@@ -14,10 +14,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ButtonElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.unit.dp
-import com.aurora.store.mise.LocalMiseUi
 
 /**
  * Drop-in replacements for Material 3's four button composables, identical in signature but with
@@ -35,11 +32,7 @@ import com.aurora.store.mise.LocalMiseUi
  * everywhere, exactly as the slider says.
  */
 @Composable
-fun houseButtonBorder(): BorderStroke? {
-    val ui = LocalMiseUi.current
-    if (ui.borderWidth <= 0) return null
-    return BorderStroke(ui.borderWidth.dp, Color(ui.borderColor))
-}
+fun houseButtonBorder(): BorderStroke? = houseBorder()
 
 @Composable
 fun TextButton(

@@ -29,7 +29,7 @@ import com.aurora.store.compose.composable.FilledTonalButton
 import com.aurora.store.compose.composable.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
+import com.aurora.store.compose.composable.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable

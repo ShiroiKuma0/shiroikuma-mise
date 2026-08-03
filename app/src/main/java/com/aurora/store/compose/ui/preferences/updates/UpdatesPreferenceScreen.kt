@@ -19,7 +19,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.AlertDialog
+import com.aurora.store.compose.composable.AlertDialog
 import androidx.compose.material3.Checkbox
 import com.aurora.store.compose.composable.HorizontalDivider
 import androidx.compose.material3.ListItem
