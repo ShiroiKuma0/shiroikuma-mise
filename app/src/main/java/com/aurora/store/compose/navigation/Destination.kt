@@ -44,6 +44,9 @@ sealed class Destination {
     data object NetworkPreference : Destination()
     data object Dispenser : Destination()
     data object UIPreference : Destination()
+
+    /** 白い熊 店 fork: our own UI page (also reachable by long-pressing the cog). */
+    data object MiseUi : Destination()
     data object NotificationPreference : Destination()
     data object UpdatesPreference : Destination()
     data object SourceFilters : Destination()

@@ -7,10 +7,12 @@ package com.aurora.store.compose.ui.main
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Badge
@@ -30,10 +32,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.aurora.extensions.requiresObbDir
@@ -156,7 +161,19 @@ fun MainScreen(
                             contentDescription = stringResource(R.string.title_download_manager)
                         )
                     }
-                    IconButton(onClick = { showMoreSheet = true }) {
+                    // 白い熊 店 fork: a tap opens the More sheet as upstream does; a LONG press
+                    // jumps straight to the 白い熊 店 UI page, skipping More > Settings > UI.
+                    Box(
+                        modifier = Modifier
+                            .size(48.dp)
+                            .pointerInput(Unit) {
+                                detectTapGestures(
+                                    onTap = { showMoreSheet = true },
+                                    onLongPress = { onNavigateTo(Destination.MiseUi) }
+                                )
+                            },
+                        contentAlignment = Alignment.Center
+                    ) {
                         Icon(
                             painter = painterResource(R.drawable.ic_settings_account),
                             contentDescription = stringResource(R.string.title_more)

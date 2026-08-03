@@ -92,6 +92,10 @@ sealed class Screen : NavKey, Parcelable {
     @Serializable
     data object UIPreference : Screen()
 
+    /** 白い熊 店 fork: the 白い熊 店 UI page. */
+    @Serializable
+    data object MiseUi : Screen()
+
     @Serializable
     data object NotificationPreference : Screen()
 

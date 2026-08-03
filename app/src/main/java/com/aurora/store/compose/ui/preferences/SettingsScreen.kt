@@ -77,6 +77,19 @@ private fun ScreenContent(onNavigateTo: (Destination) -> Unit = {}) {
                 )
             }
             item {
+                // 白い熊 店 fork: our own UI page, first in the list — it themes everything below it.
+                ListItem(
+                    modifier = Modifier.clickable { onNavigateTo(Destination.MiseUi) },
+                    leadingContent = {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_ui),
+                            contentDescription = null
+                        )
+                    },
+                    headlineContent = { Text("白い熊 店 UI") }
+                )
+            }
+            item {
                 ListItem(
                     modifier = Modifier.clickable { onNavigateTo(Destination.UIPreference) },
                     leadingContent = {
