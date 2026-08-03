@@ -1,13 +1,13 @@
 {
-  "version_name": "4.8.4+001",
-  "version_code": "760001",
-  "download_url": "https://github.com/ShiroiKuma0/shiroikuma-mise/releases/download/4.8.4+001/shiroikuma-mise_4.8.4+001.apk",
+  "version_name": "4.8.4+012",
+  "version_code": "760012",
+  "download_url": "https://github.com/ShiroiKuma0/shiroikuma-mise/releases/download/4.8.4+012/shiroikuma-mise_4.8.4+012.apk",
   "icon_url": "",
-  "sha1": "ad27f5c41f54fe7426dc498578b0997663286a41",
-  "sha256": "3cf0b75ed74441d7a3589494314566a845307b3fe600fd82c708df497c35c315",
-  "changelog": "白い熊 店 4.8.4+001\n• First fork build on Aurora Store 4.8.4\n• Black-yellow traced icon, 白い熊 店 branding, our own links\n• Self-updates now come from this repository",
-  "size": "9075203",
-  "last_commit": "",
+  "sha1": "5f81e7a113e8db762c5624b73c2dffe5513ad60e",
+  "sha256": "c33e74e02d16048d58d97d3af94dfc5c50ecbf18820009bc56a7d1330ae85e6e",
+  "changelog": "白い熊 店 4.8.4+012\n• Updates are found for frozen apps too, listed in italics — switchable in Settings › Updates and on the 白い熊 店 UI page\n• Shizuku appears under Installation method again: our own shiroikuma.shizuku build is recognised\n• Sheets and dialogs carry the house border; the Update buttons are outlined\n• Signing in uses our own account picker instead of the system dialog\n• The splash screen shows our icon",
+  "size": "9129473",
+  "last_commit": "ff0829e3f98f8e09b7ccc2071a16aa9255b62b45",
   "updated_on": "Aug 3, 2026",
-  "timestamp": "1785742320"
+  "timestamp": "1785781831"
 }
