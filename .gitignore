@@ -53,3 +53,12 @@ signing.properties
 
 
 .kotlin/*
+
+# shiroikuma fork: signing material never leaves this machine
+*.jks
+# ...except upstream's public AOSP test key, which is committed and signs debug builds
+!app/testkey.jks
+keystore.properties
+# ...but the agent files DO belong in the repo (only the local settings stay out)
+!.claude/
+.claude/settings.local.json

@@ -27,6 +27,23 @@ val lastCommitTimestamp = providers.exec {
     commandLine("git", "log", "-1", "--format=%ct")
 }.standardOutput.asText.map { it.trim() }
 
+// --- shiroikuma-mise fork: per-build version tail (see gradle.properties + the build-apk skill) ---
+// N = BUILD_NUMBER from gradle.properties, bumped after every successful build by `buildFork`
+// and reset to 1 on every upstream sync. Zero-padded to three digits in the NAME only, so that
+// +002 sorts before +010; versionCode keeps the plain integer.
+val forkBuildNumber = (project.findProperty("BUILD_NUMBER") as String?)?.trim()?.toIntOrNull() ?: 1
+val paddedBuildNumber = forkBuildNumber.toString().padStart(3, '0')
+
+// Filled in from upstream's own versionCode/versionName inside defaultConfig below, so the base
+// flows in automatically on every rebase and is never edited by hand here.
+var forkVersionName = ""
+var forkVersionCode = 0
+
+// shiroikuma fork: upstream writes `File("signing.properties")`, which resolves against the JVM
+// working directory and is the repo root only by accident (it is not, when Gradle is invoked from
+// elsewhere). Pin it to the repo root so release signing never silently degrades to unsigned.
+val signingPropertiesFile = rootProject.file("signing.properties")
+
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
@@ -58,7 +75,10 @@ configure<ApplicationExtension> {
     }
 
     defaultConfig {
-        applicationId = "com.aurora.store"
+        // shiroikuma fork: our own applicationId so we install side-by-side with upstream.
+        // The `namespace` above stays com.aurora.store — renaming it would make every rebase a
+        // mass-conflict, and nothing user-visible depends on it.
+        applicationId = "shiroikuma.mise"
         minSdk {
             version = release(23)
         }
@@ -68,6 +88,16 @@ configure<ApplicationExtension> {
 
         versionCode = 76
         versionName = "4.8.4"
+
+        // --- shiroikuma fork: our version derives from upstream's two literals directly above ---
+        // versionName = "<upstream name>+<NNN>"  e.g. 4.8.4+001
+        // versionCode = <upstream code> * 10000 + N  e.g. 76 * 10000 + 1 = 760001
+        // so a new upstream line always outranks every build of the previous one.
+        // NEVER hand-edit the two upstream literals: they update themselves on rebase.
+        forkVersionCode = versionCode!! * 10000 + forkBuildNumber
+        forkVersionName = "$versionName+$paddedBuildNumber"
+        versionCode = forkVersionCode
+        versionName = forkVersionName
 
         testInstrumentationRunner = "com.aurora.store.HiltInstrumentationTestRunner"
         testInstrumentationRunnerArguments["disableAnalytics"] = "true"
@@ -79,10 +109,10 @@ configure<ApplicationExtension> {
     }
 
     signingConfigs {
-        if (File("signing.properties").exists()) {
+        if (signingPropertiesFile.exists()) {
             create("release") {
                 val properties = Properties().apply {
-                    File("signing.properties").inputStream().use { load(it) }
+                    signingPropertiesFile.inputStream().use { load(it) }
                 }
 
                 keyAlias = properties["KEY_ALIAS"] as String
@@ -109,7 +139,7 @@ configure<ApplicationExtension> {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            if (File("signing.properties").exists()) {
+            if (signingPropertiesFile.exists()) {
                 signingConfig = signingConfigs.getByName("release")
             }
         }
@@ -276,4 +306,50 @@ dependencies {
 
     // LeakCanary
     debugImplementation(libs.squareup.leakcanary.android)
+}
+
+// --- shiroikuma fork: archive naming + one-shot build task -------------------------------------
+// Placed at the end of the script on purpose: forkVersionName / forkVersionCode are assigned while
+// the `configure<ApplicationExtension>` block above evaluates, so they are only final down here.
+
+base {
+    archivesName = "shiroikuma-mise_$forkVersionName"
+}
+
+tasks.register("buildFork") {
+    group = "build"
+    description = "Build the signed vanilla release APK, copy it to ~/tmp, and bump BUILD_NUMBER."
+    dependsOn("assembleVanillaRelease")
+
+    // Configuration-cache-safe: capture every project-derived value HERE (configuration time).
+    // The doLast lambda must not touch `layout` / `rootProject` / other project services.
+    val apkName = "shiroikuma-mise_$forkVersionName.apk"
+    val builtVersionCode = forkVersionCode
+    val releaseApkDir = layout.buildDirectory.dir("outputs/apk/vanilla/release")
+    val userHome = providers.systemProperty("user.home")
+    val propsFile = rootProject.file("gradle.properties")
+    val currentBuildNumber = forkBuildNumber
+
+    doLast {
+        val outputDir = releaseApkDir.get().asFile
+        val targetDir = File(userHome.get(), "tmp")
+        targetDir.mkdirs()
+
+        val apk = outputDir.listFiles { _, name -> name.endsWith(".apk") }?.firstOrNull()
+            ?: throw GradleException("No APK found in $outputDir")
+        val targetFile = File(targetDir, apkName)
+        apk.copyTo(targetFile, overwrite = true)
+        println("[1;36m>>> ${targetFile.absolutePath}[0m")
+        println("[1;36m>>> versionCode $builtVersionCode[0m")
+
+        // Auto-increment BUILD_NUMBER for the next build.
+        val nextBuildNumber = currentBuildNumber + 1
+        propsFile.writeText(
+            propsFile.readText().replace(
+                "BUILD_NUMBER=$currentBuildNumber",
+                "BUILD_NUMBER=$nextBuildNumber"
+            )
+        )
+        println("[1;36m>>> BUILD_NUMBER bumped to $nextBuildNumber[0m")
+    }
 }
