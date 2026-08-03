@@ -67,6 +67,7 @@ import com.aurora.store.util.Preferences.PREFERENCE_SELF_UPDATE_ENABLED
 import com.aurora.store.util.Preferences.PREFERENCE_UPDATES_AUTO
 import com.aurora.store.util.Preferences.PREFERENCE_UPDATES_CHECK_INTERVAL
 import com.aurora.store.util.Preferences.PREFERENCE_UPDATES_EXTENDED
+import com.aurora.store.util.Preferences.PREFERENCE_UPDATES_FROZEN
 import com.aurora.store.util.Preferences.PREFERENCE_UPDATES_WARN_TRACKERS
 import com.aurora.store.util.save
 import com.aurora.store.viewmodel.all.UpdatesViewModel
@@ -113,6 +114,9 @@ private fun ScreenContent(
     }
     var updatesExtended by remember {
         mutableStateOf(Preferences.getBoolean(context, PREFERENCE_UPDATES_EXTENDED))
+    }
+    var updatesFrozen by remember {
+        mutableStateOf(Preferences.getBoolean(context, PREFERENCE_UPDATES_FROZEN, true))
     }
     var warnTrackers by remember {
         mutableStateOf(Preferences.getBoolean(context, PREFERENCE_UPDATES_WARN_TRACKERS, false))
@@ -341,6 +345,29 @@ private fun ScreenContent(
                             onCheckedChange = { checked ->
                                 updatesExtended = checked
                                 context.save(PREFERENCE_UPDATES_EXTENDED, checked)
+                                onCheckUpdatesNow()
+                            }
+                        )
+                    }
+                )
+            }
+            item {
+                ListItem(
+                    modifier = Modifier.clickable {
+                        updatesFrozen = !updatesFrozen
+                        context.save(PREFERENCE_UPDATES_FROZEN, updatesFrozen)
+                        onCheckUpdatesNow()
+                    },
+                    headlineContent = { Text(stringResource(R.string.pref_updates_frozen)) },
+                    supportingContent = {
+                        Text(stringResource(R.string.pref_updates_frozen_desc))
+                    },
+                    trailingContent = {
+                        Switch(
+                            checked = updatesFrozen,
+                            onCheckedChange = { checked ->
+                                updatesFrozen = checked
+                                context.save(PREFERENCE_UPDATES_FROZEN, checked)
                                 onCheckUpdatesNow()
                             }
                         )
