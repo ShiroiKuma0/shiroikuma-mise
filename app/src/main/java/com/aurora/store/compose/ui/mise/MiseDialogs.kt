@@ -44,6 +44,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateMap
 import androidx.compose.ui.Alignment
@@ -60,6 +61,10 @@ import com.aurora.store.mise.MiseBackup
 import com.aurora.store.mise.MiseFonts
 import com.aurora.store.mise.MiseUiState
 import com.jakewharton.processphoenix.ProcessPhoenix
+import java.io.ByteArrayOutputStream
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 // ------------------------------------------------------------------ colour picker
 
@@ -269,6 +274,7 @@ fun MiseFontPickerDialog(onDismiss: () -> Unit) {
 fun MiseExportImportPanel(onDismiss: () -> Unit, onFinishedAndClose: () -> Unit) {
     val ui = LocalMiseUi.current
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
 
     val checks = remember {
         SnapshotStateMap<MiseBackup.Cat, Boolean>().apply {
@@ -301,12 +307,24 @@ fun MiseExportImportPanel(onDismiss: () -> Unit, onFinishedAndClose: () -> Unit)
     ) { uri: Uri? ->
         if (uri == null) return@rememberLauncherForActivityResult
         val selected = checks.filterValues { it }.keys
-        info = runCatching {
-            val bytes = context.contentResolver.openInputStream(uri)!!.use { it.readBytes() }
-            val restored = MiseBackup.restore(context, bytes, selected)
-            ui.reload()
-            InfoState("Import finished", "$restored categories restored.", success = true, restart = true)
-        }.getOrElse { InfoState("Import failed", it.message ?: "Unknown error", success = false) }
+        // Room reads/writes are suspending, and the zip is real I/O — never on the main thread.
+        scope.launch {
+            info = runCatching {
+                val bytes = withContext(Dispatchers.IO) {
+                    context.contentResolver.openInputStream(uri)!!.use { it.readBytes() }
+                }
+                val restored = MiseBackup.restore(context, bytes, selected)
+                ui.reload()
+                InfoState(
+                    "Import finished",
+                    "$restored categories restored.",
+                    success = true,
+                    restart = true
+                )
+            }.getOrElse {
+                InfoState("Import failed", it.message ?: "Unknown error", success = false)
+            }
+        }
     }
 
     AlertDialog(
@@ -418,25 +436,40 @@ fun MiseExportImportPanel(onDismiss: () -> Unit, onFinishedAndClose: () -> Unit)
                     }
                     PillButton(ui, "Export") {
                         val selected = checks.filterValues { it }.keys
-                        info = when {
+                        when {
                             selected.isEmpty() ->
-                                InfoState("Export failed", "No categories selected.", success = false)
+                                info = InfoState(
+                                    "Export failed", "No categories selected.", success = false
+                                )
 
                             ui.exportDir.isBlank() ->
-                                InfoState("Export failed", "No backup directory set.", success = false)
-
-                            else -> runCatching {
-                                val bytes = MiseBackup.buildZip(context, selected)
-                                val name = MiseBackup.writeToTree(context, ui.exportDir.toUri(), bytes)
-                                    ?: error("The backup folder could not be written to.")
-                                lastBackup = MiseBackup.newestBackup(context, ui.exportDir.toUri())
-                                InfoState(
-                                    "Export finished",
-                                    "$name\n${bytes.size / 1024} kB · ${selected.size} categories",
-                                    success = true
+                                info = InfoState(
+                                    "Export failed", "No backup directory set.", success = false
                                 )
-                            }.getOrElse {
-                                InfoState("Export failed", it.message ?: "Unknown error", success = false)
+
+                            else -> scope.launch {
+                                info = runCatching {
+                                    val bytes = withContext(Dispatchers.IO) {
+                                        ByteArrayOutputStream().also { out ->
+                                            MiseBackup.writeZip(context, selected, out)
+                                        }.toByteArray()
+                                    }
+                                    val name = withContext(Dispatchers.IO) {
+                                        MiseBackup.writeToTree(context, ui.exportDir.toUri(), bytes)
+                                    } ?: error("The backup folder could not be written to.")
+                                    lastBackup = MiseBackup.newestBackup(context, ui.exportDir.toUri())
+                                    InfoState(
+                                        "Export finished",
+                                        "$name\n${bytes.size / 1024} kB · ${selected.size} categories",
+                                        success = true
+                                    )
+                                }.getOrElse {
+                                    InfoState(
+                                        "Export failed",
+                                        it.message ?: "Unknown error",
+                                        success = false
+                                    )
+                                }
                             }
                         }
                     }

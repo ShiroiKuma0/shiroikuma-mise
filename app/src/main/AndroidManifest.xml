@@ -232,5 +232,22 @@
                 <action android:name="android.intent.action.UNARCHIVE_PACKAGE" />
             </intent-filter>
         </receiver>
+        <!-- 白い熊 店 fork: the 保存復元 automation contract. No android:permission — the caller
+             cannot hold one, so the token in MiseAutomationAuth is the gate. -->
+        <receiver
+            android:name="com.aurora.store.mise.automation.StateExportReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="shiroikuma.mise.action.EXPORT_STATE" />
+                <action android:name="shiroikuma.mise.action.LIST_CATEGORIES" />
+                <action android:name="shiroikuma.mise.action.CANCEL_EXPORT" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.aurora.store.mise.automation.StateExportService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+
     </application>
 </manifest>

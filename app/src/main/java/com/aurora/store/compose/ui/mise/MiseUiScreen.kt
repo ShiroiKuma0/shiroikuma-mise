@@ -5,6 +5,9 @@
 
 package com.aurora.store.compose.ui.mise
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.background
@@ -40,6 +43,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -51,6 +55,7 @@ import com.aurora.store.compose.composable.TopAppBar
 import com.aurora.store.mise.ColorSlot
 import com.aurora.store.mise.LocalMiseUi
 import com.aurora.store.mise.MiseFonts
+import com.aurora.store.mise.automation.MiseAutomationAuth
 import com.aurora.store.mise.MiseUiState
 
 /**
@@ -88,6 +93,9 @@ fun MiseUiScreen() {
                 summaryIsWarning = ui.exportDir.isBlank(),
                 onClick = { showExportImport = true }
             )
+            // The 保存復元 automation rows belong here, under the export rows — a backup feature
+            // lives where backup lives, and every sister app looks the same.
+            AutomationRows(ui)
 
             // ------------------------------------------------------------ colours
             SectionHeader(ui, "Colours")
@@ -171,6 +179,65 @@ fun MiseUiScreen() {
             onFinishedAndClose = {
                 showExportImport = false
                 activity?.onBackPressedDispatcher?.onBackPressed()
+            }
+        )
+    }
+}
+
+/**
+ * The two contract rows: a master switch (default OFF — nothing is reachable from outside until
+ * 白い熊 turns it on) and the token, abbreviated, copied on tap, regenerated on the right.
+ */
+@Composable
+private fun AutomationRows(ui: MiseUiState) {
+    val context = LocalContext.current
+    var enabled by remember { mutableStateOf(MiseAutomationAuth.enabled(context)) }
+    var token by remember { mutableStateOf(MiseAutomationAuth.token(context)) }
+
+    ToggleRow(ui, "Automation export", enabled) {
+        MiseAutomationAuth.setEnabled(context, it)
+        enabled = it
+    }
+    Text(
+        text = "Lets 白い熊 自由作業盤 trigger this app's export through the token-gated intent.",
+        color = Color(ui.textDimColor),
+        fontSize = ui.labelSize.sp,
+        modifier = Modifier.padding(
+            start = rowIndent(ui, false),
+            end = 16.dp,
+            bottom = ui.rowPadding.dp
+        )
+    )
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable {
+                context.getSystemService(ClipboardManager::class.java)
+                    ?.setPrimaryClip(ClipData.newPlainText("token", token))
+                Toast.makeText(context, "Token copied", Toast.LENGTH_SHORT).show()
+            }
+            .padding(
+                start = rowIndent(ui, false),
+                end = 16.dp,
+                top = ui.rowPadding.dp,
+                bottom = ui.rowPadding.dp
+            ),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Column(Modifier.weight(1f)) {
+            RowTitle(ui, "Automation token", MiseAutomationAuth.abbreviated(token))
+        }
+        Text(
+            text = "Regenerate",
+            color = Color(ui.warnColor),
+            fontSize = ui.labelSize.sp,
+            modifier = Modifier.clickable {
+                token = MiseAutomationAuth.regenerate(context)
+                Toast.makeText(
+                    context,
+                    "New token — update every copy you pasted elsewhere",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         )
     }
