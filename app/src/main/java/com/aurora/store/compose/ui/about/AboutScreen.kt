@@ -47,6 +47,7 @@ import com.aurora.store.compose.composable.LinkListItem
 import com.aurora.store.compose.composable.TopAppBar
 import com.aurora.store.compose.preview.ThemePreviewProvider
 import com.aurora.store.data.model.Link
+import com.aurora.store.mise.MiseFlash
 
 @Composable
 fun AboutScreen() {
@@ -114,11 +115,7 @@ private fun ScreenContent(onAboutAurora: () -> Unit = {}) {
                             link.url.startsWith("upi") && context.viewExternal(link.url) -> Unit
                             else -> {
                                 context.copyToClipBoard(link.url)
-                                Toast.makeText(
-                                    context,
-                                    R.string.toast_clipboard_copied,
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                MiseFlash.show(context, R.string.toast_clipboard_copied, Toast.LENGTH_SHORT)
                             }
                         }
                     }

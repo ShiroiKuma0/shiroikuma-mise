@@ -37,6 +37,7 @@ import com.aurora.store.data.model.AuthState
 import com.aurora.store.util.AC2DMUtil
 import com.aurora.store.util.Preferences
 import com.aurora.store.viewmodel.auth.AuthViewModel
+import com.aurora.store.mise.MiseFlash
 
 private const val EMBEDDED_SETUP_URL = "https://accounts.google.com/EmbeddedSetup"
 private const val AUTH_TOKEN = "oauth_token"
@@ -77,8 +78,7 @@ fun GoogleLoginScreen(
                         )
                     }
                 } else {
-                    Toast.makeText(context, R.string.toast_aas_token_failed, Toast.LENGTH_LONG)
-                        .show()
+                    MiseFlash.show(context, R.string.toast_aas_token_failed, Toast.LENGTH_LONG)
                     onNavigateTo(if (addAccount) Destination.Accounts else Destination.Splash())
                 }
             }
@@ -91,8 +91,7 @@ fun GoogleLoginScreen(
         LaunchedEffect(Unit) {
             viewModel.accountAdded.collect { ok ->
                 if (!ok) {
-                    Toast.makeText(context, R.string.toast_aas_token_failed, Toast.LENGTH_LONG)
-                        .show()
+                    MiseFlash.show(context, R.string.toast_aas_token_failed, Toast.LENGTH_LONG)
                 }
                 onNavigateTo(Destination.Accounts)
             }

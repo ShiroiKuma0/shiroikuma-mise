@@ -6,6 +6,7 @@
 package com.aurora.store.mise
 
 import android.content.Context
+import android.graphics.Typeface
 import android.net.Uri
 import android.provider.OpenableColumns
 import androidx.compose.ui.text.font.Font
@@ -42,6 +43,7 @@ object MiseFonts {
     )
 
     private val cache = mutableMapOf<String, FontFamily>()
+    private val typefaceCache = mutableMapOf<String, Typeface?>()
 
     fun fontsDir(context: Context): File =
         File(context.applicationContext.filesDir, "mise-fonts").apply { mkdirs() }
@@ -80,6 +82,23 @@ object MiseFonts {
     }
 
     /**
+     * The same catalogue in View terms — the black-yellow flash is a plain [android.widget.TextView],
+     * so it needs a Typeface rather than a Compose FontFamily.
+     * @return null for "leave the view's own typeface".
+     */
+    fun typeface(context: Context, id: String): Typeface? = when (id) {
+        SYSTEM -> null
+        SANS -> Typeface.SANS_SERIF
+        SERIF -> Typeface.SERIF
+        MONOSPACE -> Typeface.MONOSPACE
+        CURSIVE -> Typeface.create("cursive", Typeface.NORMAL)
+        else -> typefaceCache.getOrPut(id) {
+            val file = File(fontsDir(context), id)
+            if (file.isFile) runCatching { Typeface.createFromFile(file) }.getOrNull() else null
+        }
+    }
+
+    /**
      * Copies the picked font into our own storage.
      * @return the stored file name (the id to persist), or null if it was not a font file.
      */
@@ -93,6 +112,7 @@ object MiseFonts {
                 target.outputStream().use { output -> input.copyTo(output) }
             } ?: return null
             cache.remove(target.name)
+            typefaceCache.remove(target.name)
             target.name
         }.getOrNull()
     }
@@ -100,6 +120,7 @@ object MiseFonts {
     fun delete(context: Context, id: String) {
         File(fontsDir(context), id).takeIf { it.isFile }?.delete()
         cache.remove(id)
+        typefaceCache.remove(id)
     }
 
     private fun queryName(context: Context, uri: Uri): String? {

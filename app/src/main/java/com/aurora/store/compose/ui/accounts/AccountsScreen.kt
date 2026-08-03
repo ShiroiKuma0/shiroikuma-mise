@@ -26,7 +26,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
+import com.aurora.store.compose.composable.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -73,6 +73,7 @@ import com.aurora.store.util.PackageUtil
 import com.aurora.store.util.Preferences
 import com.aurora.store.util.RestartUtil
 import com.aurora.store.viewmodel.accounts.AccountsViewModel
+import com.aurora.store.mise.MiseFlash
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -102,11 +103,7 @@ fun AccountsScreen(
             accountName.isNullOrBlank() -> isAddingAccount = false
             accounts.any { it.email.equals(accountName, ignoreCase = true) } -> {
                 isAddingAccount = false
-                Toast.makeText(
-                    context,
-                    context.getString(R.string.account_exists),
-                    Toast.LENGTH_SHORT
-                ).show()
+                MiseFlash.show(context, context.getString(R.string.account_exists), Toast.LENGTH_SHORT)
             }
             else -> viewModel.addSystemAccount(accountName, activity)
         }
@@ -118,11 +115,7 @@ fun AccountsScreen(
                 RestartUtil.restart(context)
             } else {
                 isSwitchingDefault = false
-                Toast.makeText(
-                    context,
-                    context.getString(R.string.account_switch_failed),
-                    Toast.LENGTH_SHORT
-                ).show()
+                MiseFlash.show(context, context.getString(R.string.account_switch_failed), Toast.LENGTH_SHORT)
             }
         }
     }
@@ -140,11 +133,7 @@ fun AccountsScreen(
         viewModel.addResult.collect { added ->
             isAddingAccount = false
             if (!added) {
-                Toast.makeText(
-                    context,
-                    context.getString(R.string.account_add_failed),
-                    Toast.LENGTH_SHORT
-                ).show()
+                MiseFlash.show(context, context.getString(R.string.account_add_failed), Toast.LENGTH_SHORT)
             }
         }
     }
@@ -161,7 +150,7 @@ fun AccountsScreen(
                     failures
                 )
             }
-            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+            MiseFlash.show(context, message, Toast.LENGTH_SHORT)
         }
     }
 
