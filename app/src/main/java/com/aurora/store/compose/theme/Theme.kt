@@ -11,9 +11,11 @@ import android.os.Build
 import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialExpressiveTheme
+import androidx.compose.material3.Typography
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
@@ -24,6 +26,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import com.aurora.store.mise.LocalMiseUi
+import com.aurora.store.mise.rememberMiseUiState
 import com.aurora.store.util.Preferences
 
 /**
@@ -110,5 +114,18 @@ fun AuroraTheme(content: @Composable () -> Unit) {
         }
     }
 
-    MaterialExpressiveTheme(colorScheme = colorScheme, content = content)
+    // --- 白い熊 店 fork: our own scheme wins ------------------------------------------------
+    // The whole app is themed from the 白い熊 店 UI page (black background, pure #FFFF00 text and
+    // borders by default), so upstream's light/dark/dynamic schemes computed above are only the
+    // fallback the page's knobs are layered onto. Providing the state here means a slider drag on
+    // that page repaints every screen live — the preview IS the app.
+    val miseUi = rememberMiseUiState(context)
+    CompositionLocalProvider(LocalMiseUi provides miseUi) {
+        MaterialExpressiveTheme(
+            colorScheme = miseUi.colorScheme(),
+            shapes = miseUi.shapes(),
+            typography = miseUi.typography(Typography()),
+            content = content
+        )
+    }
 }

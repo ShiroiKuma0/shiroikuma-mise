@@ -54,6 +54,7 @@ import com.aurora.store.compose.ui.notifications.NotificationsScreen
 import com.aurora.store.compose.ui.onboarding.OnboardingScreen
 import com.aurora.store.compose.ui.preferences.NotificationPreferenceScreen
 import com.aurora.store.compose.ui.preferences.SettingsScreen
+import com.aurora.store.compose.ui.mise.MiseUiScreen
 import com.aurora.store.compose.ui.preferences.UIPreferenceScreen
 import com.aurora.store.compose.ui.preferences.installation.InstallationPreferenceScreen
 import com.aurora.store.compose.ui.preferences.installation.InstallerScreen
@@ -203,6 +204,7 @@ fun NavDisplay(startDestination: NavKey) {
             Destination.NetworkPreference -> backstack.add(Screen.NetworkPreference)
             Destination.Dispenser -> backstack.add(Screen.Dispenser)
             Destination.UIPreference -> backstack.add(Screen.UIPreference)
+            Destination.MiseUi -> backstack.add(Screen.MiseUi)
             Destination.NotificationPreference -> backstack.add(Screen.NotificationPreference)
             Destination.UpdatesPreference -> backstack.add(Screen.UpdatesPreference)
             Destination.SourceFilters -> backstack.add(Screen.SourceFilters)
@@ -336,6 +338,7 @@ fun NavDisplay(startDestination: NavKey) {
             entry<Screen.Settings> { SettingsScreen(onNavigateTo = ::navigate) }
             entry<Screen.NetworkPreference> { NetworkPreferenceScreen(onNavigateTo = ::navigate) }
             entry<Screen.UIPreference> { UIPreferenceScreen() }
+            entry<Screen.MiseUi> { MiseUiScreen() }
             entry<Screen.NotificationPreference> { NotificationPreferenceScreen() }
             entry<Screen.UpdatesPreference> { UpdatesPreferenceScreen(onNavigateTo = ::navigate) }
             entry<Screen.SourceFilters> { SourceFiltersScreen() }
