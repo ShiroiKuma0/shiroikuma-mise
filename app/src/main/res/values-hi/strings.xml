@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="details_dev_email">ईमेल</string>
-    <string name="about_bhim">BHIM - UPI</string>
     <string name="action_disable">अक्षम करें</string>
     <string name="action_copy_link">लिंक कॉपी करें</string>
     <string name="action_copy">कॉपी करें</string>
@@ -15,25 +14,6 @@
     <string name="account_login_using">इनसे लॉगिन करें</string>
     <string name="account_google">गूगल</string>
     <string name="account_anonymous">अज्ञात</string>
-    <string name="about_xda_summary">चर्चा या सुझाव के लिए ऑरोरा स्टोर XDA थ्रेड देखें।</string>
-    <string name="about_xda">XDA फोरम</string>
-    <string name="about_telegram_summary">चर्चा या सुझाव के लिए ऑरोरा सहायता समूह में शामिल हों।</string>
-    <string name="about_telegram">Telegram</string>
-    <string name="about_paypal_summary">PayPal के द्वारा दान करें</string>
-    <string name="about_paypal">PayPal</string>
-    <string name="about_libera_summary">Liberapay पर संरक्षक बनें</string>
-    <string name="about_libera">Liberapay</string>
-    <string name="about_gitlab_summary">GitLab पर ऑरोरा OSS से ऑरोरा स्टोर का स्रोत कोड प्राप्त करें।</string>
-    <string name="about_gitlab">GitLab</string>
-    <string name="about_fdroid_summary">F-Droid के माध्यम से ऑरोरा स्टोर प्राप्त करें।</string>
-    <string name="about_fdroid">F-Droid</string>
-    <string name="about_bitcoin_eth_summary">Ethereum (ETH) के द्वारा दान करें</string>
-    <string name="about_bitcoin_eth">Ethereum</string>
-    <string name="about_bitcoin_btc_summary">Bitcoin (BTC) के द्वारा दान करें</string>
-    <string name="about_bitcoin_btc">Bitcoin</string>
-    <string name="about_bitcoin_bch_summary">Bitcoin Cash (BCH) के द्वारा दान करें</string>
-    <string name="about_bitcoin_bch">बिटकॉइन कैश</string>
-    <string name="about_bhim_summary">UPI के द्वारा दान करें</string>
     <string name="details_dev_website">वेबसाइट</string>
     <string name="details_dev_address">पता</string>
     <string name="action_logout">लॉगआउट करें</string>
@@ -332,8 +312,6 @@
     <string name="pref_clear_device_owner_title">डिवाइस स्वामी हटाएं</string>
     <string name="pref_clear_device_owner_summary">ऑरोरा स्टोर को डिवाइस स्वामी ऐप के रूप में हटाता है</string>
     <string name="pref_clear_device_owner_desc">इससे ऐप को चुपचाप इंस्टॉल करने के लिए सेशन इंस्टॉलर की अनुमति रद्द हो जाएगी। डिवाइस स्वामित्व साफ़ करने के साथ आगे बढ़ें?</string>
-    <string name="about_wiki_title">विकि</string>
-    <string name="about_wiki_summary">अक्सर पूछे जाने वाले प्रश्नों (F.A.Q.) के उत्तर, समस्या निवारण चरण और बहुत कुछ खोजें</string>
     <string name="pref_dispenser_title">डिस्पेंसर प्रबंधित करें</string>
     <string name="pref_dispenser_summary">अनाम लॉगिन के लिए टोकन डिस्पेंसर देखें और प्रबंधित करें</string>
     <string name="no_dispensers_available">कोई डिस्पेंसर उपलब्ध नहीं</string>
@@ -348,7 +326,6 @@
     <string name="session_login">कृपया अपने गूगल प्ले खाते में लॉग इन करें</string>
     <string name="about_aurora_store_title">ऑरोरा स्टोर के बारे में</string>
     <string name="about_aurora_store_subtitle">ऑरोरा स्टोर के बारे में अधिक जानें</string>
-    <string name="about_aurora_store_summary">ओरोरा स्टोर आपको आधिकारिक गूगल प्ले स्टोर से ऐप्स खोजने और डाउनलोड करने में सक्षम बनाता है। आप ऐप विवरण, स्क्रीनशॉट, अपडेट, अन्य उपयोगकर्ताओं की टिप्पणियाँ देख सकते हैं और गूगल प्ले से सीधे अपने डिवाइस पर APK डाउनलोड कर सकते हैं। ओरोरा स्टोर का उपयोग करने के लिए, आपके पास गूगल प्ले खाता होना चाहिए, और जब आप पहली बार ओरोरा स्टोर खोलते और कॉन्फ़िगर करते हैं तो अपने गूगल प्ले खाते में लॉग इन करें। \n \nपारंपरिक ऐप स्टोर के विपरीत, ऑरोरा स्टोर किसी भी ऐप का स्वामित्व, लाइसेंस या वितरण नहीं करता है। ऑरोरा स्टोर में सभी ऐप, ऐप विवरण, स्क्रीनशॉट और अन्य सामग्री सीधे गूगल प्ले से एक्सेस, डाउनलोड और/या प्रदर्शित की जाती है। ऑरोरा स्टोर बिल्कुल एक दरवाजे या ब्राउज़र की तरह काम करता है, जिससे आप अपने गूगल प्ले खाते में लॉग इन कर सकते हैं और गूगल प्ले से ऐप ढूंढ सकते हैं। \n \nकृपया ध्यान दें कि ऑरोरा स्टोर के पास गूगल, गूगल प्ले, ऑरोरा स्टोर के माध्यम से डाउनलोड किए गए किसी भी ऐप या किसी भी ऐप डेवलपर से कोई अनुमोदन, प्रायोजन या प्राधिकरण नहीं है; न ही ऑरोरा स्टोर का उनके साथ कोई संबद्धता, सहयोग या संबंध है।</string>
     <string name="toast_app_unavailable">ऐप आपके डिवाइस के लिए उपलब्ध नहीं है</string>
     <string name="action_favourite">पसंदीदा</string>
     <string name="details_no_favourites">कोई पसंदीदा ऐप नहीं मिला</string>

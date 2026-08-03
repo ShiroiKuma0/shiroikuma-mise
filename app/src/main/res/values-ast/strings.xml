@@ -26,15 +26,10 @@
     <string name="pref_install_mode_title">Métodu d\'instalación</string>
     <string name="spoof_apply">Asegúrate de volver aniciar la sesión p\'aplicar la suplantación</string>
     <string name="toast_clipboard_copied">Copióse nel cartafueyu</string>
-    <string name="about_gitlab">GitLab</string>
     <string name="action_copy_link">Copiar l\'enllaz</string>
-    <string name="about_telegram">Telegram</string>
     <string name="purchase_unsupported">L\'aplicación nun ye compatible</string>
     <string name="device_miui_extra">D\'otramiente, pues escoyer l\'instalador nativu mas nun vas poder instalar APKs en paquetes, polo que tu decides.</string>
     <string name="filter_review_positive">Reseña positiva</string>
-    <string name="about_xda">Foros de XDA</string>
-    <string name="about_bhim_summary">Dona per UPI</string>
-    <string name="about_bitcoin_btc_summary">Dona per Bitcoin (BTC)</string>
     <string name="action_update">Anovar</string>
     <string name="action_update_all">Anovar too</string>
     <string name="details_beta_available">¿Quies xunite al programa Beta?</string>
@@ -61,19 +56,15 @@
     <string name="onboarding_permission_esa_desc">Pa guardar los ficheros d\'espansión d\'APK (OBBs) p\'aplicaciones y xuegos grandes.</string>
     <string name="action_logout">Zarrar la sesión</string>
     <string name="toast_rated_success">Rated, it may take a while to show</string>
-    <string name="about_paypal">Paypal</string>
-    <string name="account_logout">Zarru de la sesión d\'Aurora</string>
-    <string name="installer_service_available">Los servicios d\'Aurora tán disponibles y yá se puen instalar.</string>
+    <string name="account_logout">Zarru de la sesión d\'白い熊 店</string>
+    <string name="installer_service_available">Los servicios d\'白い熊 店 tán disponibles y yá se puen instalar.</string>
     <string name="purchase_invalid">Nun se compró l\'aplicación</string>
     <string name="action_next">Siguiente</string>
-    <string name="about_libera_summary">Conviértite en mecenes en Liberapay</string>
     <string name="action_filter_apply">Aplicar</string>
     <string name="title_updates">Anovamientos</string>
-    <string name="about_gitlab_summary">Consigui\'l códigu fonte d\'Aurora Store dende\'l depósitu d\'Aurora OSS en GitLab.</string>
     <string name="action_clear">Borrar</string>
     <string name="pref_install_mode_native">Instalador nativu (obsoletu)</string>
     <string name="account_anonymous">Cuenta anónima</string>
-    <string name="about_bitcoin_bch">Bitcoin Cash</string>
     <string name="action_close">Zarrar</string>
     <string name="action_filter_gsf_dependent_apps">GSF</string>
     <string name="download_speed_estimating">Estimando</string>
@@ -82,25 +73,18 @@
     <string name="toast_apk_blacklisted">Amestóse a la llista prieta</string>
     <string name="action_join">Xunise</string>
     <string name="download_none">Nun hai nenguna descarga</string>
-    <string name="about_fdroid_summary">Consigui Aurora Store per F-Droid.</string>
-    <string name="about_telegram_summary">Xúnite al grupu de sofitu d\'Aurora p\'aldericar o suxerir.</string>
     <string name="action_filter_apps_with_ads">Aplicaciones con anuncios</string>
     <string name="action_filter_downloads">Descargues</string>
     <string name="installer_status_failure_conflict">Esiste un paquete en conflictu</string>
-    <string name="about_bitcoin_eth">Ethereum</string>
     <string name="action_copy">Copiar</string>
     <string name="download_failed">La descarga falló</string>
     <string name="exodus_view_report">Ver l\'informe</string>
-    <string name="about_paypal_summary">Dona per PayPal</string>
-    <string name="about_fdroid">F-Droid</string>
     <string name="details_ratings">Valoración y reseñes</string>
     <string name="action_filter">Peñeres</string>
     <string name="details_free">De baldre</string>
     <string name="action_disable">Desactivar</string>
     <string name="action_export">Esportar</string>
     <string name="details_permission">Permisos</string>
-    <string name="about_bitcoin_bch_summary">Dona per Bitcoin Cash (BCH)</string>
-    <string name="about_bhim">BHIM - UPI</string>
     <string name="account_google">Google</string>
     <string name="action_back">Atrás</string>
     <string name="action_open">Abrir</string>
@@ -109,22 +93,18 @@
     <string name="tab_trending">En tendencia</string>
     <string name="download_force_clear_all">Forciar el borráu de too</string>
     <string name="action_leave">Colar</string>
-    <string name="about_bitcoin_btc">Bitcoin</string>
     <string name="toast_export_failed">Nun se pudo esportar la configuración del preséu</string>
     <string name="action_install">Instalar</string>
     <string name="toast_anonymous_restriction">Nun ta disponible nes cuentes anónimes</string>
     <string name="action_share">Compartir</string>
-    <string name="onboarding_permission_select">Aurora Store rique los permisos siguientes</string>
+    <string name="onboarding_permission_select">白い熊 店 rique los permisos siguientes</string>
     <string name="download_cancel_all">Encaboxar too</string>
     <string name="details_no_app_match">Nun s\'atopó nenguna aplicación que concasare</string>
     <string name="details_beta_description">You will see new features and bugs before the public does. Give your feedback to developers to help them improve.</string>
     <string name="details_beta_delay">El rexistru pue tardar un tiempu mas pues comprobar dempués l\'estáu.</string>
     <string name="details_changelog">Rexistru de cambeos</string>
-    <string name="about_bitcoin_eth_summary">Dona per Ethereum (ETH)</string>
-    <string name="about_libera">Liberapay</string>
     <string name="action_filter_paid_apps">De pagu</string>
     <string name="action_grant">Conceder</string>
-    <string name="about_xda_summary">Visita\'l filu d\'Aurora Store en XDA p\'aldericar o consiguir suxerencies.</string>
     <string name="account_login_using">Aniciar la sesión con</string>
     <string name="action_ignore">Inorar</string>
     <string name="action_installations">Instalación</string>
@@ -152,7 +132,7 @@
     <string name="onboarding_welcome_select">¿Alcuéntreste\?</string>
     <string name="onboarding_permission_esm">Xestor del almacenamientu esternu</string>
     <string name="onboarding_permission_installer">Permisu del instalador</string>
-    <string name="onboarding_permission_installer_desc">Permite la instalación d\'aplicaciones dende Aurora Store</string>
+    <string name="onboarding_permission_installer_desc">Permite la instalación d\'aplicaciones dende 白い熊 店</string>
     <string name="onboarding_permission_notifications">Avisos</string>
     <string name="onboarding_permission_notifications_desc">Unvia avisos rellacionaos col estáu de los procesos d\'instalación</string>
     <string name="pref_common_extra">Configuración adicional</string>
@@ -190,7 +170,7 @@
     <string name="action_cancel">Encaboxar</string>
     <string name="exodus_powered">Cola teunoloxía d\'Exodus Privacy</string>
     <string name="exodus_progress">Comprobando los rastrexadores…</string>
-    <string name="pref_install_mode_services">Servicios d\'Aurora (obsoletos)</string>
+    <string name="pref_install_mode_services">Servicios d\'白い熊 店 (obsoletos)</string>
     <string name="pref_install_mode_session">Instalador de la sesión</string>
     <string name="pref_network_title">Rede</string>
     <string name="pref_ui_layout_tab">Llingüeta predeterminada</string>
@@ -201,8 +181,8 @@
     <string name="exodus_no_tracker">Nun contién rastrexadores conocíos</string>
     <string name="installer_am_unavailable">Instala App Manager o camuda\'l tipu d\'instaldor.</string>
     <string name="installer_root_unavailable">Nun hai accesu de superusuariu. Concédelu o camuda\'l tipu d\'instalador.</string>
-    <string name="installer_service_unavailable">Instala la versión 1.0.9 ó superior de los servicios d\'Aurora o camuda\'l tipu d\'instalador.</string>
-    <string name="installer_service_misconfigured">Configura los servicios d\'Aurora y concéde-y tolos permisos primero.</string>
+    <string name="installer_service_unavailable">Instala la versión 1.0.9 ó superior de los servicios d\'白い熊 店 o camuda\'l tipu d\'instalador.</string>
+    <string name="installer_service_misconfigured">Configura los servicios d\'白い熊 店 y concéde-y tolos permisos primero.</string>
     <string name="installer_status_failure_blocked">Bloquióse la instalación</string>
     <string name="installer_status_failure_session">Nun se pudo crear la sesión</string>
     <string name="installer_status_failure_incompatible">L\'aplicación ye incompatible</string>
@@ -214,7 +194,7 @@
     <string name="menu_terms">Términos del serviciu</string>
     <string name="device_miui_title">¡Detectóse MIUI!</string>
     <string name="device_miui_subtitle">L\'instalador de la sesión nun pue instalar aplicaciones pola mor de les optimizaciones de MIUI.</string>
-    <string name="device_miui_description">Desactiva les optimizaciones de MIUI pa permitir la instalación d\'aplicaciones. Si non, pues escoyer l\'instalador de superusuariu o\'l de los servicios d\'Aurora.</string>
+    <string name="device_miui_description">Desactiva les optimizaciones de MIUI pa permitir la instalación d\'aplicaciones. Si non, pues escoyer l\'instalador de superusuariu o\'l de los servicios d\'白い熊 店.</string>
     <string name="dialog_title_self_update">Hai un anovamientu</string>
     <string name="dialog_desc_native_split">You can not install bundled(split) apps via Native Installer. Change your installer to Session, Services or Root.</string>
     <string name="onboarding_title_welcome">Acoyida</string>
@@ -245,8 +225,6 @@
     <string name="spoof_property"><xliff:g id="manufacturer">%1$s</xliff:g> • API <xliff:g id="api">%2$s</xliff:g></string>
     <string name="permissions_denied">Negáronse los permisos riquíos, concédelos pa siguir cola aición</string>
     <string name="search_hint">Buscar aplicaciones y xuegos</string>
-    <string name="about_wiki_title">Wiki</string>
-    <string name="about_wiki_summary">Atopa rempuestes a les entrugues más frecuentes y a otros problemes</string>
     <string name="notification_updates_available_desc_3"><xliff:g id="app_one_name">%1$s</xliff:g>, <xliff:g id="app_two_name">%2$s</xliff:g> y <xliff:g id="app_three_name">%3$s</xliff:g></string>
     <string name="android_market_desc">Android Market foi una tienda en llinia qu\'ufría aplicaciones de software diseñaes pa preseos Android. Cesó l\'actividá en 2017.</string>
     <string name="pref_install_mode_shizuku">Instalador Shizuku</string>
@@ -272,7 +250,7 @@
     <string name="export_app_title">Esportador de ficheros</string>
     <string name="export_app_summary">Espera que se ta esportando\'l ficheru</string>
     <string name="export_app_summary_success">Successfully exported app bundle</string>
-    <string name="force_restart_summary">Tienes de reaniciar Aurora Sotre p\'aplicar les opciones cambiaes</string>
+    <string name="force_restart_summary">Tienes de reaniciar 白い熊 店 Sotre p\'aplicar les opciones cambiaes</string>
     <string name="status_completed">Completóse</string>
     <string name="status_queued">Na cola</string>
     <string name="status_unavailable">Nun ta disponible</string>
@@ -286,11 +264,10 @@
     <string name="notification_updates_available_desc_2"><xliff:g id="app_one_name">%1$s</xliff:g> y <xliff:g id="app_two_name">%2$s</xliff:g></string>
     <string name="pref_updates_auto_notify">Check &amp; notify for available updates</string>
     <string name="google_play_store_desc">Google Play, tamién conocíu como la tienda Google Play (antiguamente Android Market).</string>
-    <string name="privacy_policy_subtitle">Conoz cómo Aurora Store usa los tos datos</string>
+    <string name="privacy_policy_subtitle">Conoz cómo 白い熊 店 usa los tos datos</string>
     <string name="made_with_love">Fechu con <xliff:g id="heart_emoji">%1$s</xliff:g> n\'India</string>
-    <string name="about_aurora_store_summary">Aurora Store permítete buscar y baxar aplicaciones de la tienda oficial de Google Play. Pues consultar les descripciones de les aplicaciones, los anovamientos, les caputres de pantalla, los comentarios d\'otros usuarios y baxar los APKs direutamente de la tienda al preséu. Pa usar Aurora Store precises tener una cuenta de Google Play y aniciar la sesión nella cuando abras l\'aplicación per primer vegada y la configures.\n\nA diferencia de les tiendes d\'aplicaciones tradicionales, Aurora Store nun contién, llicencia nin distribúi aplicaciones. Tol conteníu que l\'aplicación amuesa provién direutamente de Google Play, quitante les opciones de configuración. Aurora Store funciona como una puerta o un restolador, permítete aniciar la sesión na to cuenta de Google Play y atopar aplicaciones nesta tienda.\n\nDecátate que Aurora Store nun coopera nin ta aprobada, patrocinada, afiliada, nin tien autorización o conexón con Google, Google Play, cualesquier aplicación baxada pente Aurora Store o cualesquier desendolcador.</string>
     <string name="action_logout_confirmation_message">¿De xuru que quies zarrar la sesión?</string>
-    <string name="force_restart_title">Restart Aurora Store</string>
+    <string name="force_restart_title">Restart 白い熊 店</string>
     <string name="export_app_summary_fail">Failed to exported app bundle</string>
     <string name="authentication_required_unarchive">¡Anicia la sesión na to cuenta de Google Play o desarchiva l\'aplicación!</string>
     <string name="status_downloading">En descarga</string>
@@ -309,7 +286,7 @@
     <string name="action_favourite">Meter en Favoritos</string>
     <string name="toast_proxy_invalid">¡La URL del proxy ye inválida, revisa\'l formatu!</string>
     <string name="shizuku_installer_subtitle">Esti instalador usa direutamente les APIs del sistema colos privilexos d\'ADB/superusuariu</string>
-    <string name="about_aurora_store_title">Tocante a Aurora Store</string>
+    <string name="about_aurora_store_title">Tocante a 白い熊 店</string>
     <string name="services_installer_subtitle">Installer for background installations</string>
     <string name="services_installer_desc">Requires Aurora Services to be installed as a privileged-system app</string>
     <string name="am_installer_subtitle">Un xestor de paquetes completu de códigu abiertu</string>
@@ -317,13 +294,13 @@
     <string name="title_more">Más</string>
     <string name="manage_account">Xestionar la cuenta</string>
     <string name="pref_clear_device_owner_title">Clear device owner</string>
-    <string name="pref_aurora_only_desc">Amuesa namás les aplicaciones instalaes por Aurora Store y los sos anovamientos</string>
+    <string name="pref_aurora_only_desc">Amuesa namás les aplicaciones instalaes por 白い熊 店 y los sos anovamientos</string>
     <string name="bad_request">¡Error internu! Volvi tentalo nun ratu</string>
     <string name="verifying_new_session">Verificando la sesión nueva</string>
     <string name="check_connectivity">Check internet connectivity</string>
     <string name="app_links_title">Enllaces d\'aplicaciones</string>
     <string name="action_request_analysis">Solicitar un análisis nuevu</string>
-    <string name="pref_aurora_only">Namás les aplicaciones d\'Aurora Store</string>
+    <string name="pref_aurora_only">Namás les aplicaciones d\'白い熊 店</string>
     <string name="session_installer_subtitle">Session based installer for bundled/split APKs</string>
     <string name="native_installer_desc">Best suited for devices running below Android 4.4</string>
     <string name="details_data_safety_title">Seguranza de los datos</string>
@@ -344,7 +321,7 @@
     <string name="access_denied_using_vpn">¡Negóse l\'accesu! ¿Tas usando una VPN o Tor?</string>
     <string name="session_installer_desc">Aconseyáu, integráu y compatible con toles versiones d\'Android</string>
     <string name="root_installer_subtitle">L\'instalador basáu na shell qu\'usa los permisos de superusuariu</string>
-    <string name="add_dispenser_summary">Amiesta un fornidor de pases a Aurora Store. Los fornidores de pases apurren credenciales de cuenta a Aurora Store p\'aniciar la sesión anónimamente.</string>
+    <string name="add_dispenser_summary">Amiesta un fornidor de pases a 白い熊 店. Los fornidores de pases apurren credenciales de cuenta a 白い熊 店 p\'aniciar la sesión anónimamente.</string>
     <string name="add_dispenser_error">La URL ye inválida</string>
     <string name="add_dispenser_hint">URL del fornidor de pases</string>
     <string name="remove_dispenser_title">Desaniciu del fornidor</string>
@@ -354,7 +331,7 @@
     <string name="pref_updates_check_frequency">Frecuencia d\'anovamientos automáticos</string>
     <string name="pref_updates_check_frequency_desc">Configure intervals for auto and self updates, in hour.</string>
     <string name="action_uninstall_success">Desinstalóse correutamente</string>
-    <string name="onboarding_permission_doze_desc">Permite qu\'Aurora Store baxe y anueve aplicaciones en segundu planu</string>
+    <string name="onboarding_permission_doze_desc">Permite qu\'白い熊 店 baxe y anueve aplicaciones en segundu planu</string>
     <string name="pref_clear_device_owner_desc">This will revoke session installer\'s permission to silently install app. Proceed with clearing device ownership?</string>
     <string name="pref_dispenser_title">Xestionar los fornidores de pases</string>
     <string name="toast_fav_import_failed">Failed to import favourites!</string>
@@ -364,7 +341,7 @@
     <string name="pref_updates_auto_off">Nun anovar automáticamente les aplicaciones</string>
     <string name="pref_updates_auto">Anovamientu automáticu d\'aplicaciones</string>
     <string name="toast_fav_export_failed">Failed to export favourites!</string>
-    <string name="pref_clear_device_owner_summary">Removes Aurora Store as the device owner app</string>
+    <string name="pref_clear_device_owner_summary">Removes 白い熊 店 as the device owner app</string>
     <string name="toast_fav_import_success">¡Importáronse les aplicaciones favorites!</string>
     <string name="toast_fav_export_success">¡Esportáronse les aplicaciones favorites!</string>
     <string name="notification_channel_export">App export notification</string>
@@ -373,12 +350,12 @@
     <string name="pref_vending_version_device">La predeterminada (de la configuración del preséu)</string>
     <string name="notification_updates_available_desc_4"><xliff:g id="app_one_name">%1$s</xliff:g>, <xliff:g id="app_two_name">%2$s</xliff:g>, <xliff:g id="app_three_name">%3$s</xliff:g> y <xliff:g id="apps_count">%4$d</xliff:g> más</string>
     <string name="failed_to_generate_session">Nun se pudo xenerar la sesión</string>
-    <string name="app_links_desc">Permite qu\'Aurora abra los enllaces compatibles</string>
+    <string name="app_links_desc">Permite qu\'白い熊 店 abra los enllaces compatibles</string>
     <string name="add">Amestar</string>
     <string name="action_logout_confirmation_title">¿Quies zarrar la sesión?</string>
     <string name="check_updates">Check for updates</string>
     <string name="native_installer_subtitle">Intent based installer, available on all devices</string>
     <string name="shizuku_installer_desc">Requires Shizuku or Sui, needs to be setup and permission granted</string>
     <string name="source_code_title">Códigu fonte</string>
-    <string name="about_aurora_store_subtitle">Conoz más tocante a Aurora Store</string>
+    <string name="about_aurora_store_subtitle">Conoz más tocante a 白い熊 店</string>
 </resources>

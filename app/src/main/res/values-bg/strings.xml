@@ -2,32 +2,12 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="details_dev_website">Уебсайт</string>
     <string name="details_dev_email">Електронна поща</string>
-    <string name="about_bitcoin_btc">Bitcoin</string>
-    <string name="about_bhim">BHIM - UPI</string>
-    <string name="about_bhim_summary">Дарете чрез UPI</string>
-    <string name="about_bitcoin_bch">Bitcoin Cash</string>
-    <string name="about_bitcoin_bch_summary">Дарете чрез Bitcoin Cash (BCH)</string>
-    <string name="about_bitcoin_btc_summary">Дарете чрез Bitcoin (BTC)</string>
-    <string name="about_bitcoin_eth">Ethereum</string>
-    <string name="about_bitcoin_eth_summary">Дарете чрез Ethereum (ETH)</string>
-    <string name="about_fdroid">F-Droid</string>
-    <string name="about_fdroid_summary">Вземете Aurora Магазин чрез F-Droid.</string>
-    <string name="about_gitlab">GitLab</string>
-    <string name="about_gitlab_summary">Вземете програмния код на Aurora Магазин от Aurora OSS в GitLab.</string>
-    <string name="about_libera">Liberapay</string>
-    <string name="about_libera_summary">Станете покровител на Liberapay</string>
-    <string name="about_paypal">PayPal</string>
-    <string name="about_paypal_summary">Дарете чрез PayPal</string>
-    <string name="about_telegram">Telegram</string>
-    <string name="about_telegram_summary">Присъединете се към групата за подкрепа на Aurora за дискусии или предложения.</string>
-    <string name="about_xda">XDA Форум</string>
-    <string name="about_xda_summary">Вижте темата на Aurora Store XDA за дискусии или предложения.</string>
     <string name="account_anonymous">Анонимен</string>
     <string name="action_export">Експортиране</string>
     <string name="action_filter_apply">Прилагане</string>
     <string name="account_google">Google</string>
     <string name="account_login_using">Влизане чрез</string>
-    <string name="account_logout">Излизане от Aurora</string>
+    <string name="account_logout">Излизане от 白い熊 店</string>
     <string name="action_back">Назад</string>
     <string name="action_blacklist">Черен списък</string>
     <string name="action_blacklist_add">Добавяне към черен списък</string>
@@ -102,7 +82,7 @@
     <string name="details_no_permission">Няма разрешения</string>
     <string name="installer_status_failure">Инсталаторът е неуспешен</string>
     <string name="installer_status_failure_storage">Недостатъчно място в паметта</string>
-    <string name="onboarding_permission_installer_desc">Разрешете инсталирането на приложения от Aurora Store</string>
+    <string name="onboarding_permission_installer_desc">Разрешете инсталирането на приложения от 白い熊 店</string>
     <string name="pref_common_extra">Екстри</string>
     <string name="details_privacy">Поверителност</string>
     <string name="download_cancel_all">Отмени всички</string>
@@ -136,7 +116,7 @@
     <string name="pref_filter_fdroid_summary">Премахва приложенията на F-Droid от списъците с приложения</string>
     <string name="pref_install_mode_am">AM инсталатор.</string>
     <string name="pref_install_mode_root">Root инсталатор</string>
-    <string name="pref_install_mode_services">Услуги на Aurora</string>
+    <string name="pref_install_mode_services">Услуги на 白い熊 店</string>
     <string name="pref_install_mode_summary">Изберете режим на инсталиране на APK</string>
     <string name="pref_ui_no_for_you_desc">Показва страници за вас на началния екран</string>
     <string name="purchase_failed">Изтеглянето се провали</string>
@@ -177,7 +157,7 @@
     <string name="installer_status_success">Успешно инсталиранe</string>
     <string name="menu_terms">Условия за ползване</string>
     <string name="device_miui_subtitle">Програмата за инсталиране на сесии не може да инсталира приложения поради MIUI оптимизации.</string>
-    <string name="onboarding_permission_select">Aurora Store изисква следните разрешения</string>
+    <string name="onboarding_permission_select">白い熊 店 изисква следните разрешения</string>
     <string name="onboarding_title_installer">Инсталатор</string>
     <string name="onboarding_title_permissions">Разрешения</string>
     <string name="onboarding_title_welcome">Добре дошли</string>
@@ -217,12 +197,12 @@
     <string name="download_none">Няма изтегляния</string>
     <string name="download_resume_all">Възобновете всички</string>
     <string name="installer_root_unavailable">Няма root достъп. Предоставете го или сменете инсталатора.</string>
-    <string name="installer_service_misconfigured">Първо настройте услугите на Aurora и дайте всички разрешения.</string>
+    <string name="installer_service_misconfigured">Първо настройте услугите на 白い熊 店 и дайте всички разрешения.</string>
     <string name="details_dependencies">Зависимости</string>
     <string name="download_canceled">Отменен</string>
     <string name="exodus_view_report">Вижте отчета</string>
-    <string name="installer_service_unavailable">Инсталирайте Aurora services 1.0.9 или по-нова или променете инсталатора.</string>
-    <string name="installer_service_available">Услугите на Aurora са налични и готови за инсталиране.</string>
+    <string name="installer_service_unavailable">Инсталирайте 白い熊 店 services 1.0.9 или по-нова или променете инсталатора.</string>
+    <string name="installer_service_available">Услугите на 白い熊 店 са налични и готови за инсталиране.</string>
     <string name="installer_status_failure_blocked">Инсталацията беше блокирана</string>
     <string name="installer_status_failure_session">Не можа да се създаде сесия</string>
     <string name="device_miui_description">Деактивирайте MIUI оптимизациите, за да позволите инсталации, в противен случай можете да изберете Root или Services installer.</string>
@@ -259,11 +239,9 @@
     <string name="notification_updates_available_1"><xliff:g id="apps_count">%1$d</xliff:g> налична актуализация</string>
     <string name="notification_updates_available_desc_3"><xliff:g id="app_one_name">%1$s</xliff:g>, <xliff:g id="app_two_name">%2$s</xliff:g> и <xliff:g id="app_three_name">%3$s</xliff:g></string>
     <string name="notification_updates_available_desc_4"><xliff:g id="app_one_name">%1$s</xliff:g>, <xliff:g id="app_two_name">%2$s</xliff:g>, <xliff:g id="app_three_name">%3$s</xliff:g> и <xliff:g id="apps_count">%4$d</xliff:g> още</string>
-    <string name="about_wiki_title">Уики</string>
     <string name="action_home_screen">Добавяне към началния екран</string>
     <string name="action_favourite">Любими</string>
     <string name="action_uninstall_success">Успешно деинсталиране</string>
-    <string name="about_wiki_summary">Намери отговори на често задавани въпроси, стъпки за отстраняване на грешки и още</string>
     <string name="action_remove_all">Премахни всички</string>
     <string name="action_request_analysis">Поискаи нов анализ</string>
     <string name="action_select_all">Избери всички</string>

@@ -14,11 +14,6 @@
     <string name="action_back">ආපසු</string>
     <string name="account_google">ගූගල්</string>
     <string name="account_anonymous">නිර්නාමික</string>
-    <string name="about_telegram">ටෙලිග්‍රෑම්</string>
-    <string name="about_libera">ලිබෙරාපේ</string>
-    <string name="about_gitlab">ගිට්ලැබ්</string>
-    <string name="about_fdroid">එෆ්-ඩ්‍රොයිඩ්</string>
-    <string name="about_bitcoin_btc">බිට්කොයින්</string>
     <string name="onboarding_title_welcome">සාදරයෙන් පිළිගනිමු</string>
     <string name="onboarding_title_permissions">අවසර</string>
     <string name="menu_terms">සේවාවේ නියම</string>
@@ -106,7 +101,6 @@
     <string name="action_blacklist">කළු ලේඛනය</string>
     <string name="account_logout">අවුරෝරා වෙතින් නික්මෙන්න</string>
     <string name="account_login_using">විකල්පයකින් පිවිසෙන්න</string>
-    <string name="about_paypal">පේපෑල්</string>
     <string name="toast_apk_blacklisted">කළු ලේඛනගතයි</string>
     <string name="title_blacklist_manager">කළු ලේඛන කළමනාකරු</string>
     <string name="dialog_title_self_update">නව යාවත්කාලයක් ඇත</string>
@@ -123,14 +117,8 @@
     <string name="toast_clipboard_copied">පසුරු පුවරුවට පිටපත් විය</string>
     <string name="app_updater_service_notif_text">යෙදුම් පසුබිමින් බාගැනීම සබල කරයි</string>
     <string name="app_updater_service_notif_title">යෙදුම් පසුබිමින් බාගැනීම</string>
-    <string name="about_bitcoin_eth">ඊතරම්</string>
     <string name="onboarding_permission_esa_desc">බාගැනීම් (APKs හා OBBs) සුරැකීමට හා බාහිර ආචයනයෙන් උපාංග වින්‍යාස ආයාත හෝ නිර්යාත කිරීමට.</string>
     <string name="toast_export_success">උපාංගයේ වින්‍යාසය නිර්යාත කෙරිණි</string>
-    <string name="about_xda">XDA සංසදය</string>
-    <string name="about_bhim_summary">UPI මගින් පරිත්‍යාග</string>
-    <string name="about_bitcoin_bch">බිට්කොයින් මුදල්</string>
-    <string name="about_fdroid_summary">එෆ්-ඩ්‍රොයිඩ් හරහා අවුරෝරා ස්ටෝර් ගන්න.</string>
-    <string name="about_gitlab_summary">ගිට්ලැබ් හි Aurora OSS වෙතින් අවුරෝරා ස්ටෝර් ප්‍රභව කේතය ගන්න.</string>
     <string name="installer_root_unavailable">මූල ප්‍රවේශය නැත. එය පිරිනමන්න හෝ ස්ථාපකය වෙනස් කරන්න.</string>
     <string name="filter_review_positive">ධනාත්මක</string>
     <string name="tab_for_you">ඔබ සඳහා</string>
@@ -163,14 +151,7 @@
     <string name="title_manual_download">අතින් බාගැනීම</string>
     <string name="toast_export_failed">උපාංගයේ වින්‍යාසය නිර්යාත නොකෙරිණි</string>
     <string name="toast_rated_failed">ඇගැයුම යොමුකිරීමට නොහැකි විය</string>
-    <string name="about_bitcoin_eth_summary">ඊතරම් (ETH) මගින් පරිත්‍යාග</string>
-    <string name="about_paypal_summary">පේපෑල් මගින් පරිත්‍යාග</string>
-    <string name="about_telegram_summary">සාකච්ඡා හා යෝජනා සඳහා අවුරෝරා සහාය සමූහයට එක්වන්න.</string>
     <string name="action_finish">අවසන්</string>
-    <string name="about_bitcoin_btc_summary">බිට්කොයින් (BTC) මගින් පරිත්‍යාග</string>
-    <string name="about_bitcoin_bch_summary">බිට්කොයින් මුදල් (BCH) මගින් පරිත්‍යාග</string>
-    <string name="about_libera_summary">ලිබෙරාපේ හරහා සම්පාදකයෙකු වන්න</string>
-    <string name="about_xda_summary">සාකච්ඡා හා යෝජනා සඳහා අවුරෝරා ස්ටෝර් XDA පිටුව බලන්න.</string>
     <string name="action_filter_gsf_dependent_apps">GSF මත යැපෙයි</string>
     <string name="action_filter_misc">ප්‍රකීර්ණ</string>
     <string name="title_spoof_manager">රැවටීම් කළමණාකරු</string>
@@ -189,7 +170,6 @@
     <string name="details_ratings">ඇගැයුම් හා සමාලෝචන</string>
     <string name="installer_status_failure_blocked">ස්ථාපනය අවහිර කර ඇත</string>
     <string name="installer_service_available">අවුරෝරා සේවා තිබේ හා ස්ථාපනයට සූදානම්ය.</string>
-    <string name="about_bhim">BHIM - UPI</string>
     <string name="installer_service_unavailable">අවුරෝරා සේවා 1.0.9 හෝ ඉහළ ස්ථාපනය, හෝ ස්ථාපකය වෙනස් කරන්න.</string>
     <string name="installer_status_failure_incompatible">අනනුකූල යෙදුමකි</string>
     <string name="device_miui_title">MIUI අනාවරණය විය!</string>

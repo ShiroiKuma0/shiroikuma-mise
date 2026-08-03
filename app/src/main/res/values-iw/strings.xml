@@ -2,20 +2,11 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="title_about">על אודות</string>
     <string name="details_think_this_app">מה דעתך על היישום הזה\?</string>
-    <string name="about_telegram">טלגרם</string>
-    <string name="about_paypal_summary">תרומה דרך פייפאל</string>
-    <string name="about_paypal">פייפאל</string>
-    <string name="about_libera">‏Liberapay</string>
-    <string name="about_gitlab">‏GitLab</string>
-    <string name="about_fdroid_summary">הורדת Aurora Store דרך F-Droid.</string>
-    <string name="about_fdroid">‏F-Droid</string>
-    <string name="about_bitcoin_btc_summary">תרומה דרך ביטקוין (BTC)</string>
-    <string name="about_bitcoin_btc">ביטקוין</string>
     <string name="title_games">משחקים</string>
     <string name="title_apps_games">היישומים והמשחקים שלי</string>
     <string name="title_language">שפה</string>
     <string name="title_account_manager">חשבונות</string>
-    <string name="account_logout">התנתקות מ־Aurora</string>
+    <string name="account_logout">התנתקות מ־白い熊 店</string>
     <string name="account_login_using">התחברות לחשבון</string>
     <string name="account_google">‏Google</string>
     <string name="details_more_about_app">עוד על היישום</string>
@@ -59,13 +50,6 @@
     <string name="action_back">חזרה</string>
     <string name="action_blacklist_add">הוספה לרשימה השחורה</string>
     <string name="action_blacklist">רשימה שחורה</string>
-    <string name="about_telegram_summary">הצטרף לקבוצת Aurora Support לדיונים או הצעות.</string>
-    <string name="about_libera_summary">תמיכה ב-Liberapay</string>
-    <string name="about_gitlab_summary">השג את קוד המקור של Aurora Store מ-Aurora OSS ב-GitLab.</string>
-    <string name="about_bitcoin_eth_summary">תרומה דרך אתריום (ETH)</string>
-    <string name="about_bitcoin_eth">אתריום</string>
-    <string name="about_bitcoin_bch_summary">תרומה דרך ביטקוין קאש (BCH)</string>
-    <string name="about_bitcoin_bch">ביטקוין קאש</string>
     <string name="action_ok">אישור</string>
     <string name="action_pending">בהמתנה</string>
     <string name="details_no_permission">ללא הרשאות</string>
@@ -123,7 +107,6 @@
     <string name="menu_disclaimer">כתב ויתור</string>
     <string name="tab_for_you">בשבילך</string>
     <string name="tab_trending">יישומים טרנדיים</string>
-    <string name="about_bhim_summary">תרומה דרך UPI</string>
     <string name="action_disable">השבתה</string>
     <string name="details_privacy">פרטיות</string>
     <string name="action_share">שיתוף</string>
@@ -153,7 +136,7 @@
     <string name="exodus_substring">עוקבנים ידועים נמצאו</string>
     <string name="download_queued">מחכה בתור</string>
     <string name="pref_install_delete_title">מחיקת קובצי ה־APK לאחר ההתקנה</string>
-    <string name="pref_install_mode_services">שירותי Aurora (לא עדכני)</string>
+    <string name="pref_install_mode_services">שירותי 白い熊 店 (לא עדכני)</string>
     <string name="pref_network_title">תעבורת רשת</string>
     <string name="title_manual_download">הורדה ידנית</string>
     <string name="purchase_invalid">לא רכשת את היישום</string>
@@ -238,7 +221,7 @@
     <string name="notification_updates_available_desc_1">קיימת גרסה חדשה ל <xliff:g id="app_one_name">%1$s</xliff:g></string>
     <string name="toast_import_failed">לא הצליח לייבא תצורת מכשיר</string>
     <string name="download_eta_sec">%1$dשנ נותרו</string>
-    <string name="app_links_desc">אשר לחנות Aurora לפתוח קישורים נתמכים</string>
+    <string name="app_links_desc">אשר לחנות 白い熊 店 לפתוח קישורים נתמכים</string>
     <string name="requesting_new_session">מבקש כניסה חדשה</string>
     <string name="bad_request">תקלה פנימית! בבקשה נסה שוב אחרי זמן מה</string>
     <string name="update_available">עדכון נמצא</string>
@@ -269,7 +252,6 @@
     <string name="title_app_settings">הגדרות יישום</string>
     <string name="dialog_desc_native_split">לא ניתן להתקין יישומים מחולקים באמצעות מתקין המקורי. יש לשנות את סוג המתקין ל־Session, Services או Root.</string>
     <string name="session_init">מכין כמה דברים…</string>
-    <string name="about_xda">פורומים של XDA</string>
     <string name="session_enjoy">היכנסו ותהנו.</string>
     <string name="server_maintenance">השרת מושבת לצורך תחזוקה</string>
     <string name="toast_manual_available">מזל טוב, קוד הגרסה המבוקש זמין, מוריד עכשיו.</string>
@@ -285,8 +267,6 @@
     <string name="download_progress">מוריד • <xliff:g id="completed_downloads">%1$d</xliff:g> / <xliff:g id="all_downloads">%2$d</xliff:g> • <xliff:g id="speed">%3$s</xliff:g></string>
     <string name="onboarding_permission_notifications_desc">שלח התראות לגבי מצב ההתקנה</string>
     <string name="android_market_desc">החנות של אנדרואיד הייתה חנות אונליין שמציעה אפליקציות שעוצבו למכשירי אנדרואיד, עד 2017.</string>
-    <string name="about_xda_summary">הצג את העמוד של Aurora Store בפורום XDA לשוחח ולהציע הצעות.</string>
-    <string name="about_bhim">BHIM - UPI</string>
     <string name="permissions_denied">ההרשאות הנדרשות נדחו. אנא אשר אותן בשביל המשך הפעולה</string>
     <string name="access_denied_using_vpn">הגישה נדחתה! האם נעשה שימוש ב־VPN או ב־Tor?</string>
     <string name="app_language">שפת היישום</string>
@@ -304,7 +284,7 @@
     <string name="pref_updates_auto_desc">הגדרת אופן הפעולה של עדכונים אוטומטיים</string>
     <string name="action_home_screen">הוספה למסך הבית</string>
     <string name="download_clear_finished">נקה הורדות שהסתיימו</string>
-    <string name="onboarding_permission_doze_desc">אפשר לחנות Aurora להוריד ולעדכן יישומים ברקע</string>
+    <string name="onboarding_permission_doze_desc">אפשר לחנות 白い熊 店 להוריד ולעדכן יישומים ברקע</string>
     <string name="pref_vending_version_title">גרסת Google Play</string>
     <string name="pref_vending_version_device">ברירת מחדל (מתוך תצורת המכשיר)</string>
     <string name="action_request_analysis">בקש ניתוח חדש</string>
@@ -324,8 +304,6 @@
     <string name="session_installer_subtitle">מתקין מבוסס הפעלה עבור חבילות APK מצורפות/מפוצלות</string>
     <string name="manual_download_hint">הזן את קוד הגרסה שברצונך להוריד</string>
     <string name="faqs_subtitle">יש שאלות? גלה את התשובות</string>
-    <string name="about_wiki_title">ויקי</string>
-    <string name="about_wiki_summary">מצא תשובות לשאלות נפוצות (F.A.Q.), שלבי פתרון בעיות ועוד</string>
     <string name="native_installer_subtitle">מתקין מבוסס כוונות, זמין בכל המכשירים</string>
     <string name="am_installer_desc">דורש מנהל אפליקציות, צריך מצב adb/root כדי להתקין כאשר אופטימיזציית miui פועלת</string>
     <string name="shizuku_installer_subtitle">שימוש בממשקי API של מערכת ישירות עם הרשאות adb/root</string>
@@ -334,7 +312,6 @@
     <string name="services_installer_desc">דורש התקנה של שירותי אורורה כאפליקציית מערכת מיוחסת</string>
     <string name="am_installer_subtitle">מנהל חבילות קוד פתוח מלא</string>
     <string name="title_more">יותר</string>
-    <string name="about_aurora_store_summary">חנות אורורה מאפשר לך לחפש ולהוריד יישומים מהחנות הרשמית של Google Play. ניתן לבדוק תיאורי יישומים, צילומי מסך, עדכונים, תגובות של משתמשים אחרים, ולהוריד את קובץ ה-APK ישירות מ-Google Play אל ההתקן שלך. כדי להשתמש בחנות אורורה, עליך להחזיק חשבון Google Play ולהתחבר אליו בעת פתיחה והגדרה ראשונית של חנות אורורה.\n\nבשונה מחנויות יישומים מסורתיות, חנות אורורה אינו מחזיק, רוכש רישוי או מפיץ יישומים. כל היישומים, תיאורי היישומים, צילומי המסך ותוכן נוסף בחנות אורורה ניגשים, מוצגים או מורדים ישירות מ-Google Play. חנות אורורה פועלת בדיוק כמו דפדפן או שער, המאפשר לך להתחבר לחשבון Google Play שלך ולמצוא יישומים מ-Google Play.\n\nלתשומת לבך: חנות אורורה אינה מאושרת, ממומנת או מורשה על ידי Google, Google Play, יישומים שהורדו דרך חנות אורורה או מפתחי יישומים; ואין לו כל שותפות, שיתוף פעולה או קשר איתם.</string>
     <string name="pref_clear_device_owner_title">נקה את בעל המכשיר</string>
     <string name="pref_clear_device_owner_summary">מסיר את חנות אורורה כאפליקציה לבעלי המכשיר</string>
     <string name="pref_dispenser_title">ניהול מתקנים</string>
@@ -344,15 +321,15 @@
     <string name="no_dispensers_available">אין מתקנים זמינים</string>
     <string name="add_dispenser_hint">כתובת אתר של מתקן</string>
     <string name="add">הוסף</string>
-    <string name="add_dispenser_summary">הוסף מתקן אסימונים לחנות אורורה. מכשירי אסימונים מספקים אישורי חשבון לחנות Aurora לצורך כניסה אנונימית.</string>
+    <string name="add_dispenser_summary">הוסף מתקן אסימונים לחנות אורורה. מכשירי אסימונים מספקים אישורי חשבון לחנות 白い熊 店 לצורך כניסה אנונימית.</string>
     <string name="remove_dispenser_summary">האם ברצונך להסיר את המתקן \"<xliff:g id="url">%1$s</xliff:g>\"?</string>
     <string name="remove">הסר</string>
     <string name="pref_clear_device_owner_desc">פעולה זו תבטל את ההרשאה של מתקין ההפעלה להתקין אפליקציה בשקט. להמשיך בניקוי הבעלות על המכשיר?</string>
     <string name="manage_account">נהל את החשבון שלך</string>
     <string name="add_dispenser_error">כתובת אתר לא חוקית</string>
     <string name="export_app_summary">רגע, ייצא את הקובץ שלך</string>
-    <string name="force_restart_title">הפעל מחדש את Aurora Store</string>
-    <string name="force_restart_summary">יש להפעיל מחדש את Aurora Store כדי להחיל את ההגדרות החדשות שהשתנו</string>
+    <string name="force_restart_title">הפעל מחדש את 白い熊 店</string>
+    <string name="force_restart_summary">יש להפעיל מחדש את 白い熊 店 כדי להחיל את ההגדרות החדשות שהשתנו</string>
     <string name="export_app_title">מייצא הקבצים</string>
     <string name="action_favourite">מועדף</string>
     <string name="toast_fav_export_success">המועדפים יוצאו!</string>
@@ -485,14 +462,14 @@
     <string name="account_default">ברירת מחדל</string>
     <string name="account_remove">הסר</string>
     <string name="account_remove_title">להסיר חשבון?</string>
-    <string name="account_remove_message">להסיר %1$s מ־Aurora Store?</string>
-    <string name="account_remove_last_message">זהו החשבון היחיד שלך. הסרתו תוציא אותך מהמערכת, ולא תוכל להשתמש ב־Aurora Store עד שתיכנס שוב.</string>
+    <string name="account_remove_message">להסיר %1$s מ־白い熊 店?</string>
+    <string name="account_remove_last_message">זהו החשבון היחיד שלך. הסרתו תוציא אותך מהמערכת, ולא תוכל להשתמש ב־白い熊 店 עד שתיכנס שוב.</string>
     <string name="account_add">הוסף חשבון</string>
     <string name="account_add_device">חשבונות מכשיר</string>
     <string name="account_add_google">היכנס עם Google</string>
     <string name="account_add_anonymous">הוסף חשבון אנונימי</string>
     <string name="account_set_default_title">להחליף חשבון ברירת מחדל?</string>
-    <string name="account_set_default_message">Aurora Store תופעל מחדש כדי להשתמש בחשבון ברירת מחדל החדש.</string>
+    <string name="account_set_default_message">白い熊 店 תופעל מחדש כדי להשתמש בחשבון ברירת מחדל החדש.</string>
     <string name="account_switching">מחליף חשבון…</string>
     <string name="account_adding">מוסיף חשבון…</string>
     <string name="account_refresh_all">רענן את כל החשבונות</string>
@@ -511,10 +488,10 @@
     <string name="details_your_review">הביקורת שלך</string>
     <string name="installer_fallback_session">המתקין שנבחר אינו זמין, משתמש במתקין ברירת המחדל במקום זאת.</string>
     <string name="app_lock_title">נעילת יישומון</string>
-    <string name="app_lock_summary">דרוש אימות ביומטרי או באמצעות נעילת מסך כדי לפתוח את Aurora Store.</string>
+    <string name="app_lock_summary">דרוש אימות ביומטרי או באמצעות נעילת מסך כדי לפתוח את 白い熊 店.</string>
     <string name="app_lock_no_credential">הגדר קודם נעילת מסך במכשיר שלך (קוד PIN, תבנית, סיסמה או ביומטריה).</string>
-    <string name="app_lock_locked_message">נדרש אימות כדי לגשת ל־Aurora Store</string>
+    <string name="app_lock_locked_message">נדרש אימות כדי לגשת ל־白い熊 店</string>
     <string name="app_lock_unlock">פתח נעילה</string>
-    <string name="app_lock_prompt_title">פתח נעילת Aurora Store</string>
+    <string name="app_lock_prompt_title">פתח נעילת 白い熊 店</string>
     <string name="app_lock_prompt_subtitle">הכנס תבנית, קוד PIN, סיסמה או טביעת אצבע של נעילת המסך</string>
 </resources>

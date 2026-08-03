@@ -74,6 +74,17 @@ JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64 ./gradlew :app:assembleVanillaRelea
 We ship the **`vanilla`** flavor (upstream's default). The `huawei` and `preload` flavors and the
 `nightly` build type are upstream's — we don't build or ship them.
 
+### Releasing
+
+Releases go through the global `/publish-version` skill (tag = `VERSION_NAME+NNN`, APK attached).
+**One extra step this repo needs:** refresh `updates.json` at the repo root and commit it to `custom`
+before/with the release. That file *is* our self-update feed — the app fetches it from
+`raw.githubusercontent.com/ShiroiKuma0/shiroikuma-mise/custom/updates.json` and offers the build in
+the Updates tab when its `version_code` exceeds the installed one. Its schema is
+`app/src/main/java/com/aurora/store/data/model/SelfUpdate.kt` (all values are JSON **strings**):
+`version_name`, `version_code`, `download_url` (the release asset URL), `size`, `sha256`,
+`changelog`, `updated_on`, `timestamp`. A stale `updates.json` means the app never sees the release.
+
 ### Toolchain
 
 - JDK **21** at `/usr/lib/jvm/java-21-openjdk-amd64` (the host default `java` is older; always set
