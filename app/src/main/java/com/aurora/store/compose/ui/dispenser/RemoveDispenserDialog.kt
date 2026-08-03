@@ -5,7 +5,7 @@
 
 package com.aurora.store.compose.ui.dispenser
 
-import androidx.compose.material3.AlertDialog
+import com.aurora.store.compose.composable.AlertDialog
 import androidx.compose.material3.Text
 import com.aurora.store.compose.composable.TextButton
 import androidx.compose.runtime.Composable

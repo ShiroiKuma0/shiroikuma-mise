@@ -19,7 +19,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import com.aurora.store.compose.composable.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
+import com.aurora.store.compose.composable.ModalBottomSheet
 import androidx.compose.material3.Text
 import com.aurora.store.compose.composable.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState

@@ -7,7 +7,7 @@ package com.aurora.store.compose.ui.commons
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material3.AlertDialog
+import com.aurora.store.compose.composable.AlertDialog
 import androidx.compose.material3.Text
 import com.aurora.store.compose.composable.TextButton
 import androidx.compose.runtime.Composable

@@ -34,6 +34,7 @@ import com.aurora.store.data.model.AccountType
 import com.aurora.store.data.model.AuthState
 import com.aurora.store.data.providers.AccountProvider
 import com.aurora.store.data.providers.AuthProvider
+import com.aurora.store.data.providers.GoogleAccountTokenProvider
 import com.aurora.store.util.AC2DMTask
 import com.aurora.store.util.PackageUtil
 import com.aurora.store.util.Preferences
@@ -48,13 +49,23 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
     val authProvider: AuthProvider,
     @ApplicationContext private val context: Context,
-    private val aC2DMTask: AC2DMTask
+    private val aC2DMTask: AC2DMTask,
+    private val tokenProvider: GoogleAccountTokenProvider
 ) : ViewModel() {
+
+    /**
+     * Google accounts already present on-device (via microG), so the splash screen can offer
+     * them in our own themed sheet instead of the system's un-styleable account chooser.
+     */
+    suspend fun systemGoogleAccountEmails(): List<String> = withContext(Dispatchers.IO) {
+        tokenProvider.systemGoogleAccountEmails()
+    }
 
     private val _authState: MutableStateFlow<AuthState> = MutableStateFlow(AuthState.Init)
     val authState = _authState.asStateFlow()

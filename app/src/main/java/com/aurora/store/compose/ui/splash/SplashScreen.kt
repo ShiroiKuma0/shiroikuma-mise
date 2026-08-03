@@ -42,6 +42,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -61,6 +62,7 @@ import com.aurora.store.BuildConfig
 import com.aurora.store.R
 import com.aurora.store.compose.composition.LocalNetworkStatus
 import com.aurora.store.compose.navigation.Destination
+import com.aurora.store.compose.ui.sheets.DeviceAccountSheet
 import com.aurora.store.data.model.AuthState
 import com.aurora.store.data.model.NetworkStatus
 import com.aurora.store.data.work.ExodusTrackerWorker
@@ -70,6 +72,7 @@ import com.aurora.store.util.CertUtil.GOOGLE_PLAY_CERT
 import com.aurora.store.util.PackageUtil
 import com.aurora.store.util.Preferences
 import com.aurora.store.viewmodel.auth.AuthViewModel
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -91,6 +94,12 @@ fun SplashScreen(
     var anonymousLoading by remember { mutableStateOf(false) }
     var googleLoading by remember { mutableStateOf(false) }
 
+    // Our own account picker, so signing in never drops into the system's un-styleable
+    // chooser dialog. Only "add account" still hands off to microG — see DeviceAccountSheet.
+    val scope = rememberCoroutineScope()
+    var showAccountSheet by remember { mutableStateOf(false) }
+    var deviceEmails by remember { mutableStateOf(emptyList<String>()) }
+
     val accountLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -107,6 +116,21 @@ fun SplashScreen(
         } else {
             googleLoading = false
         }
+    }
+
+    val launchSystemChooser = {
+        googleLoading = true
+        accountLauncher.launch(
+            AccountManager.newChooseAccountIntent(
+                null,
+                null,
+                arrayOf(GOOGLE_ACCOUNT_TYPE),
+                null,
+                null,
+                null,
+                null
+            )
+        )
     }
 
     LaunchedEffect(authState) {
@@ -268,18 +292,15 @@ fun SplashScreen(
                             enabled = !anonymousLoading && !googleLoading && isOnline,
                             onClick = {
                                 if (canMicroGLogin) {
-                                    googleLoading = true
-                                    accountLauncher.launch(
-                                        AccountManager.newChooseAccountIntent(
-                                            null,
-                                            null,
-                                            arrayOf(GOOGLE_ACCOUNT_TYPE),
-                                            null,
-                                            null,
-                                            null,
-                                            null
-                                        )
-                                    )
+                                    scope.launch {
+                                        val emails = viewModel.systemGoogleAccountEmails()
+                                        if (emails.isEmpty()) {
+                                            launchSystemChooser()
+                                        } else {
+                                            deviceEmails = emails
+                                            showAccountSheet = true
+                                        }
+                                    }
                                 } else {
                                     onNavigateTo(Destination.GoogleLogin())
                                 }
@@ -309,6 +330,29 @@ fun SplashScreen(
                 }
             }
         }
+    }
+
+    if (showAccountSheet) {
+        DeviceAccountSheet(
+            emails = deviceEmails,
+            onSelect = { email ->
+                showAccountSheet = false
+                googleLoading = true
+                requestAuthTokenForGoogle(
+                    viewModel = viewModel,
+                    context = context,
+                    accountName = email,
+                    oldToken = null,
+                    activity = activity,
+                    onError = { googleLoading = false }
+                )
+            },
+            onAddAccount = {
+                showAccountSheet = false
+                launchSystemChooser()
+            },
+            onDismiss = { showAccountSheet = false }
+        )
     }
 }
 

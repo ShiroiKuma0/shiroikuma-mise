@@ -38,6 +38,7 @@
     <string name="account_remove_message">Remove %1$s from 白い熊 店?</string>
     <string name="account_remove_last_message">This is your only account. Removing it will log you out, and you won\'t be able to use 白い熊 店 until you sign in again.</string>
     <string name="account_add">Add account</string>
+    <string name="account_choose">Choose an account</string>
     <string name="account_add_device">Device accounts</string>
     <string name="account_add_google">Sign in with Google</string>
     <string name="account_add_anonymous">Add anonymous account</string>

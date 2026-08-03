@@ -23,6 +23,7 @@ import androidx.compose.ui.tooling.preview.PreviewWrapper
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.aurora.store.R
+import com.aurora.store.compose.composable.houseBorder
 import com.aurora.store.compose.preview.ThemePreviewProvider
 
 /**
@@ -41,6 +42,7 @@ fun LoadingDialog(message: String) {
     ) {
         Surface(
             shape = RoundedCornerShape(dimensionResource(R.dimen.radius_large)),
+            border = houseBorder(),
             tonalElevation = dimensionResource(R.dimen.spacing_xsmall)
         ) {
             Row(
