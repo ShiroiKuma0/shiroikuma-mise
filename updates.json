@@ -1,9 +1,13 @@
 {
-  "version_name": "4.6.4",
-  "version_code": 65,
-  "aurora_build": "https://www.auroraoss.com/AuroraStore/Release/AuroraStore-4.6.4.apk",
-  "fdroid_build": "",
-  "changelog": "Changelog : v4.6.4\n • Fixed issues with shared library installation for apps like Chrome and WebView\n •Support for login into personal account using microG\n • Fixed an issue with auth verification",
-  "size": 7431013,
-  "updated_on": "Jan 10, 2024"
+  "version_name": "4.8.4+001",
+  "version_code": "760001",
+  "download_url": "https://github.com/ShiroiKuma0/shiroikuma-mise/releases/download/4.8.4+001/shiroikuma-mise_4.8.4+001.apk",
+  "icon_url": "",
+  "sha1": "ad27f5c41f54fe7426dc498578b0997663286a41",
+  "sha256": "3cf0b75ed74441d7a3589494314566a845307b3fe600fd82c708df497c35c315",
+  "changelog": "白い熊 店 4.8.4+001\n• First fork build on Aurora Store 4.8.4\n• Black-yellow traced icon, 白い熊 店 branding, our own links\n• Self-updates now come from this repository",
+  "size": "9075203",
+  "last_commit": "",
+  "updated_on": "Aug 3, 2026",
+  "timestamp": "1785742320"
 }

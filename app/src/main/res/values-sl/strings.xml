@@ -1,26 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="about_bhim_summary">UPI donacija</string>
     <string name="action_filter_all">Vse</string>
     <string name="action_share">Deli</string>
-    <string name="about_bitcoin_bch_summary">Bitcoin Cash (BCH) donacija</string>
-    <string name="about_bitcoin_btc">Bitcoin</string>
-    <string name="about_bitcoin_btc_summary">Bitcoin (BTC) donacija</string>
-    <string name="about_bitcoin_eth_summary">Ethereum (ETH) donacija</string>
-    <string name="about_fdroid">F-Droid</string>
-    <string name="about_fdroid_summary">Namestite Aurora Store iz F-Droid.</string>
-    <string name="about_gitlab">GitLab</string>
-    <string name="about_gitlab_summary">Pridobite izvorno kodo Aurora Store iz Aurora OSS projekta na GitLab-u.</string>
-    <string name="about_libera">Liberapay</string>
-    <string name="about_libera_summary">Postanite pokrovitelj na Liberapay</string>
-    <string name="about_paypal">PayPal</string>
-    <string name="about_paypal_summary">PayPal donacija</string>
-    <string name="about_telegram">Telegram</string>
-    <string name="about_telegram_summary">Za razpravo in predloge se pridružite skupini Aurora Support.</string>
-    <string name="about_xda">XDA forumi</string>
-    <string name="about_xda_summary">Za razpravo in predloge obiščite Aurora Store XDA forum.</string>
     <string name="account_anonymous">Anonimno</string>
-    <string name="account_logout">Odjavite se iz Aurora</string>
+    <string name="account_logout">Odjavite se iz 白い熊 店</string>
     <string name="action_back">Nazaj</string>
     <string name="action_blacklist">Črni seznam</string>
     <string name="action_blacklist_add">Dodaj na črni seznam</string>
@@ -92,9 +75,9 @@
     <string name="filter_review_positive">Pozitivno</string>
     <string name="filter_review_two">Dvojka</string>
     <string name="installer_am_unavailable">Namesti upravitelja aplikacij ali menjava namestitve.</string>
-    <string name="installer_service_available">Servisi Aurora so na voljo in pripravljeni na namešanje.</string>
-    <string name="installer_service_unavailable">Namestite servise Aurora 1.0.9 ali novejše ali spremenite namestitev.</string>
-    <string name="installer_service_misconfigured">Nastavite servise Aurora in odobrite dovoljenja.</string>
+    <string name="installer_service_available">Servisi 白い熊 店 so na voljo in pripravljeni na namešanje.</string>
+    <string name="installer_service_unavailable">Namestite servise 白い熊 店 1.0.9 ali novejše ali spremenite namestitev.</string>
+    <string name="installer_service_misconfigured">Nastavite servise 白い熊 店 in odobrite dovoljenja.</string>
     <string name="installer_status_failure">Namestitev ni uspela</string>
     <string name="installer_status_failure_session">Ne moremo ustvariti seje</string>
     <string name="installer_status_failure_conflict">Obstaja paket v sporu</string>
@@ -110,9 +93,6 @@
     <string name="device_miui_extra">Izberete lahko izvorni namestitveni program, vendar s tem ne morete namestiti svežnjev (razdeljenih) APK-jev. Izbira je vaša.</string>
     <string name="dialog_title_self_update">Nove posodobitve so na voljo</string>
     <string name="action_export">Izvozi</string>
-    <string name="about_bhim">BHIM - UPI</string>
-    <string name="about_bitcoin_bch">Bitcoin Cash</string>
-    <string name="about_bitcoin_eth">Ethereum</string>
     <string name="action_close">Zapri</string>
     <string name="account_google">Google</string>
     <string name="account_login_using">Prijavite se</string>
@@ -151,7 +131,7 @@
     <string name="pref_install_delete_title">Izbriši APK po namestitvi</string>
     <string name="pref_install_mode_native">Izvorni namestitveni program (zastarelo)</string>
     <string name="pref_install_mode_root">Korenski namestitveni program</string>
-    <string name="pref_install_mode_services">Aurora storitve (zastarelo)</string>
+    <string name="pref_install_mode_services">白い熊 店 storitve (zastarelo)</string>
     <string name="pref_install_mode_title">Način namestitve</string>
     <string name="downloading_dep">Prenašanje dodatnih datotek za <xliff:g id="app">%1$s</xliff:g></string>
     <string name="notification_updates_available_desc_3"><xliff:g id="app_one_name">%1$s</xliff:g>, <xliff:g id="app_two_name">%2$s</xliff:g> in <xliff:g id="app_three_name">%3$s</xliff:g></string>
@@ -160,7 +140,7 @@
     <string name="login_rate_limited">Ups, vaša stopnja je omejena</string>
     <string name="purchase_no_file">Datotek ni bilo mogoče dobiti</string>
     <string name="onboarding_title_installer">Namestitveni program</string>
-    <string name="onboarding_permission_select">Trgovina Aurora zahteva naslednja dovoljenja</string>
+    <string name="onboarding_permission_select">Trgovina 白い熊 店 zahteva naslednja dovoljenja</string>
     <string name="onboarding_title_permissions">Dovoljenja</string>
     <string name="pref_ui_similar_apps">Podobne in sorodne aplikacije</string>
     <string name="pref_common_extra">Dodatki</string>
@@ -265,7 +245,7 @@
     <string name="onboarding_permission_esa_desc">Če želite shraniti APK razširitvene datoteke (OBB-ji) za večje aplikacije in igre.</string>
     <string name="onboarding_permission_esm">Upravitelj zunanjega pomnilnika</string>
     <string name="onboarding_permission_installer">Dovoljenje namestitvenega programa</string>
-    <string name="onboarding_permission_installer_desc">Dovoli namestitev aplikacij iz trgovine Aurora</string>
+    <string name="onboarding_permission_installer_desc">Dovoli namestitev aplikacij iz trgovine 白い熊 店</string>
     <string name="onboarding_permission_notifications">Obvestila</string>
     <string name="onboarding_permission_notifications_desc">Pošiljanje obvestil o statusu namestitve</string>
     <string name="pref_filter_fdroid_summary">Ne preveri posodobitev za aplikacije, prenešene ali nameščene iz F-Droid</string>
@@ -273,8 +253,6 @@
     <string name="pref_ui_title">Prilagajanje</string>
     <string name="pref_ui_no_for_you">Strani za vas</string>
     <string name="menu">Meni</string>
-    <string name="about_wiki_title">Wiki</string>
-    <string name="about_wiki_summary">Poiščite odgovore na pogosto zastavljena vprašanja (F.A.Q.), korake za odpravljanje težav in več</string>
     <string name="details_no_favourites">Ni najdenih priljubljenih aplikacij</string>
     <string name="action_favourite">Priljubljeno</string>
     <string name="action_request_analysis">Zahtevaj novo analizo</string>
@@ -283,7 +261,7 @@
     <string name="action_home_screen">Dodaj na Domači zaslon</string>
     <string name="action_uninstall_success">Uspešno odstranjeno</string>
     <string name="toast_proxy_invalid">Neveljaven URL posrednika, preverite obliko!</string>
-    <string name="app_links_desc">Dovoli Aurora Store odpiranje podprtih povezav</string>
+    <string name="app_links_desc">Dovoli 白い熊 店 odpiranje podprtih povezav</string>
     <string name="details_ratings_title_hint">Oceni naslov</string>
     <string name="pref_updates_incompatible_desc">Pokaži posodobitve za nezdružljive ali onemogočene aplikacije, katerih namestitev lahko spodleti</string>
     <string name="pref_updates_auto">Samodejne posodobitve</string>
@@ -306,14 +284,14 @@
     <string name="app_links_title">Povezave aplikacij</string>
     <string name="pref_ui_layout">Razporeditev</string>
     <string name="pref_network_proxy_url">URL posrednika</string>
-    <string name="pref_aurora_only_desc">Preveri posodobitve samo za aplikacije nameščene od Aurora Store</string>
+    <string name="pref_aurora_only_desc">Preveri posodobitve samo za aplikacije nameščene od 白い熊 店</string>
     <string name="session_login">Prijavite se v vaš Google Play račun</string>
-    <string name="pref_aurora_only">Samo Aurora Store aplikacije</string>
+    <string name="pref_aurora_only">Samo 白い熊 店 aplikacije</string>
     <string name="pref_updates_auto_notify">Preveri in obvesti za razpoložljivimi posodobitvami</string>
     <string name="pref_updates_check_frequency">Pogostost samodejnih posodobitev</string>
     <string name="onboarding_permission_installer_legacy_desc">Dovoli namestitev aplikacij iz neznanih virov</string>
     <string name="pref_updates_incompatible">Nezdružljive posodobitve</string>
-    <string name="onboarding_permission_doze_desc">Dovoli Aurora Store prenose in posodobitve aplikacij v ozadju</string>
+    <string name="onboarding_permission_doze_desc">Dovoli 白い熊 店 prenose in posodobitve aplikacij v ozadju</string>
     <string name="pref_ui_layout_tab">Izberite privzeti zavihek</string>
     <string name="item_optional">Izbirno</string>
     <string name="download_clear_finished">Počisti končane</string>
@@ -327,8 +305,8 @@
     <string name="android_market_desc">Android Market je bila spletna trgovina, ki je ponujala programske aplikacije, ustvarjene za Android naprave, zaprta v 2017.</string>
     <string name="add_dispenser_error">Neveljaven URL</string>
     <string name="add_dispenser_hint">URL dozirnika</string>
-    <string name="force_restart_title">Vnovično zaženi Aurora Store</string>
-    <string name="add_dispenser_summary">Dodaj dozirnik žetona v Aurora Store. Dozirnik žetona priskrbi podatke računa v Aurora Store, za anonimno prijavljanje.</string>
+    <string name="force_restart_title">Vnovično zaženi 白い熊 店</string>
+    <string name="add_dispenser_summary">Dodaj dozirnik žetona v 白い熊 店. Dozirnik žetona priskrbi podatke računa v 白い熊 店, za anonimno prijavljanje.</string>
     <string name="remove_dispenser_summary">Ali želite odstraniti dozirnik \"<xliff:g id="url">%1$s</xliff:g>\"?</string>
     <string name="pref_updates_check_frequency_desc">Nastavite časovni interval za samodejne posodobitve, v uri.</string>
     <string name="manual_download_hint">Vnesite kodo različice, ki jo želite prenesti</string>
@@ -338,9 +316,9 @@
     <string name="services_installer_subtitle">Namestitveni program za namestitve v ozadju</string>
     <string name="native_installer_subtitle">Namenski namestitveni program, na voljo na vseh napravah</string>
     <string name="privacy_policy_title">Politika zasebnosti</string>
-    <string name="privacy_policy_subtitle">Odkrijte, kako Aurora Store uporablja vaše podatke</string>
+    <string name="privacy_policy_subtitle">Odkrijte, kako 白い熊 店 uporablja vaše podatke</string>
     <string name="status_downloading">Prenašanje</string>
-    <string name="force_restart_summary">Aurora Store mora biti vnovično zagnan za uveljavitev novo spremenjenih nastavitev</string>
+    <string name="force_restart_summary">白い熊 店 mora biti vnovično zagnan za uveljavitev novo spremenjenih nastavitev</string>
     <string name="export_app_title">Izvoznik datotek</string>
     <string name="authentication_required_title">Zahtevana prijava</string>
     <string name="authentication_required_unarchive">Prijavite se v vaš Google Play račun za odstranitev aplikacije iz arhiva!</string>
@@ -354,7 +332,6 @@
     <string name="made_with_love">Narejeno z <xliff:g id="heart_emoji">%1$s</xliff:g> v Indiji</string>
     <string name="remove_dispenser_title">Odstrani dozirnik</string>
     <string name="checking_updates">Preverjanje za posodobitve</string>
-    <string name="about_aurora_store_summary">Aurora Store vam omogoča iskanje in prenos aplikacij iz uradne Google Play trgovine. Preverite lahko opis aplikacije, zaslonske slike, posodobitve, komentarje drugih uporabnikov in prenesete APK neposredno iz Google Play na vašo napravo. Za uporabo Aurora Store, morate imeti Google Play račun in se prijaviti v vaš Google Play račun, ko prvič odprete in nastavite Aurora Store.\n\nZa razliko od uveljavljene trgovine aplikacij, Aurora Store nima v lasti, dovoljenja ali distribucije katerekoli aplikacije. Vse aplikacije, opisi aplikacij, zaslonske slike in druga vsebina v Aurora Store so neposredno dostopni, prenešeni in/ali prikazani iz Google Play. Aurora Store deluje kot vrata ali brskalnik, ki vam omogoča prijavo v vaš Google Play račun in iskanje aplikacij iz Google Play.\n\nVedite, da Aurora Store nima nobene odobritve, pokroviteljstva ali pooblastila od Google-a, Google Play-a, katerekoli aplikacije, prenešene prek Aurora Store ali katerihkoli razvijalcev; tudi Aurora Store nima kakršnekoli pripadnosti, sodelovanja ali povezav z njimi.</string>
     <string name="session_installer_subtitle">Namestitveni program na podlagi seje za paketne/razdeljene APK-je</string>
     <string name="session_installer_desc">Priporočeno, vdelan in podpira vse Android različice</string>
     <string name="root_installer_subtitle">Namestitveni program na podlagi lupine, z uporabo skrbniških dovoljenj</string>
@@ -363,7 +340,7 @@
     <string name="faqs_subtitle">Imate vprašanja? Najdite odgovore</string>
     <string name="title_more">Več</string>
     <string name="pref_clear_device_owner_desc">To bo razveljavilo dovoljenje sejnega namestitvenega programa za tiho nameščanje aplikacije. Nadaljuj s čiščenjem lastništva naprave?</string>
-    <string name="pref_clear_device_owner_summary">Odstrani Aurora Store kot aplikacijo lastnika naprave</string>
+    <string name="pref_clear_device_owner_summary">Odstrani 白い熊 店 kot aplikacijo lastnika naprave</string>
     <string name="check_updates">Preveri za posodobitve</string>
     <string name="manage_account">Upravljajte vaš račun</string>
     <string name="export_app_summary_success">Uspešno izvožen paket aplikacije</string>
@@ -374,8 +351,8 @@
     <string name="pref_clear_device_owner_title">Počisti lastnika naprave</string>
     <string name="export_app_summary">Počakajte, izvažanje vaše datoteke</string>
     <string name="shizuku_installer_desc">Zahteva Shizuku ali Sui, mora biti nastavljen in dovoljenje odobreno</string>
-    <string name="about_aurora_store_title">O Aurora Store</string>
-    <string name="about_aurora_store_subtitle">Izvedite več o Aurora Store</string>
+    <string name="about_aurora_store_title">O 白い熊 店</string>
+    <string name="about_aurora_store_subtitle">Izvedite več o 白い熊 店</string>
     <string name="add_dispenser_title">Dodaj dozirnik</string>
     <string name="remove">Odstrani</string>
     <string name="action_logout_confirmation_title">Odjava?</string>

@@ -24,9 +24,9 @@ object Constants {
     const val PARCEL_DOWNLOAD = "PARCEL_DOWNLOAD"
 
     const val URL_TOS = "https://play.google.com/about/play-terms/"
-    const val URL_LICENSE = "https://gitlab.com/AuroraOSS/AuroraStore/-/tree/master/LICENSES"
-    const val URL_DISCLAIMER = "https://gitlab.com/AuroraOSS/AuroraStore/blob/master/DISCLAIMER.md"
-    const val URL_POLICY = "https://gitlab.com/AuroraOSS/AuroraStore/-/blob/master/POLICY.md"
+    const val URL_LICENSE = "https://github.com/ShiroiKuma0/shiroikuma-mise/tree/custom/LICENSES"
+    const val URL_DISCLAIMER = "https://github.com/ShiroiKuma0/shiroikuma-mise/blob/custom/DISCLAIMER.md"
+    const val URL_POLICY = "https://github.com/ShiroiKuma0/shiroikuma-mise/blob/custom/POLICY.md"
 
     const val EXODUS_SUBMIT_PAGE = "https://reports.exodus-privacy.eu.org/analysis/submit/#"
     const val EXODUS_REPORT_URL = "https://reports.exodus-privacy.eu.org/reports/"
@@ -38,10 +38,11 @@ object Constants {
 
     const val SHARE_URL = "https://play.google.com/store/apps/details?id="
 
+    // Self-update feed: our own updates.json on the fork's `custom` branch, refreshed by
+    // /publish-version on every release. Schema = SelfUpdate (version_code decides newness).
     const val UPDATE_URL_VANILLA =
-        "https://auroraoss.com/downloads/AuroraStore/Feeds/release_feed.json"
-    const val UPDATE_URL_NIGHTLY =
-        "https://auroraoss.com/downloads/AuroraStore/Feeds/nightly_feed.json"
+        "https://raw.githubusercontent.com/ShiroiKuma0/shiroikuma-mise/custom/updates.json"
+    const val UPDATE_URL_NIGHTLY = UPDATE_URL_VANILLA
 
     // Channel IDs carry a version suffix where the importance changed from a previous
     // release: Android ignores importance edits on an already-created channel, so a new ID
@@ -60,7 +61,8 @@ object Constants {
         "NOTIFICATION_CHANNEL_ACCOUNT"
     )
 
-    const val GITLAB_URL = "https://gitlab.com/AuroraOSS/AuroraStore"
+    // Our own repository; kept under upstream's constant name so rebases stay small.
+    const val GITLAB_URL = "https://github.com/ShiroiKuma0/shiroikuma-mise"
     const val URL_DISPENSER = "https://auroraoss.com/api/auth"
 
     // ACCOUNTS

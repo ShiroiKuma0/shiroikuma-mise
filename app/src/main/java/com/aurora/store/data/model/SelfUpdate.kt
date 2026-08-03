@@ -17,7 +17,7 @@ import kotlinx.serialization.Serializable
 
 /**
  * Self-update feed entry returned by `release_feed.json` (vanilla release) and
- * `nightly_feed.json` (nightly), both served from the Aurora OSS server.
+ * `updates.json`, served from our own fork repository.
  *
  * The producer encodes numeric fields as JSON strings, so the raw fields below stay
  * `String` and we expose typed `Long` accessors that tolerate blank values. Decoding
@@ -66,7 +66,7 @@ data class SelfUpdate(
         size = size,
         updatedOn = updatedOn,
         displayName = context.getString(R.string.app_name),
-        developerName = "Rahul Kumar Patel",
+        developerName = "白い熊",
         iconArtwork = Artwork(url = iconUrl),
         fileList = mutableListOf(
             PlayFile(
