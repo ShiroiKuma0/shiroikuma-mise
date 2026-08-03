@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <!-- 白い熊 店 (shiroikuma-mise): Aurora Store's basket + triangle mark, traced as
+       stroke-only line-art, house black-yellow (#FFFF00 on #000000). -->
+  <rect x="0" y="0" width="512" height="512" fill="#000000"/>
+  <g fill="none" stroke="#FFFF00" stroke-linecap="round" stroke-linejoin="round">
+    <!-- basket handle -->
+    <path d="M 190,208 L 244,122 Q 255,105 266,122 L 324,208" stroke-width="16"/>
+    <!-- basket body -->
+    <path d="M 120,212 L 392,212 Q 400,212 398,230 L 370,378 Q 367,398 350,398 L 162,398 Q 145,398 142,378 L 114,230 Q 112,212 120,212 Z" stroke-width="17"/>
+    <!-- Aurora's triangle mark, inside the basket: three separate strokes so all six ends
+         read as rounded tips, the way the original's coloured segments do -->
+    <path d="M 256,246 L 318,352" stroke-width="24"/>
+    <path d="M 194,352 L 256,246" stroke-width="24"/>
+    <path d="M 196,357 L 316,357" stroke-width="24"/>
+  </g>
+</svg>

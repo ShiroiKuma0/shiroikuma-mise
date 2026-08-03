@@ -20,16 +20,15 @@
 package com.aurora.extensions
 
 import android.content.Context
-import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.aurora.store.mise.MiseFlash
 
-fun Context.toast(resId: Int) = runOnUiThread {
-    Toast.makeText(this, resId, Toast.LENGTH_SHORT).apply { show() }
-}
+// 白い熊 店 fork: every toast in the app funnels through here, and here it is the black-yellow
+// flash rather than the platform's grey pill. Call sites are unchanged.
 
-fun Context.toast(text: CharSequence) = runOnUiThread {
-    Toast.makeText(this, text, Toast.LENGTH_SHORT).apply { show() }
-}
+fun Context.toast(resId: Int) = runOnUiThread { MiseFlash.show(this, resId) }
+
+fun Context.toast(text: CharSequence) = runOnUiThread { MiseFlash.show(this, text) }
 
 fun Fragment.toast(resId: Int) = requireContext().toast(resId)
 

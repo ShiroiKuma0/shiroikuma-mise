@@ -106,12 +106,18 @@ the Updates tab when its `version_code` exceeds the installed one. Its schema is
 | `compose/ui/mise/MiseUiScreen.kt` | the 白い熊 店 UI page, in kxkb's grammar |
 | `compose/ui/mise/MiseDialogs.kt` | RGBA colour picker with recent-colour swatches, font picker (each font in its own glyphs), the Export/Import panel |
 | `compose/composable/MiseButtons.kt` | drop-in `TextButton`/`Button`/`OutlinedButton`/`FilledTonalButton` with the house border by default |
+| `compose/composable/MiseDividers.kt` | drop-in `HorizontalDivider`/`VerticalDivider` taking thickness + colour from the knobs (0 = draw nothing) |
+| `mise/MiseFlash.kt` | the black-yellow toast; `Context.toast()` and every direct call route through it |
+| `design/` | the icon's source SVG |
 
 ### Things that will bite you if you don't know them
 
-- **`MiseButtons.kt` is how buttons get their outline.** A file opts in by importing these instead of
-  the `androidx.compose.material3` ones — 36 files already do. When upstream adds a screen with a
-  button, switch its import over; don't patch borders at call sites.
+- **Never call `Toast.makeText` directly** — use `Context.toast()` or `MiseFlash`. Note the OS
+  limit: since Android 11 a custom toast view is only honoured in the **foreground**, so a toast
+  posted from a worker or receiver will still look like the platform's.
+- **`MiseButtons.kt` / `MiseDividers.kt` are how buttons and dividers get the house look.** A file opts in by importing these instead of
+  the `androidx.compose.material3` ones — 36 files (buttons) and 16 (dividers) already do. When
+  upstream adds a screen, switch its imports over; don't patch borders or thicknesses at call sites.
 - **`MiseUiState` writers are `updateX()`, not `setX()`** — the properties' generated setters already
   own the `setX` JVM signature.
 - **The export core is called from three places** (panel, service, and any future caller). Never

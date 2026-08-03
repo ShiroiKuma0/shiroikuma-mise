@@ -57,6 +57,7 @@ import com.aurora.store.mise.LocalMiseUi
 import com.aurora.store.mise.MiseFonts
 import com.aurora.store.mise.automation.MiseAutomationAuth
 import com.aurora.store.mise.MiseUiState
+import com.aurora.store.mise.MiseFlash
 
 /**
  * The 白い熊 店 UI page — every knob that shapes the app's look, in the kxkb page grammar:
@@ -214,7 +215,7 @@ private fun AutomationRows(ui: MiseUiState) {
             .clickable {
                 context.getSystemService(ClipboardManager::class.java)
                     ?.setPrimaryClip(ClipData.newPlainText("token", token))
-                Toast.makeText(context, "Token copied", Toast.LENGTH_SHORT).show()
+                MiseFlash.show(context, "Token copied", Toast.LENGTH_SHORT)
             }
             .padding(
                 start = rowIndent(ui, false),
@@ -233,11 +234,7 @@ private fun AutomationRows(ui: MiseUiState) {
             fontSize = ui.labelSize.sp,
             modifier = Modifier.clickable {
                 token = MiseAutomationAuth.regenerate(context)
-                Toast.makeText(
-                    context,
-                    "New token — update every copy you pasted elsewhere",
-                    Toast.LENGTH_LONG
-                ).show()
+                MiseFlash.show(context, "New token — update every copy you pasted elsewhere", Toast.LENGTH_LONG)
             }
         )
     }
