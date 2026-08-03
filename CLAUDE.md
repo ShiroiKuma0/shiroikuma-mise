@@ -94,6 +94,35 @@ the Updates tab when its `version_code` exceeds the installed one. Its schema is
 - Release is minified + resource-shrunk (`isMinifyEnabled = true`, `isShrinkResources = true`) —
   that is upstream's setting; leave it unless asked.
 
+## Our subsystems (fork-only code, all under `mise/` + `compose/ui/mise/`)
+
+| Where | What |
+| --- | --- |
+| `mise/MiseUiConfig.kt` | SharedPreferences store for every UI knob, seeded to the house black-yellow |
+| `mise/MiseUiState.kt` | observable mirror; writes land in prefs AND Compose state, so edits repaint live. Derives the `ColorScheme` / `Shapes` / `Typography`, and provides `LocalMiseUi` |
+| `mise/MiseFonts.kt` | `.ttf`/`.otf` import into app storage + family resolution |
+| `mise/MiseBackup.kt` | the category ZIP: `writeZip(categories, OutputStream, onProgress, isCancelled)` is the ONE export implementation; atomic `.part`-then-rename on both paths |
+| `mise/automation/` | the 保存復元 contract — `MiseAutomationAuth` (token, switch default OFF), `StateExportReceiver` (exported, 3 actions), `StateExportService` (foreground `dataSync`) |
+| `compose/ui/mise/MiseUiScreen.kt` | the 白い熊 店 UI page, in kxkb's grammar |
+| `compose/ui/mise/MiseDialogs.kt` | RGBA colour picker with recent-colour swatches, font picker (each font in its own glyphs), the Export/Import panel |
+| `compose/composable/MiseButtons.kt` | drop-in `TextButton`/`Button`/`OutlinedButton`/`FilledTonalButton` with the house border by default |
+
+### Things that will bite you if you don't know them
+
+- **`MiseButtons.kt` is how buttons get their outline.** A file opts in by importing these instead of
+  the `androidx.compose.material3` ones — 36 files already do. When upstream adds a screen with a
+  button, switch its import over; don't patch borders at call sites.
+- **`MiseUiState` writers are `updateX()`, not `setX()`** — the properties' generated setters already
+  own the `setX` JVM signature.
+- **The export core is called from three places** (panel, service, and any future caller). Never
+  duplicate export logic into a receiver, and never run it there: a manifest receiver that overruns
+  the broadcast window gets the app ANR'd and killed mid-write.
+- **The automation token lives in its own prefs file** and is deliberately not a backup category.
+  The `accounts` Room table is excluded from backups too — it holds live Google auth tokens.
+- **Blacklist and spoof are NOT Room-backed**; they are in the default SharedPreferences, so the
+  `settings` category already carries them.
+- **`/publish-version` must also refresh `updates.json`** — see "Releasing" above.
+
 ## Architecture (upstream Aurora Store)
 
 Single `:app` module, `com.aurora.store` namespace, Hilt DI throughout.
