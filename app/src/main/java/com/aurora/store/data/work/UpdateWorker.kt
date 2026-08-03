@@ -90,6 +90,10 @@ class UpdateWorker @AssistedInject constructor(
     private val isExtendedUpdateEnabled: Boolean
         get() = Preferences.getBoolean(context, Preferences.PREFERENCE_UPDATES_EXTENDED)
 
+    /** Fork: whether frozen (disabled or suspended) apps are scanned for updates too. */
+    private val isFrozenUpdateEnabled: Boolean
+        get() = Preferences.getBoolean(context, Preferences.PREFERENCE_UPDATES_FROZEN, true)
+
     override suspend fun doWork(): Result {
         super.doWork()
 
@@ -176,9 +180,13 @@ class UpdateWorker @AssistedInject constructor(
      */
     private suspend fun checkUpdates(): List<Update> {
         return withContext(Dispatchers.IO) {
+            // Frozen apps (disabled or suspended) get their own switch. Upstream checks them
+            // only when "extended updates" is on, but that toggle also pulls in apps whose
+            // signature doesn't match Play's — two unrelated things behind one switch. A frozen
+            // app is still installed and still updatable; its rows are set in italics instead.
             val packages = PackageUtil.getAllValidPackages(context)
                 .filterNot { blacklistProvider.isBlacklisted(it.packageName) }
-                .filter { if (!isExtendedUpdateEnabled) it.applicationInfo!!.enabled else true }
+                .filter { isFrozenUpdateEnabled || it.applicationInfo!!.enabled }
 
             // Filter out packages based on user's preferences
             val installerFilters = Preferences.getStringSet(

@@ -36,7 +36,7 @@ import com.aurora.extensions.isSAndAbove
 import com.aurora.extensions.toast
 import com.aurora.store.BuildConfig
 import com.aurora.store.R
-import com.aurora.store.data.installer.ShizukuInstaller.Companion.SHIZUKU_PACKAGE_NAME
+import com.aurora.store.data.installer.ShizukuInstaller.Companion.SHIZUKU_PACKAGE_NAMES
 import com.aurora.store.data.installer.base.IInstaller
 import com.aurora.store.data.model.Installer
 import com.aurora.store.data.model.InstallerInfo
@@ -176,7 +176,10 @@ class AppInstaller @Inject constructor(
                 PackageUtil.isInstalled(context, AMInstaller.AM_DEBUG_PACKAGE_NAME)
 
         fun hasShizukuOrSui(context: Context): Boolean = isOAndAbove &&
-            (PackageUtil.isInstalled(context, SHIZUKU_PACKAGE_NAME) || Sui.isSui())
+            (
+                SHIZUKU_PACKAGE_NAMES.any { PackageUtil.isInstalled(context, it) } ||
+                    Sui.isSui()
+                )
 
         // Shizuku.checkSelfPermission() throws when the binder is not alive (Shizuku
         // disabled/not running), so guard on pingBinder() and swallow any failure to let

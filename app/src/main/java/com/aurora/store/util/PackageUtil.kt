@@ -22,6 +22,7 @@ package com.aurora.store.util
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.ApplicationInfo
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.content.pm.PackageManager.PackageInfoFlags
@@ -185,6 +186,22 @@ object PackageUtil {
         } catch (_: PackageManager.NameNotFoundException) {
             false
         }
+    }
+
+    /**
+     * `true` when [packageName] is frozen: disabled by the user — what `pm disable-user` and the
+     * freezer apps do — or suspended. Such an app is still installed and still updatable, it just
+     * can't be launched, so the Updates tab lists it in italics rather than hiding it.
+     *
+     * Apps frozen by *hiding* them (`setApplicationHiddenSettingAsUser`, the Island/Shelter
+     * approach) are invisible to us entirely and can be neither listed nor reported here.
+     */
+    fun isFrozen(context: Context, packageName: String): Boolean = try {
+        val applicationInfo = getPackageInfo(context, packageName).applicationInfo!!
+        !applicationInfo.enabled ||
+            applicationInfo.flags and ApplicationInfo.FLAG_SUSPENDED != 0
+    } catch (_: Exception) {
+        false
     }
 
     /**

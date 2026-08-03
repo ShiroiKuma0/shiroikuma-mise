@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewWrapper
@@ -31,7 +32,6 @@ import com.aurora.store.data.room.download.Download
 import com.aurora.store.data.room.update.Update
 import com.aurora.store.util.CommonUtil
 import com.aurora.store.compose.composable.OutlinedButton
-import com.aurora.store.compose.composable.Button
 
 @Composable
 fun AppUpdateItem(
@@ -39,6 +39,7 @@ fun AppUpdateItem(
     update: Update,
     download: Download? = null,
     isChecking: Boolean = false,
+    isFrozen: Boolean = false,
     onClick: () -> Unit = {},
     onUpdate: () -> Unit = {},
     onCancel: () -> Unit = {},
@@ -54,6 +55,8 @@ fun AppUpdateItem(
     } else {
         0f
     }
+    // A frozen app's update is offered like any other; the italics are what tell them apart.
+    val fontStyle = if (isFrozen) FontStyle.Italic else null
 
     Row(
         modifier = modifier
@@ -78,12 +81,14 @@ fun AppUpdateItem(
             Text(
                 text = update.displayName,
                 style = MaterialTheme.typography.bodyMedium,
+                fontStyle = fontStyle,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
             Text(
                 text = update.developerName,
                 style = MaterialTheme.typography.bodySmall,
+                fontStyle = fontStyle,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
@@ -91,6 +96,7 @@ fun AppUpdateItem(
             Text(
                 text = "${update.versionName}  •  ${CommonUtil.addSiPrefix(update.size)}",
                 style = MaterialTheme.typography.bodySmall,
+                fontStyle = fontStyle,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
@@ -116,8 +122,10 @@ fun AppUpdateItem(
                 }
             }
 
+            // Outlined, not filled: black ground, yellow label, yellow border — the same
+            // shape as the row's other actions, so the column reads as one set of buttons.
             else -> {
-                Button(onClick = onUpdate) {
+                OutlinedButton(onClick = onUpdate) {
                     Text(stringResource(R.string.action_update))
                 }
             }

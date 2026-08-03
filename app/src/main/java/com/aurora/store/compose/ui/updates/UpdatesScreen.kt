@@ -15,6 +15,7 @@ import com.aurora.store.compose.composable.TextButton
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -32,7 +33,10 @@ import com.aurora.store.compose.navigation.Destination
 import com.aurora.store.data.model.DownloadStatus
 import com.aurora.store.data.room.download.Download
 import com.aurora.store.data.room.update.Update
+import com.aurora.store.util.PackageUtil
 import com.aurora.store.viewmodel.all.UpdatesViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 @Composable
 fun UpdatesScreen(
@@ -49,6 +53,17 @@ fun UpdatesScreen(
     val ignoredUpdates by viewModel.ignoredUpdates.collectAsStateWithLifecycle()
     val downloads by viewModel.downloadsList.collectAsStateWithLifecycle()
     val fetchingUpdates by viewModel.fetchingUpdates.collectAsStateWithLifecycle()
+
+    // Resolved from the PackageManager rather than stored on the Update row, so freezing or
+    // thawing an app shows up on the next recomposition instead of the next update check.
+    val frozenPackages by produceState(initialValue = emptySet(), updates, ignoredUpdates) {
+        value = withContext(Dispatchers.IO) {
+            (updates.orEmpty() + ignoredUpdates)
+                .map { it.packageName }
+                .filter { PackageUtil.isFrozen(context, it) }
+                .toSet()
+        }
+    }
 
     val updateMap = remember(updates, downloads) {
         updates?.associateWith { update ->
@@ -174,7 +189,8 @@ fun UpdatesScreen(
                             onNavigateTo = onNavigateTo,
                             onRequestUpdate = onRequestUpdate,
                             onCancelUpdate = onCancelUpdate,
-                            checkingPackages = checkingPackages
+                            checkingPackages = checkingPackages,
+                            frozenPackages = frozenPackages
                         )
                     }
 
@@ -211,7 +227,8 @@ fun UpdatesScreen(
                             onNavigateTo = onNavigateTo,
                             onRequestUpdate = onRequestUpdate,
                             onCancelUpdate = onCancelUpdate,
-                            checkingPackages = checkingPackages
+                            checkingPackages = checkingPackages,
+                            frozenPackages = frozenPackages
                         )
                     }
 
@@ -228,7 +245,8 @@ fun UpdatesScreen(
                             onNavigateTo = onNavigateTo,
                             onRequestUpdate = onRequestUpdate,
                             onCancelUpdate = onCancelUpdate,
-                            checkingPackages = checkingPackages
+                            checkingPackages = checkingPackages,
+                            frozenPackages = frozenPackages
                         )
                     }
 
@@ -245,6 +263,7 @@ fun UpdatesScreen(
                         ) { update ->
                             AppUpdateItem(
                                 update = update,
+                                isFrozen = update.packageName in frozenPackages,
                                 onClick = {},
                                 onUnignore = { viewModel.unignore(update.packageName) }
                             )
@@ -267,7 +286,8 @@ private fun LazyListScope.updateItems(
     onNavigateTo: (Destination) -> Unit,
     onRequestUpdate: (Update) -> Unit,
     onCancelUpdate: (String) -> Unit,
-    checkingPackages: Set<String>
+    checkingPackages: Set<String>,
+    frozenPackages: Set<String>
 ) {
     items(
         items = entries,
@@ -277,6 +297,7 @@ private fun LazyListScope.updateItems(
             update = update,
             download = download,
             isChecking = update.packageName in checkingPackages,
+            isFrozen = update.packageName in frozenPackages,
             onClick = {
                 onNavigateTo(Destination.AppUpdate(update))
             },

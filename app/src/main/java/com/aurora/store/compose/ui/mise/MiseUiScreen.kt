@@ -50,6 +50,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.aurora.store.R
 import com.aurora.store.compose.composable.TopAppBar
 import com.aurora.store.mise.ColorSlot
@@ -58,6 +59,10 @@ import com.aurora.store.mise.MiseFonts
 import com.aurora.store.mise.automation.MiseAutomationAuth
 import com.aurora.store.mise.MiseUiState
 import com.aurora.store.mise.MiseFlash
+import com.aurora.store.util.Preferences
+import com.aurora.store.util.Preferences.PREFERENCE_UPDATES_FROZEN
+import com.aurora.store.util.save
+import com.aurora.store.viewmodel.all.UpdatesViewModel
 
 /**
  * The 白い熊 店 UI page — every knob that shapes the app's look, in the kxkb page grammar:
@@ -97,6 +102,10 @@ fun MiseUiScreen() {
             // The 保存復元 automation rows belong here, under the export rows — a backup feature
             // lives where backup lives, and every sister app looks the same.
             AutomationRows(ui)
+
+            // ------------------------------------------------------------ updates
+            SectionHeader(ui, "Updates")
+            FrozenUpdatesRow(ui)
 
             // ------------------------------------------------------------ colours
             SectionHeader(ui, "Colours")
@@ -238,6 +247,37 @@ private fun AutomationRows(ui: MiseUiState) {
             }
         )
     }
+}
+
+/**
+ * The frozen-apps update switch, mirrored from Settings → Updates → Advanced. Both rows read and
+ * write the same preference, so whichever page you open shows the current state; flipping either
+ * kicks off a fresh check, since the answer it changes is "what is in the Updates tab".
+ */
+@Composable
+private fun FrozenUpdatesRow(ui: MiseUiState) {
+    val context = LocalContext.current
+    val viewModel: UpdatesViewModel = hiltViewModel()
+    var enabled by remember {
+        mutableStateOf(Preferences.getBoolean(context, PREFERENCE_UPDATES_FROZEN, true))
+    }
+
+    ToggleRow(ui, "Check frozen apps", enabled) {
+        context.save(PREFERENCE_UPDATES_FROZEN, it)
+        enabled = it
+        viewModel.fetchUpdates()
+    }
+    Text(
+        text = "Lists updates for disabled or suspended apps too, in italics. Checks take " +
+            "longer, since every frozen app is looked up as well.",
+        color = Color(ui.textDimColor),
+        fontSize = ui.labelSize.sp,
+        modifier = Modifier.padding(
+            start = rowIndent(ui, false),
+            end = 16.dp,
+            bottom = ui.rowPadding.dp
+        )
+    )
 }
 
 @Composable

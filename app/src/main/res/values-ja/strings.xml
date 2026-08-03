@@ -286,6 +286,8 @@
     <string name="failed_apk_export">APKのエクスポートに失敗しました</string>
     <string name="pref_updates_incompatible">互換性のない更新</string>
     <string name="pref_updates_incompatible_desc">インストールに失敗する可能性がある非互換、または無効化したアプリの更新を表示する</string>
+    <string name="pref_updates_frozen">凍結アプリの更新も確認する</string>
+    <string name="pref_updates_frozen_desc">無効化または一時停止したアプリの更新も一覧に表示します。該当する行は斜体で表示されます。凍結アプリもすべて照会するため、確認に時間がかかります。</string>
     <string name="pref_clear_device_owner_title">端末所有者を解除</string>
     <string name="pref_clear_device_owner_summary">白い熊 店 を端末所有者から解除します</string>
     <string name="pref_clear_device_owner_desc">これにより、アプリをサイレントインストールするための権限が取り消されます。端末所有者の解除を続行しますか？</string>

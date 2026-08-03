@@ -64,13 +64,28 @@ class ShizukuInstaller @Inject constructor(
 
     companion object {
         const val SHIZUKU_PACKAGE_NAME = "moe.shizuku.privileged.api"
+
+        /** 白い熊's own Shizuku build, renamed the same way this app is. */
+        const val SHIZUKU_FORK_PACKAGE_NAME = "shiroikuma.shizuku"
+
+        /**
+         * The Shizuku managers we accept, ours first.
+         *
+         * Upstream recognises Shizuku by one package name, so a renamed build is invisible to it
+         * and the installer option never appears. The client library doesn't care what the
+         * manager is called — it is handed its binder by the running Shizuku *server*, and the
+         * provider authority it uses is our own `${applicationId}.shizuku` — so the name is the
+         * only thing that needed widening.
+         */
+        val SHIZUKU_PACKAGE_NAMES = listOf(SHIZUKU_FORK_PACKAGE_NAME, SHIZUKU_PACKAGE_NAME)
+
         const val PLAY_PACKAGE_NAME = "com.android.vending"
 
         val installerInfo: InstallerInfo
             get() = InstallerInfo(
                 id = 5,
                 installer = Installer.SHIZUKU,
-                packageNames = listOf(SHIZUKU_PACKAGE_NAME),
+                packageNames = SHIZUKU_PACKAGE_NAMES,
                 installerPackageNames = listOf(PLAY_PACKAGE_NAME),
                 title = R.string.pref_install_mode_shizuku,
                 subtitle = R.string.shizuku_installer_subtitle,
