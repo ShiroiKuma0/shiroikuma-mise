@@ -10,9 +10,11 @@ import android.content.Context
 import android.net.Uri
 import android.provider.DocumentsContract
 import androidx.core.content.edit
+import com.aurora.Constants
 import com.aurora.store.data.room.AuroraDatabase
 import com.aurora.store.data.room.favourite.Favourite
 import com.aurora.store.data.room.update.IgnoredUpdate
+import com.aurora.store.util.Preferences
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
@@ -225,15 +227,39 @@ object MiseBackup {
     // ------------------------------------------------------------- app settings
 
     /**
+     * The signed-in account's keys, which never travel in a backup.
+     *
+     * Two reasons, and either alone would be enough. They are live Google credentials — the same
+     * reason the `accounts` Room table is excluded and the automation token lives in its own prefs
+     * file. And carrying them *without* that table is what manufactures a broken session: the
+     * restored `ACCOUNT_SIGNED_IN` makes the app believe it is logged in while the account table
+     * holds nothing usable, so `AuthProvider` falls back to its BOGUS placeholder and every Play
+     * call dies in `HeaderProvider.getDefaultHeaders`.
+     *
+     * Filtered on import as well as export, so an archive written before this fix cannot re-wedge
+     * a working install.
+     */
+    private val ACCOUNT_KEYS = setOf(
+        Constants.ACCOUNT_SIGNED_IN,
+        Constants.ACCOUNT_TYPE,
+        Constants.ACCOUNT_EMAIL_PLAIN,
+        Constants.ACCOUNT_AAS_PLAIN,
+        Constants.ACCOUNT_AUTH_PLAIN,
+        Preferences.PREFERENCE_AUTH_DATA,
+        Preferences.PREFERENCE_AUTH_VIA_MICROG
+    )
+
+    /**
      * Aurora keeps the installer/network/update preferences — and the blacklist and the spoof
      * configuration — in the default SharedPreferences, so this one category carries them all.
      * The automation token lives in its own prefs file and is deliberately NOT here: a token must
-     * never travel in a backup.
+     * never travel in a backup. Neither does the logged-in account — see [ACCOUNT_KEYS].
      */
     private fun appSettingsJson(context: Context): JSONObject {
         val prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(context)
         return JSONObject().apply {
             prefs.all.forEach { (key, value) ->
+                if (key in ACCOUNT_KEYS) return@forEach
                 when (value) {
                     is Int, is Boolean, is String, is Long, is Float -> put(key, value)
                     else -> Unit
@@ -246,6 +272,7 @@ object MiseBackup {
         val prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(context)
         prefs.edit {
             json.keys().forEach { key ->
+                if (key in ACCOUNT_KEYS) return@forEach
                 when (val value = json.get(key)) {
                     is Int -> putInt(key, value)
                     is Boolean -> putBoolean(key, value)
