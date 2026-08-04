@@ -1,13 +1,13 @@
 {
-  "version_name": "4.8.4+012",
-  "version_code": "760012",
-  "download_url": "https://github.com/ShiroiKuma0/shiroikuma-mise/releases/download/4.8.4+012/shiroikuma-mise_4.8.4+012.apk",
+  "version_name": "4.8.4+013",
+  "version_code": "760013",
+  "download_url": "https://github.com/ShiroiKuma0/shiroikuma-mise/releases/download/4.8.4+013/shiroikuma-mise_4.8.4+013.apk",
   "icon_url": "",
-  "sha1": "5f81e7a113e8db762c5624b73c2dffe5513ad60e",
-  "sha256": "c33e74e02d16048d58d97d3af94dfc5c50ecbf18820009bc56a7d1330ae85e6e",
-  "changelog": "白い熊 店 4.8.4+012\n• Updates are found for frozen apps too, listed in italics — switchable in Settings › Updates and on the 白い熊 店 UI page\n• Shizuku appears under Installation method again: our own shiroikuma.shizuku build is recognised\n• Sheets and dialogs carry the house border; the Update buttons are outlined\n• Signing in uses our own account picker instead of the system dialog\n• The splash screen shows our icon",
-  "size": "9129473",
-  "last_commit": "ff0829e3f98f8e09b7ccc2071a16aa9255b62b45",
-  "updated_on": "Aug 3, 2026",
-  "timestamp": "1785781831"
+  "sha1": "b3ad3d7f67dba6b6c397dc552e5c9458df261983",
+  "sha256": "d51a439a462a41cedf6e2b5fff1b56e779b53ea7d76edfd2debe9c4656669d77",
+  "changelog": "白い熊 店 4.8.4+013\n• Fixes the error that made every app page fail with “Attempt to invoke virtual method … getClass() on a null object reference”, so apps can be opened and installed again\n• A session that has gone bad now repairs itself on the next start instead of leaving the app stuck for good\n• Update checks recover from the same fault instead of failing every time\n• Backups no longer carry the signed-in account: Google credentials stay out of the archive, and importing one can no longer break a working login",
+  "size": "9129484",
+  "last_commit": "90be57d514fb65eacb31a64231d94c0276ccc44f",
+  "updated_on": "Aug 4, 2026",
+  "timestamp": "1785805809"
 }
