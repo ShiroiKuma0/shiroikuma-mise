@@ -105,9 +105,32 @@ class AuthProvider @Inject constructor(
             ?: AuthData("BOGUS")
 
     /**
-     * Checks whether saved AuthData is valid or not
+     * Checks whether saved AuthData is valid or not.
+     *
+     * Never throws. gplayapi implements `isValid` as a live app-details call, so a placeholder
+     * session (the BOGUS fallback in [decodeAuthData], reached whenever the default account row
+     * carries no `authDataJson`) makes it NPE inside `HeaderProvider.getDefaultHeaders` on the
+     * null `deviceInfoProvider` rather than returning false. Every caller reads "not valid" as
+     * "re-authenticate", so an exception has to read as `false` too — otherwise it escapes
+     * through `AuthViewModel.buildSavedAuthData` and [com.aurora.store.data.work.UpdateWorker]
+     * and the app stays wedged on a session it can never repair.
      */
-    fun isSavedAuthDataValid(): Boolean = AuthHelper.using(httpClient).isValid(authData!!)
+    fun isSavedAuthDataValid(): Boolean {
+        val savedAuthData = authData ?: return false
+
+        // No device info means the placeholder session: unusable, and fatal to header building.
+        if (savedAuthData.deviceInfoProvider == null) {
+            Log.i(TAG, "Saved AuthData carries no device info, treating it as invalid")
+            return false
+        }
+
+        return try {
+            AuthHelper.using(httpClient).isValid(savedAuthData)
+        } catch (exception: Exception) {
+            Log.e(TAG, "Failed to validate saved AuthData", exception)
+            false
+        }
+    }
 
     /**
      * Builds [AuthData] for login using personal Google account
