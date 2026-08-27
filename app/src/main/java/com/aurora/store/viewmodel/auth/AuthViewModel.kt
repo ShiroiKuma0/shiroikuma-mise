@@ -180,6 +180,54 @@ class AuthViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Refreshes a saved device-account (microG) session, always non-interactively.
+     *
+     * The interactive AccountManager.getAuthToken overload must never be used here. When the
+     * Google account has been removed from the device, microG still offers its package-override
+     * consent dialog, but "Allow" persists the grant with `setUserData()` on an account that no
+     * longer exists — a silent no-op in AccountManagerService — so the very next check fails and
+     * the dialog reappears forever, with no way off the splash screen. Non-interactively the
+     * request simply fails, and a session we cannot refresh is dropped for the login buttons.
+     *
+     * Consent is granted once at sign-in, where the request does carry an Activity, so a healthy
+     * session never needs UI to refresh.
+     */
+    private suspend fun refreshDeviceAccountSession(email: String, oldToken: String) {
+        val canUseMicroG = PackageUtil.hasSupportedMicroGVariant(context) &&
+            Preferences.getBoolean(context, Preferences.PREFERENCE_MICROG_AUTH, true)
+
+        val token = if (canUseMicroG) {
+            runCatching { tokenProvider.fetchAuthToken(email, oldToken.ifBlank { null }) }
+                .onFailure { Log.i(TAG, "Could not refresh the device-account session", it) }
+                .getOrNull()
+        } else {
+            Log.i(TAG, "microG sign-in is unavailable, dropping the device-account session")
+            null
+        }
+
+        if (token != null) {
+            buildGoogleAuthData(email, token, AuthHelper.Token.AUTH)
+        } else {
+            signOutStaleSession()
+        }
+    }
+
+    /**
+     * Called when microG could not mint a token — consent denied or cancelled, or the account
+     * gone. Drops the session rather than leaving the splash spinning on a dead account.
+     */
+    fun onDeviceAccountUnavailable() {
+        viewModelScope.launch(Dispatchers.IO) { signOutStaleSession() }
+    }
+
+    /** Drops a session that can no longer be refreshed and returns to the login buttons. */
+    private fun signOutStaleSession() {
+        authProvider.removeAuthData(context)
+        authProvider.logout()
+        _authState.value = AuthState.SignedOut
+    }
+
     private fun buildSavedAuthData() = viewModelScope.launch(Dispatchers.IO) {
         try {
             if (authProvider.isSavedAuthDataValid()) {
@@ -203,8 +251,7 @@ class AuthViewModel @Inject constructor(
                             }
 
                             AuthHelper.Token.AUTH -> {
-                                _authState.value =
-                                    AuthState.PendingAccountManager(email, tokenPair.first)
+                                refreshDeviceAccountSession(email, tokenPair.first)
                             }
                         }
                     }

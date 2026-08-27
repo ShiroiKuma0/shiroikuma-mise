@@ -49,7 +49,7 @@ object AccountProvider {
         val aasToken = Preferences.getString(context, Constants.ACCOUNT_AAS_PLAIN)
         val authToken = Preferences.getString(context, Constants.ACCOUNT_AUTH_PLAIN)
 
-        if (email.isBlank() && (aasToken.isBlank() || authToken.isBlank())) return null
+        if (email.isBlank() || (aasToken.isBlank() && authToken.isBlank())) return null
 
         val tokenType = if (aasToken.isBlank()) AuthHelper.Token.AUTH else AuthHelper.Token.AAS
         return Pair(aasToken.ifBlank { authToken }, tokenType)
