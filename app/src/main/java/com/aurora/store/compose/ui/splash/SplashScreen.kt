@@ -391,18 +391,28 @@ private fun requestAuthTokenForGoogle(
             },
             activity,
             { result ->
-                val token = result.result.getString(AccountManager.KEY_AUTHTOKEN)
+                // result.result throws when consent is denied or cancelled
+                // (OperationCanceledException) and on authenticator errors. It runs on the main
+                // looper, so an exception escaping here brings the whole app down.
+                val token = try {
+                    result.result.getString(AccountManager.KEY_AUTHTOKEN)
+                } catch (exception: Exception) {
+                    Log.e("SplashScreen", "AccountManager failed to mint an auth token", exception)
+                    null
+                }
                 if (token != null) {
                     viewModel.buildGoogleAuthData(accountName, token, AuthHelper.Token.AUTH)
                 } else {
                     Log.e("SplashScreen", "AccountManager returned null auth token")
+                    viewModel.onDeviceAccountUnavailable()
                     onError()
                 }
             },
             Handler(Looper.getMainLooper())
         )
-    } catch (_: Exception) {
-        Log.e("SplashScreen", "Failed to get authToken for Google login")
+    } catch (exception: Exception) {
+        Log.e("SplashScreen", "Failed to get authToken for Google login", exception)
+        viewModel.onDeviceAccountUnavailable()
         onError()
     }
 }
