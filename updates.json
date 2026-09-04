@@ -1,13 +1,13 @@
 {
-  "version_name": "4.8.4+014",
-  "version_code": "760014",
-  "download_url": "https://github.com/ShiroiKuma0/shiroikuma-mise/releases/download/4.8.4+014/shiroikuma-mise_4.8.4+014.apk",
+  "version_name": "4.8.4+017",
+  "version_code": "760017",
+  "download_url": "https://github.com/ShiroiKuma0/shiroikuma-mise/releases/download/4.8.4+017/shiroikuma-mise_4.8.4+017.apk",
   "icon_url": "",
-  "sha1": "1f62cfca2191c7d53a798a00536b0a406053fa00",
-  "sha256": "ae18abbf4ad7a40752c9ba14d0e966b59ba725f6501b1d6459e58c86f34026d4",
-  "changelog": "白い熊 店 4.8.4+014\n• Fixes the sign-in loop that could pin the app on its splash screen: when the Google account had been removed from the phone, microG's “Allow … privileged access?” dialog came back every time you tapped Allow, with no way forward\n• A saved sign-in that can no longer be refreshed is dropped, so the login buttons come back instead of a dialog you cannot get past\n• Denying that dialog no longer crashes the app\n• “Use microG to sign in to accounts” now applies to an existing sign-in too, not only to the login button\n• An account left with no token no longer counts as signed in",
-  "size": "9129464",
-  "last_commit": "dfa2291a750b3ef537b76a78608a00824266dab2",
-  "updated_on": "Aug 27, 2026",
-  "timestamp": "1787807152"
+  "sha1": "5ee43e15b271965e06fb375e854647f9f6fff2be",
+  "sha256": "54b5ac3ddcd4df601c72e60d16f8fb1638a7a99c649f737efa6976da9b8518ba",
+  "changelog": "白い熊 店 4.8.4+017\n• 保存復元 automation contract v2: this app now answers automation out of the box — the master switch defaults to on and “Use authorization token?” defaults to off, because a pasted secret cannot survive a wipe\n• A token sent while none is being asked for is ignored, never refused\n• New: 白い熊 応用管理 can back this app up with its data and restore it onto a clean phone, through a door that checks the caller's exact package name, its uid and its pinned signing certificate\n• The archive moves through a file descriptor the caller opened, not a path — so it lands inside 応用管理's encrypted, checksummed backup rather than beside it\n• Your Google account is still never exported, and the app now says so on the backup row: a restored install comes back fully configured but signed out\n• An import now flushes both settings stores to disk before reporting success, so a restore can no longer report success over data that never got written\n• The token row is hidden — and no token generated — unless you actually ask for one",
+  "size": "9129918",
+  "last_commit": "773fcabc1fb47bc9261a1bb56092ec9da1682399",
+  "updated_on": " 9月 04, 2026",
+  "timestamp": "1788532075"
 }

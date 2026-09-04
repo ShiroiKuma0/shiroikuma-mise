@@ -6,11 +6,11 @@
 
 **A Google Play client that looks like the rest of the house — and updates the apps you froze.**
 
-A fork of [Aurora Store](https://gitlab.com/AuroraOSS/AuroraStore) with **major additions**: a full black-yellow theming page with live previews, updates for frozen apps, a category-based backup with an automation contract, and an in-app account picker.
+A fork of [Aurora Store](https://gitlab.com/AuroraOSS/AuroraStore) with **major additions**: a full black-yellow theming page with live previews, updates for frozen apps, a category-based backup whose data can be backed up and restored on a wiped phone, and an in-app account picker.
 
 Installs **side-by-side** with Aurora Store (app id `shiroikuma.mise`).
 
-**📥 Latest release: [`4.8.4+014`](https://github.com/ShiroiKuma0/shiroikuma-mise/releases/latest)** — [all releases & APK downloads »](https://github.com/ShiroiKuma0/shiroikuma-mise/releases)
+**📥 Latest release: [`4.8.4+017`](https://github.com/ShiroiKuma0/shiroikuma-mise/releases/latest)** — [all releases & APK downloads »](https://github.com/ShiroiKuma0/shiroikuma-mise/releases)
 
 </div>
 
@@ -46,7 +46,11 @@ A category ZIP — UI, settings, favourites, ignored updates, fonts — written 
 
 Two deliberate omissions: the **accounts** table is never backed up, because it holds live Google auth tokens and a settings backup that carries credentials into a shared folder is a different object; and the automation token lives in its own preferences file, outside every category.
 
-The 保存復元 automation contract lets 白い熊 自由作業盤 drive an export through a token-gated intent — a switch that defaults to **off**, a 24-byte token compared in constant time, real per-category progress, and cancellation at category boundaries with the partial file deleted.
+The 保存復元 automation contract lets 白い熊 自由作業盤 drive an export headlessly — real per-category progress, and cancellation at category boundaries with the partial file deleted. Since contract v2 the app answers **out of the box**: the master switch defaults to on and 「Use authorization token?」 defaults to off, because a pasted secret cannot survive a wipe and the point of all this is a phone that has just been wiped. A token sent anyway is ignored rather than refused.
+
+And 白い熊 応用管理 can now back this app up **with its data** and put it back on a clean phone. That runs through a separate door — a `ContentProvider` that identifies its caller by exact package name, by the uid the kernel reports, and by a pinned signing certificate, then moves the archive through a file descriptor the caller opened rather than a path it named. `import` lives only there, never on the exported receiver.
+
+**Your Google account is not in the backup.** Session and auth tokens are never exported, so a restored install comes back fully configured but signed out. That is not only about secrets: restoring the signed-in flag without the accounts table manufactures a session the app cannot use, which this fork has already had to fix once.
 
 ---
 

@@ -5,6 +5,85 @@ naming the upstream release it is built on. Upstream Aurora Store's own history 
 [`CHANGELOG`](CHANGELOG) beside this file, exactly as upstream maintains it — it is left untouched
 so every upstream sync merges cleanly.
 
+## 白い熊 店 4.8.4+017 — 2026-09-04
+
+Built on Aurora Store 4.8.4.
+
+The 保存復元 automation contract moves to **v2**: the token becomes optional, and a second door is
+added through which 白い熊 応用管理 can back this app up *with its data* and put that data back on a
+phone that has just been wiped.
+
+### The gate — a switch that is on, and a token that is off
+
+- **`automation_enabled` now defaults to on, and a new 「Use authorization token?」 defaults to off.**
+  v1 shipped the app closed and required a 48-character secret pasted from these settings into the
+  caller. That is the wrong shape for a clean phone: a pasted secret cannot survive a wipe, and the
+  case this now serves is a restore onto a device where nothing has been configured yet.
+- **A token sent to the app while it is not asking for one is ignored, never refused.** Tokens live
+  in task arguments that outlive the setting they were pasted for, so refusing them would turn one
+  switch being off into half a batch mysteriously failing.
+- **Both checks now live in a single `refuse()`** that every entry point asks, rather than being
+  written out separately at each one — which is how "automation disabled" and "bad token" drift
+  apart into reporting the wrong reason. They stay distinct errors, because they debug differently.
+- The token row is **hidden unless a token is actually being asked for**, and is no longer even
+  generated in that case. A secret sitting under an off switch invites being pasted somewhere it
+  will do nothing.
+
+### The data door
+
+- **A `ContentProvider` answering `describe`, `export`, `import` and `cancel`.** A broadcast cannot
+  say who sent it, and the caller supplies the destination the export is written into — so the
+  receiver could never have been given this job.
+- **The caller is identified three ways, and each exists because the one before it is not enough:**
+  an exact package name, never a prefix, since any sideloaded app may call itself `shiroikuma.evil`;
+  the uid the kernel reports, which cannot be borrowed the way a declared attribution can; and a
+  pinned signing certificate, which is what covers a caller package being *absent* from the phone —
+  precisely the clean-phone case this feature exists for. Both pins were re-derived from the
+  callers' own signed APKs rather than taken on trust.
+- **The archive moves through a file descriptor the caller opened**, duplicated before it leaves the
+  binder call and closed in a `finally`. Not a path: 応用管理 renames its backup into place on
+  commit and encrypts and checksums per file it knows about, so a file dropped into that directory
+  would be renamed out from under it and would sit in plaintext inside an otherwise encrypted
+  backup.
+- **`import` exists only on this door.** It never gets a broadcast action — the exported receiver
+  has no permission on it, so an import there would let any app on the phone overwrite this one's
+  settings.
+- A refusal is **returned, never thrown**: an exception across a binder reaches the caller as a
+  stack trace, which tells 白い熊 nothing and tells a misbehaving caller rather more than it should.
+  Identity is checked before the method is dispatched, so an unrecognised caller cannot even learn
+  which methods exist.
+
+### What a backup does and does not carry
+
+- **The Google account is still excluded — and `describe` now says so verbatim**, so 応用管理 can
+  render it on the backup row instead of leaving it to be assumed. A restored install comes back
+  fully configured but signed out.
+- That exclusion is not only about secrets. Restoring the signed-in flag *without* the accounts
+  table manufactures a session the app cannot use — the failure this fork already had to fix in
+  4.8.4+013 — so the filter is load-bearing on import, not merely tidy on export.
+
+### Fixes and hardening in the new code
+
+- **`startForeground()` now runs before every early return in the data service.** Once
+  `startForegroundService()` has been called the platform requires it whatever the service then
+  decides, so a request carrying a job whose descriptor is already gone would have killed the
+  process instead of being ignored.
+- **An import flushes both preference stores synchronously before reporting success.** The caller
+  force-stops the app the instant it is told the import is done, and that force-stop is a `SIGKILL`
+  while both restore paths write with `edit {}` — whose default is an asynchronous `apply()`. A
+  restore would otherwise have reported success over settings that never reached disk. Flushing one
+  store is not enough: the restore spans two files.
+- **A failed service start no longer leaks the caller's descriptor.** A provider call is a
+  background start, which the platform can refuse outright; the descriptor is now closed and the
+  job dropped before the refusal is answered, rather than holding the caller's file open under a
+  job that will never reply.
+- **An import is spooled through the cache** instead of being read straight into a growing buffer,
+  and an implausibly large archive is refused with a readable error rather than an
+  `OutOfMemoryError`.
+- **A `<queries>` entry naming both callers** — the app had none. Without it a reply broadcast's
+  `setPackage()` fails silently on Android 11+, and package visibility also filters the very lookups
+  the caller check depends on.
+
 ## 白い熊 店 4.8.4+014 — 2026-08-27
 
 Built on Aurora Store 4.8.4.
