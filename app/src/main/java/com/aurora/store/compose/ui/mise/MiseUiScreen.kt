@@ -195,29 +195,53 @@ fun MiseUiScreen() {
 }
 
 /**
- * The two contract rows: a master switch (default OFF — nothing is reachable from outside until
- * 白い熊 turns it on) and the token, abbreviated, copied on tap, regenerated on the right.
+ * The three contract rows, in the order every sister app shows them.
+ *
+ * 1. The master switch — **default ON** since contract v2. It stays a switch rather than being
+ *    removed because it is the only way to close this app off, and a feature that can be turned on
+ *    but never off is one 白い熊 cannot retreat from.
+ * 2. 「Use authorization token?」 — **default OFF**. A pasted secret cannot survive a wipe, and the
+ *    case this exists for is 応用管理 restoring this app *and its data* onto a clean phone.
+ * 3. The token itself, **shown only when row 2 is on**: a 48-character secret sitting under an off
+ *    switch invites 白い熊 to paste it somewhere it will do nothing.
  */
 @Composable
 private fun AutomationRows(ui: MiseUiState) {
     val context = LocalContext.current
     var enabled by remember { mutableStateOf(MiseAutomationAuth.enabled(context)) }
-    var token by remember { mutableStateOf(MiseAutomationAuth.token(context)) }
+    var requireToken by remember { mutableStateOf(MiseAutomationAuth.requireToken(context)) }
 
     ToggleRow(ui, "Automation export", enabled) {
         MiseAutomationAuth.setEnabled(context, it)
         enabled = it
     }
-    Text(
-        text = "Lets 白い熊 自由作業盤 trigger this app's export through the token-gated intent.",
-        color = Color(ui.textDimColor),
-        fontSize = ui.labelSize.sp,
-        modifier = Modifier.padding(
-            start = rowIndent(ui, false),
-            end = 16.dp,
-            bottom = ui.rowPadding.dp
-        )
+    RowNote(
+        ui,
+        "Lets sister apps trigger this app's export, and lets 白い熊 応用管理 back its data up " +
+            "and put it back on a clean phone."
     )
+
+    ToggleRow(ui, "Use authorization token?", requireToken) {
+        MiseAutomationAuth.setRequireToken(context, it)
+        requireToken = it
+    }
+    RowNote(
+        ui,
+        if (requireToken) {
+            "On: a caller must also present the token below. The data door checks the caller's " +
+                "package name and signing certificate either way."
+        } else {
+            "Off: any sister app may drive the automation. The data door checks the caller's " +
+                "package name and signing certificate either way."
+        }
+    )
+
+    // Hidden while the token is not being asked for — see the KDoc's third point. The read below
+    // is also what MINTS the token, so an app 白い熊 never asks a token of never generates one.
+    if (!requireToken) return
+
+    var token by remember { mutableStateOf(MiseAutomationAuth.token(context)) }
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -350,6 +374,21 @@ private fun SubHeader(ui: MiseUiState, title: String) {
 // -------------------------------------------------------------------------- rows
 
 private const val BASE_INDENT = 36
+
+/** The dim explanatory line that sits under a toggle row. */
+@Composable
+private fun RowNote(ui: MiseUiState, text: String) {
+    Text(
+        text = text,
+        color = Color(ui.textDimColor),
+        fontSize = ui.labelSize.sp,
+        modifier = Modifier.padding(
+            start = rowIndent(ui, false),
+            end = 16.dp,
+            bottom = ui.rowPadding.dp
+        )
+    )
+}
 
 @Composable
 private fun rowIndent(ui: MiseUiState, level2: Boolean) =
