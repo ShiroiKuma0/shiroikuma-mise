@@ -29,6 +29,7 @@
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
@@ -47,6 +48,15 @@
     <uses-permission
         android:name="android.permission.USE_CREDENTIALS"
         android:maxSdkVersion="22" />
+
+    <!-- 白い熊 店 fork: the automation contract's callers. Without a <queries> entry a reply
+         broadcast's setPackage() fails SILENTLY on Android 11+ — the export runs, writes correctly,
+         and is never heard of. QUERY_ALL_PACKAGES above already subsumes this; it is declared
+         anyway because the contract requires it and because it names who we answer. -->
+    <queries>
+        <package android:name="shiroikuma.oyokanri" />
+        <package android:name="shiroikuma.jiyusagyoban" />
+    </queries>
 
     <uses-feature
         android:name="android.software.leanback"
@@ -248,6 +258,35 @@
             android:name="com.aurora.store.mise.automation.StateExportService"
             android:exported="false"
             android:foregroundServiceType="dataSync" />
+
+        <!-- 白い熊 店 fork, contract v2: the automation data door.
+             exported="true" with NO android:permission, and that is deliberate — a custom
+             permission could only be "normal" (any app may hold it) or "signature" (impossible:
+             every app in this family has its own keystore, 42 of them). Neither buys anything
+             AutomationCallers does not already do, which is to check the caller's exact package
+             name, cross-check its uid against the kernel, and match its signing certificate
+             against a pinned hash. `import` lives ONLY here, never on the exported receiver. -->
+        <provider
+            android:name="com.aurora.store.mise.automation.AutomationProvider"
+            android:authorities="${applicationId}.automation"
+            android:exported="true" />
+
+        <service
+            android:name="com.aurora.store.mise.automation.AutomationDataService"
+            android:exported="false"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Automation data export/import — writes this app's backup into a descriptor supplied by 白い熊 応用管理" />
+        </service>
+
+        <!-- Capability discovery, read WITHOUT waking this app: 応用管理 scans every installed
+             package with MATCH_UNINSTALLED_PACKAGES | MATCH_DISABLED_COMPONENTS, because a frozen
+             app cannot be asked anything and 白い熊 freezes aggressively. An app without these is
+             simply not offered for data backup — that is the opt-out. -->
+        <meta-data android:name="shiroikuma.automation.contract" android:value="2" />
+        <meta-data android:name="shiroikuma.automation.format" android:value="1" />
+        <meta-data android:name="shiroikuma.automation.min_format" android:value="1" />
 
     </application>
 </manifest>

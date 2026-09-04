@@ -19,7 +19,10 @@ import com.aurora.store.mise.MiseBackup
  * running export for `CANCEL_EXPORT`. A manifest receiver must reach `finish()` inside Android's
  * broadcast window — running an export here is what gets an app ANR'd and killed mid-write.
  *
- * No `android:permission` on the receiver: the caller cannot hold one, so the token is the gate.
+ * No `android:permission` on the receiver, and since contract v2 no token either unless 白い熊 asks
+ * for one — this is deliberately the **unauthenticated** half of the surface. It only ever writes
+ * where it was told to and reports what it did. Everything that moves data through a caller-supplied
+ * descriptor lives behind [AutomationProvider], which knows who is calling.
  */
 class StateExportReceiver : BroadcastReceiver() {
 
@@ -34,11 +37,7 @@ class StateExportReceiver : BroadcastReceiver() {
                 val replyPackage = intent.getStringExtra(EXTRA_REPLY_PACKAGE) ?: return
                 val replyId = intent.getStringExtra(EXTRA_REPLY_ID) ?: return
 
-                val result = when {
-                    !MiseAutomationAuth.enabled(app) -> "ERROR:automation disabled"
-                    !MiseAutomationAuth.isTokenValid(app, token) -> "ERROR:bad token"
-                    else -> "OK:" + categoryLines()
-                }
+                val result = MiseAutomationAuth.refuse(app, token) ?: ("OK:" + categoryLines())
                 reply(app, replyAction, replyPackage, replyId, result)
             }
 
@@ -47,12 +46,8 @@ class StateExportReceiver : BroadcastReceiver() {
                 val replyPackage = intent.getStringExtra(EXTRA_REPLY_PACKAGE) ?: return
                 val replyId = intent.getStringExtra(EXTRA_REPLY_ID) ?: return
 
-                if (!MiseAutomationAuth.enabled(app)) {
-                    reply(app, replyAction, replyPackage, replyId, "ERROR:automation disabled")
-                    return
-                }
-                if (!MiseAutomationAuth.isTokenValid(app, token)) {
-                    reply(app, replyAction, replyPackage, replyId, "ERROR:bad token")
+                MiseAutomationAuth.refuse(app, token)?.let { refusal ->
+                    reply(app, replyAction, replyPackage, replyId, refusal)
                     return
                 }
 
@@ -84,8 +79,7 @@ class StateExportReceiver : BroadcastReceiver() {
 
             "${app.packageName}$ACTION_CANCEL_EXPORT" -> {
                 // Fire-and-forget, and a silent no-op when nothing is running.
-                if (!MiseAutomationAuth.enabled(app)) return
-                if (!MiseAutomationAuth.isTokenValid(app, token)) return
+                if (MiseAutomationAuth.refuse(app, token) != null) return
                 StateExportService.requestCancel()
             }
         }
