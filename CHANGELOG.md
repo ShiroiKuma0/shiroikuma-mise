@@ -5,6 +5,52 @@ naming the upstream release it is built on. Upstream Aurora Store's own history 
 [`CHANGELOG`](CHANGELOG) beside this file, exactly as upstream maintains it — it is left untouched
 so every upstream sync merges cleanly.
 
+## 白い熊 店 4.8.4+019 — 2026-09-05
+
+Built on Aurora Store 4.8.4.
+
+Answers a refused foreground start instead of dying on it. (`+018` was an intermediate delivery
+during the same fix round and was never released; everything in it is included here.)
+
+### The automation path no longer crashes when it is started cold
+
+- **A broadcast and a provider `call()` are both background starts on Android 12 and up**, so every
+  foreground start in the automation path can be refused with
+  `ForegroundServiceStartNotAllowedException`. That is an `IllegalStateException`, so in the
+  receiver it escaped `onReceive` and the system killed the process rather than failing the export.
+- **This never appeared by hand, and could not have.** The allowance that makes it work comes from
+  recent interaction — open the app, run a backup, it succeeds. It fails in the cold unattended
+  batch and on a restore onto a clean phone, which is the case the whole contract exists for. The
+  failure is inversely correlated with how closely anyone is watching.
+- **Four sites could be refused, not one:** the receiver's `startForegroundService`; the export
+  service's own `startForeground`, which sat *above* the lines reading where to send the reply, so a
+  refusal there had nothing to answer with and died silently; the data door's start of its service;
+  and that service's own `startForeground`. Extras are now read first, then the guard, then the
+  reply.
+- **Catching without answering would only have traded a crash for silence.** The caller would wait
+  out its full timeout and report "no response" — indistinguishable from an app that never
+  implemented the contract. Every site now replies.
+
+### How the refusal is reported
+
+- **All four sites route through one decision.** Four copies of a two-branch rule is how the
+  branches drift apart, which is the same reason the automation gate lives in a single `refuse()`.
+- **The reply is keyed**, so the caller can offer a 「電池最適化を除外」 button on the failed row
+  instead of printing an exception.
+- **That key is reserved for the case the button can actually fix, and the test is deliberately
+  positive** — it is sent only when the app is positively determined not to be exempt from battery
+  optimisation. If the check throws, or there is no `PowerManager`, we do not know the exemption is
+  the fault and must not promise a repair, so a descriptive line is sent instead. On EMUI a refused
+  start can equally be アプリ起動管理 sitting on 自動管理, which no app can change for itself, and a
+  button that cannot repair the fault turns one dead end into two.
+- **The message is collapsed to a single line before it goes on the wire.** A reply carries one line
+  and category listings are newline-delimited, so an embedded newline would corrupt the format
+  rather than merely read badly.
+
+**Scope, stated plainly: this makes a cold-phone failure diagnosable, not fixed.** The start is
+still refused; the app now reports why instead of disappearing. Granting the app an exemption from
+battery optimisation is what actually lets a cold export run.
+
 ## 白い熊 店 4.8.4+017 — 2026-09-04
 
 Built on Aurora Store 4.8.4.

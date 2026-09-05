@@ -10,7 +10,7 @@ A fork of [Aurora Store](https://gitlab.com/AuroraOSS/AuroraStore) with **major 
 
 Installs **side-by-side** with Aurora Store (app id `shiroikuma.mise`).
 
-**📥 Latest release: [`4.8.4+017`](https://github.com/ShiroiKuma0/shiroikuma-mise/releases/latest)** — [all releases & APK downloads »](https://github.com/ShiroiKuma0/shiroikuma-mise/releases)
+**📥 Latest release: [`4.8.4+019`](https://github.com/ShiroiKuma0/shiroikuma-mise/releases/latest)** — [all releases & APK downloads »](https://github.com/ShiroiKuma0/shiroikuma-mise/releases)
 
 </div>
 
