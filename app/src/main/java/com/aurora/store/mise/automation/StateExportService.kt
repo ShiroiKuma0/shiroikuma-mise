@@ -42,8 +42,11 @@ class StateExportService : Service() {
     override fun onBind(intent: Intent?): IBinder? = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        startForeground(NOTIFICATION_ID, buildNotification(getString(R.string.app_name)))
-
+        // EXTRAS FIRST, then the guard, then the reply. startForeground() can be refused here just
+        // as the receiver's start can, and a refusal raised ABOVE these three lines has nowhere to
+        // answer — the caller then waits out its whole timeout and reports "no response", which is
+        // indistinguishable from an app that never implemented the contract. Reading three extras
+        // costs microseconds, so it does not threaten the 5 s startForeground deadline.
         val request = intent ?: run {
             stopSelf()
             return START_NOT_STICKY
@@ -52,6 +55,17 @@ class StateExportService : Service() {
         val replyPackage = request.getStringExtra(StateExportReceiver.EXTRA_REPLY_PACKAGE)
         val replyId = request.getStringExtra(StateExportReceiver.EXTRA_REPLY_ID)
         if (replyAction == null || replyPackage == null || replyId == null) {
+            stopSelf()
+            return START_NOT_STICKY
+        }
+
+        try {
+            startForeground(NOTIFICATION_ID, buildNotification(getString(R.string.app_name)))
+        } catch (exception: Exception) {
+            StateExportReceiver.reply(
+                applicationContext, replyAction, replyPackage, replyId,
+                AutomationForeground.refusal(applicationContext, exception)
+            )
             stopSelf()
             return START_NOT_STICKY
         }
