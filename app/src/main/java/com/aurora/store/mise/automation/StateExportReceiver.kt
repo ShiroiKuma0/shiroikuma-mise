@@ -64,17 +64,40 @@ class StateExportReceiver : BroadcastReceiver() {
                     return
                 }
 
-                ContextCompat.startForegroundService(
-                    app,
-                    Intent(app, StateExportService::class.java).apply {
-                        putExtra(EXTRA_PATH, intent.getStringExtra(EXTRA_PATH))
-                        putExtra(EXTRA_ITEMS, items)
-                        putExtra(EXTRA_PROGRESS_ACTION, intent.getStringExtra(EXTRA_PROGRESS_ACTION))
-                        putExtra(EXTRA_REPLY_ACTION, replyAction)
-                        putExtra(EXTRA_REPLY_PACKAGE, replyPackage)
-                        putExtra(EXTRA_REPLY_ID, replyId)
-                    }
-                )
+                // A broadcast is a BACKGROUND start on API 31+, so this throws
+                // ForegroundServiceStartNotAllowedException unless the app happens to hold a
+                // foreground-start allowance — and an exception escaping onReceive does not fail
+                // the export, it kills the process ("Unable to start receiver …").
+                //
+                // The allowance comes from recent interaction, which is why this never shows up by
+                // hand: open the app, run a backup, it works. The failure belongs to the cold,
+                // unattended batch and to a restore onto a clean phone — the case this contract
+                // exists for — so it is inversely correlated with anyone watching.
+                //
+                // Catching alone would only trade a crash for silence: the caller would wait out
+                // its whole timeout and report "no response", which is indistinguishable from an
+                // app that never implemented the contract. The ERROR: reply is the point.
+                try {
+                    ContextCompat.startForegroundService(
+                        app,
+                        Intent(app, StateExportService::class.java).apply {
+                            putExtra(EXTRA_PATH, intent.getStringExtra(EXTRA_PATH))
+                            putExtra(EXTRA_ITEMS, items)
+                            putExtra(
+                                EXTRA_PROGRESS_ACTION,
+                                intent.getStringExtra(EXTRA_PROGRESS_ACTION)
+                            )
+                            putExtra(EXTRA_REPLY_ACTION, replyAction)
+                            putExtra(EXTRA_REPLY_PACKAGE, replyPackage)
+                            putExtra(EXTRA_REPLY_ID, replyId)
+                        }
+                    )
+                } catch (exception: Exception) {
+                    reply(
+                        app, replyAction, replyPackage, replyId,
+                        AutomationForeground.refusal(app, exception)
+                    )
+                }
             }
 
             "${app.packageName}$ACTION_CANCEL_EXPORT" -> {

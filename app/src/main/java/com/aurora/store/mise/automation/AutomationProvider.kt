@@ -152,7 +152,7 @@ class AutomationProvider : ContentProvider() {
             AutomationJobs.finish(jobId)
             AutomationDataService.abandon(jobId)
             runCatching { dup.close() }
-            fail("ERROR:${failure.message ?: failure.javaClass.simpleName}")
+            fail(AutomationForeground.refusal(ctx, failure))
         }
     }
 

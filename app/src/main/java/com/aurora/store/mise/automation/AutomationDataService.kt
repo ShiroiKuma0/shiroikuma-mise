@@ -71,7 +71,7 @@ class AutomationDataService : Service() {
         // before this call would let a retry take the app down instead of being ignored.
         val foreground = runCatching {
             startForeground(NOTIFICATION_ID, notification(importing))
-        }.isSuccess
+        }
 
         val jobId = intent?.getStringExtra(EXTRA_JOB) ?: return stop(startId)
         val fd = HANDOVER.remove(jobId) ?: return stop(startId)
@@ -103,9 +103,9 @@ class AutomationDataService : Service() {
         // app is exempt from battery optimisation. Nothing can run, and the handover is drained, so
         // this descriptor is ours to close — leaking it would hold the caller's file open forever
         // under a job that never answers.
-        if (!foreground) {
+        if (foreground.isFailure) {
             runCatching { fd.close() }
-            reply("ERROR:foreground service refused")
+            reply(AutomationForeground.refusal(applicationContext, foreground.exceptionOrNull()))
             return stop(startId)
         }
 
