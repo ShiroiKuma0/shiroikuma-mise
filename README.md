@@ -10,7 +10,7 @@ A fork of [Aurora Store](https://gitlab.com/AuroraOSS/AuroraStore) with **major 
 
 Installs **side-by-side** with Aurora Store (app id `shiroikuma.mise`).
 
-**📥 Latest release: [`4.8.4+019`](https://github.com/ShiroiKuma0/shiroikuma-mise/releases/latest)** — [all releases & APK downloads »](https://github.com/ShiroiKuma0/shiroikuma-mise/releases)
+**📥 Latest release: [`4.8.4+020`](https://github.com/ShiroiKuma0/shiroikuma-mise/releases/latest)** — [all releases & APK downloads »](https://github.com/ShiroiKuma0/shiroikuma-mise/releases)
 
 </div>
 
@@ -29,6 +29,14 @@ The border, divider and roundness sliders all reach **0 meaning "draw nothing"**
 Stock hides updates for disabled apps unless you turn on "extended updates" — which also drags in apps whose signature does not match Play's, two unrelated things behind one switch. Here frozen apps get their **own** switch, on by default, in Settings › Updates and on the UI page.
 
 A frozen app is still installed and still updatable, so it is listed like any other and set in **italics** to tell it apart. The italics are resolved from live system state, so freezing or thawing an app changes them straight away rather than at the next update check.
+
+---
+
+## 📌 Hold an app at its installed version
+
+Tick **Hold at current version** in an app's ⋯ menu and it stays where it is. Its update is still checked and listed on the Updates tab — under *Ignored*, with the new version and size, so you can see what you are missing — but it is not counted in the badge or the "updates available" total, it is left out of **Update all**, and the background check never notifies or auto-installs it.
+
+Stock had the rule but offered it only from a pending update's sheet, and its background check ignored it anyway; here it is a toggle you can set on any installed app ahead of time, and it holds against the periodic run too.
 
 ---
 

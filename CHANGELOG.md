@@ -5,6 +5,30 @@ naming the upstream release it is built on. Upstream Aurora Store's own history 
 [`CHANGELOG`](CHANGELOG) beside this file, exactly as upstream maintains it — it is left untouched
 so every upstream sync merges cleanly.
 
+## 白い熊 店 4.8.4+020 — 2026-10-22
+
+Built on Aurora Store 4.8.4.
+
+### Hold an app at its installed version
+
+- **A “Hold at current version” toggle in the app page's ⋯ menu.** It can be set on any installed
+  app, whether or not an update is pending, and cleared from the same place at any time.
+- **A held app's update is still listed, for information only.** It appears on the Updates tab
+  under *Ignored*, with its new version and size, but is not counted in “N updates available” or
+  the tab badge, and is not part of **Update all**. **Unignore** on that row releases the hold.
+- **The hold is upstream's “Ignore all updates” rule**, not a second mechanism: the toggle and the
+  update sheet's “Ignore all updates” set the same entry, and the existing backup category for
+  ignored updates already carries it.
+- **A manual Update from the held app's own page still works** — that is a deliberate per-app
+  choice, not a batch.
+
+### The background update check now honours ignore rules
+
+- **Ignored updates were only hidden from the screen.** The periodic check still notified them
+  and, in check-and-install mode, downloaded and installed them — so neither “Ignore all updates”
+  nor “Skip version” held against the background run. Both now do; the updates are still recorded,
+  so the *Ignored* section keeps showing what is available.
+
 ## 白い熊 店 4.8.4+019 — 2026-09-05
 
 Built on Aurora Store 4.8.4.
