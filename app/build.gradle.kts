@@ -6,6 +6,9 @@
  */
 
 import com.android.build.api.dsl.ApplicationExtension
+import java.time.Instant
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 import java.util.Properties
 
 plugins {
@@ -28,11 +31,51 @@ val lastCommitTimestamp = providers.exec {
 }.standardOutput.asText.map { it.trim() }
 
 // --- shiroikuma-mise fork: per-build version tail (see gradle.properties + the build-apk skill) ---
-// N = BUILD_NUMBER from gradle.properties, bumped after every successful build by `buildFork`
-// and reset to 1 on every upstream sync. Zero-padded to three digits in the NAME only, so that
-// +002 sorts before +010; versionCode keeps the plain integer.
+// N = BUILD_NUMBER from gradle.properties, bumped after every successful build by `buildFork`.
+// It runs on across upstream syncs and resets to 1 only when upstream's own versionCode moves —
+// resetting on a mere repin would send versionCode backwards. Zero-padded to three digits in the
+// NAME only, so that +002 sorts before +010; versionCode keeps the plain integer.
 val forkBuildNumber = (project.findProperty("BUILD_NUMBER") as String?)?.trim()?.toIntOrNull() ?: 1
 val paddedBuildNumber = forkBuildNumber.toString().padStart(3, '0')
+
+// `providers.exec`, not a raw ProcessBuilder: the configuration cache refuses a process started at
+// configuration time. isIgnoreExitValue: with no local `master` (shallow clone, tarball) the pin
+// degrades to empty instead of failing the build.
+val repoRootDir = project.rootDir
+fun gitOutput(vararg command: String): String = try {
+    providers.exec {
+        commandLine(*command)
+        workingDir = repoRootDir
+        isIgnoreExitValue = true
+    }.standardOutput.asText.get().trim()
+} catch (e: Exception) {
+    println("Git command [${command.joinToString(" ")}] failed [$e]")
+    ""
+}
+
+// shiroikuma fork: upstream-base pin (the global git-versioning skill). `custom` is rebased onto
+// upstream's master tip, whose versionName stands still for months, so the version names the
+// upstream commit our patches sit on: the merge-base of HEAD and master — not our own HEAD, and
+// not master's tip, which overstates the base while custom is not yet rebased.
+val upstreamBaseSha = gitOutput("git", "merge-base", "HEAD", "master").take(8)
+
+// That commit's committer time, never build time, so every build on one base shares a pin and
+// versions sort chronologically. UTC from the raw epoch, so it matches what the GitHub API reports.
+val upstreamBaseStamp = if (upstreamBaseSha.length == 8) {
+    gitOutput("git", "show", "-s", "--format=%ct", upstreamBaseSha).toLongOrNull()?.let {
+        Instant.ofEpochSecond(it).atZone(ZoneOffset.UTC)
+            .format(DateTimeFormatter.ofPattern("yyyy-MM-dd.HH-mm"))
+    } ?: ""
+} else {
+    ""
+}
+
+// `+` opens each top-level group; the pin's own date, time and sha are dot-joined inside it.
+val upstreamPin = when {
+    upstreamBaseSha.length != 8 -> ""
+    upstreamBaseStamp.length == 16 -> "+$upstreamBaseStamp.g$upstreamBaseSha"
+    else -> "+g$upstreamBaseSha"
+}
 
 // Filled in from upstream's own versionCode/versionName inside defaultConfig below, so the base
 // flows in automatically on every rebase and is never edited by hand here.
@@ -90,12 +133,13 @@ configure<ApplicationExtension> {
         versionName = "4.8.4"
 
         // --- shiroikuma fork: our version derives from upstream's two literals directly above ---
-        // versionName = "<upstream name>+<NNN>"  e.g. 4.8.4+001
-        // versionCode = <upstream code> * 10000 + N  e.g. 76 * 10000 + 1 = 760001
+        // versionName = "<upstream name>+<base date>.<HH-MM>.g<base sha>+<NNN>"
+        //               e.g. 4.8.4+2026-08-02.08-09.g4b717c67+021
+        // versionCode = <upstream code> * 10000 + N  e.g. 76 * 10000 + 21 = 760021
         // so a new upstream line always outranks every build of the previous one.
         // NEVER hand-edit the two upstream literals: they update themselves on rebase.
         forkVersionCode = versionCode!! * 10000 + forkBuildNumber
-        forkVersionName = "$versionName+$paddedBuildNumber"
+        forkVersionName = "$versionName$upstreamPin+$paddedBuildNumber"
         versionCode = forkVersionCode
         versionName = forkVersionName
 
