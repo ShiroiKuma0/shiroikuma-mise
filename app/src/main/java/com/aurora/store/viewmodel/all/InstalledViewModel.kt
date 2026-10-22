@@ -73,7 +73,7 @@ class InstalledViewModel @Inject constructor(
         start = CoroutineStart.LAZY
     ) {
         val pm = context.packageManager
-        val packages = pm.getInstalledPackages(PackageManager.GET_META_DATA)
+        val packages = PackageUtil.getInstalledPackages(context, PackageManager.GET_META_DATA)
             .filter { it.isValidApp(pm) }
             .filterNot { it.packageName in blacklist }
             .map { info ->
