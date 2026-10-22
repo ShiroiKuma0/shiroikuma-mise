@@ -44,6 +44,8 @@ import com.aurora.store.data.room.favourite.FavouriteDao
 import com.aurora.store.data.room.review.LocalReview
 import com.aurora.store.data.room.review.LocalReview.Companion.toReview
 import com.aurora.store.data.room.review.ReviewDao
+import com.aurora.store.data.room.update.IgnoredUpdate
+import com.aurora.store.data.room.update.IgnoredUpdateDao
 import com.aurora.store.util.CertUtil
 import com.aurora.store.util.PackageUtil
 import com.aurora.store.util.Preferences
@@ -84,7 +86,8 @@ class AppDetailsViewModel @Inject constructor(
     private val httpClient: IHttpClient,
     private val json: Json,
     private val accountRepository: AccountRepository,
-    private val exodusRepository: ExodusRepository
+    private val exodusRepository: ExodusRepository,
+    private val ignoredUpdateDao: IgnoredUpdateDao
 ) : ViewModel() {
 
     private val _app = MutableStateFlow<App?>(null)
@@ -138,6 +141,20 @@ class AppDetailsViewModel @Inject constructor(
 
     private val _favourite = MutableStateFlow(false)
     val favourite = _favourite.asStateFlow()
+
+    // Fork: the app is held at its installed version — an "ignore all updates" rule, so its
+    // update is listed under Ignored but never counted, never in Update all, never auto-installed.
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val isHeld: StateFlow<Boolean> = app
+        .filterNotNull()
+        .flatMapLatest { loadedApp ->
+            ignoredUpdateDao.ignoredUpdates().map { rules ->
+                rules.any {
+                    it.packageName == loadedApp.packageName && it.ignoredVersionCode == null
+                }
+            }
+        }
+        .stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
     private val _installError = MutableStateFlow<InstallError?>(null)
     val installError = _installError.asStateFlow()
@@ -377,6 +394,16 @@ class AppDetailsViewModel @Inject constructor(
             }
 
             _favourite.value = !favourite.value
+        }
+    }
+
+    fun toggleHold(app: App) {
+        viewModelScope.launch(Dispatchers.IO) {
+            if (isHeld.value) {
+                ignoredUpdateDao.delete(app.packageName)
+            } else {
+                ignoredUpdateDao.upsert(IgnoredUpdate(packageName = app.packageName))
+            }
         }
     }
 

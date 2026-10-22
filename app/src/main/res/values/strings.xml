@@ -376,6 +376,7 @@
     <string name="action_ignore_all">Ignore all updates</string>
     <string name="action_ignore_version">Skip version <xliff:g id="version_name">%1$s</xliff:g></string>
     <string name="action_unignore">Unignore</string>
+    <string name="action_hold_version">Hold at current version</string>
     <string name="error">An error occurred!</string>
     <string name="menu">Menu</string>
     <string name="expand">Expand</string>

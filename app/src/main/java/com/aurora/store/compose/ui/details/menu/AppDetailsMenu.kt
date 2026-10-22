@@ -7,6 +7,7 @@
 package com.aurora.store.compose.ui.details.menu
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
@@ -41,6 +42,7 @@ fun AppDetailsMenu(
     modifier: Modifier = Modifier,
     state: AppState = AppState.Unavailable,
     isFavorite: Boolean = false,
+    isHeld: Boolean = false,
     isExpanded: Boolean = false,
     canManualDownload: Boolean = true,
     canUseOtherAccount: Boolean = false,
@@ -103,6 +105,18 @@ fun AppDetailsMenu(
                 text = { Text(text = stringResource(R.string.action_view_on_play)) },
                 onClick = { onClick(MenuItem.PLAY_STORE) },
                 enabled = PackageUtil.isInstalled(context, Constants.PACKAGE_NAME_PLAY_STORE)
+            )
+            // Fork: a toggle, so the menu stays open long enough to see the tick flip.
+            DropdownMenuItem(
+                text = { Text(text = stringResource(R.string.action_hold_version)) },
+                onClick = { onMenuItemClicked(MenuItem.HOLD_VERSION) },
+                trailingIcon = {
+                    Checkbox(
+                        checked = isHeld,
+                        onCheckedChange = { onMenuItemClicked(MenuItem.HOLD_VERSION) }
+                    )
+                },
+                enabled = isHeld || state is AppState.Installed || state is AppState.Updatable
             )
         }
     }
