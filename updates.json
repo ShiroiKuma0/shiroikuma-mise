@@ -1,13 +1,13 @@
 {
-  "version_name": "4.8.4+2026-08-02.08-09.g4b717c67+023",
-  "version_code": "760023",
-  "download_url": "https://github.com/ShiroiKuma0/shiroikuma-mise/releases/download/4.8.4+2026-08-02.08-09.g4b717c67+023/shiroikuma-mise_4.8.4+2026-08-02.08-09.g4b717c67+023.apk",
+  "version_name": "4.8.4+2026-10-02.16-53.g3a15ff67+024",
+  "version_code": "760024",
+  "download_url": "https://github.com/ShiroiKuma0/shiroikuma-mise/releases/download/4.8.4+2026-10-02.16-53.g3a15ff67+024/shiroikuma-mise_4.8.4+2026-10-02.16-53.g3a15ff67+024.apk",
   "icon_url": "",
-  "sha1": "948799dd2c3c191599ce0a5fce06fe0431049456",
-  "sha256": "332fd7f1dee9d839677b3e018d21ebe3bcea97e13ebf59c6e3aa36a1a6617fb7",
-  "changelog": "白い熊 店 4.8.4+2026-08-02.08-09.g4b717c67+023\n• Apps frozen by hiding are now checked for updates — before, a hidden app was invisible to the update check, the Installed list and the Ignored section\n• A hidden app counts as frozen: shown in italics, and covered by the “Updates for frozen apps” switch\n• New version format naming the upstream base (date, time and commit); the build counter no longer resets on an upstream sync, so a sync build is never a downgrade",
-  "size": "9130445",
-  "last_commit": "1e3451a457952182fac3a0caf2cda47342892046",
+  "sha1": "8fef3ec2bc4f15fb8808b7c7b029cb56ca3c27e4",
+  "sha256": "ec4cd39e458ea715ab31ee5a256da5079421efa4867ca2f6a0f960e03fa2b740",
+  "changelog": "白い熊 店 4.8.4+2026-10-02.16-53.g3a15ff67+024\n• Synced onto the latest upstream Aurora Store (113 commits)\n• Installs stalled on a missed system prompt are recovered, with a new in-app notification centre\n• Free space is checked before a download starts\n• Every Shizuku variant is supported; changing the spoofed device now takes effect\n• Downloads can be sorted; the files list is back on the app page\n• Our basket mark in notifications; new translations de-branded again",
+  "size": "9239425",
+  "last_commit": "d2c44a0ab17357c36c9f1b89bf60209f944fdaf5",
   "updated_on": "10月 22, 2026",
-  "timestamp": "1792689358"
+  "timestamp": "1792689976"
 }

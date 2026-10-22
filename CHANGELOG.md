@@ -5,6 +5,45 @@ naming the upstream release it is built on. Upstream Aurora Store's own history 
 [`CHANGELOG`](CHANGELOG) beside this file, exactly as upstream maintains it — it is left untouched
 so every upstream sync merges cleanly.
 
+## 白い熊 店 4.8.4+2026-10-02.16-53.g3a15ff67+024 — 2026-10-22
+
+Built on Aurora Store 4.8.4, upstream `master` at `3a15ff67` (2026-10-02) — synced from
+`4b717c67`, 113 upstream commits.
+
+### New from upstream
+
+- **Installs stalled on a missed system prompt are recovered.** A download whose install prompt
+  never appeared used to sit on “Installing” forever; it now waits as “Waiting for confirmation”
+  and can be resumed from the notification shade or the new in-app **notification centre**.
+- **Free space is checked before a download starts** — a “Not enough space” dialog at the tap,
+  instead of a failed download later.
+- **Every Shizuku variant is supported**, found by whichever app serves Shizuku rather than by
+  package name; a running Shizuku service counts on its own, and the installer row names the fork
+  that serves it. Installs go through `pm`.
+- **Changing the spoofed device now takes effect:** a session built under another device is
+  rebuilt, so Play serves the new device's splits.
+- **Downloads can be sorted** by date, name and size, and the files list is back under
+  *More about app*.
+- Fixes: self-update no longer reinstalls itself in a loop; a session waiting for confirmation is
+  no longer re-committed (the stray “Can't install app” dialog); a stream that returns the same app
+  twice no longer crashes.
+- 89 Weblate translation updates, a new Filipino locale, and REUSE licence headers across the tree.
+
+### Fork changes in this sync
+
+- **Our mark in notifications.** Upstream switched every notification icon to Aurora's own mark;
+  ours shows the 白い熊 店 basket instead.
+- **The update check's ignore-rule fix is now upstream's own.** Upstream fixed the same hole the
+  hold had closed in `+020`, so ours was dropped in favour of theirs; the hold toggle is unchanged.
+- **Shizuku detection is upstream's**, which finds our renamed Shizuku build by itself, so the
+  fork's own name list is gone.
+- **The new notification centre and storage dialog use the house buttons.**
+- **New translations de-branded again:** app-name strings in Catalan, Filipino, Italian, Japanese,
+  Lao, Latvian, Serbian and Swedish say 白い熊 店; the Filipino locale drops the About links and
+  donation strings, like every other locale.
+- **Fixed:** the English About text called 白い熊 店 “a fork of 白い熊 店”; it names Aurora Store
+  again.
+
 ## 白い熊 店 4.8.4+2026-08-02.08-09.g4b717c67+023 — 2026-10-22
 
 Built on Aurora Store 4.8.4, upstream `master` at `4b717c67` (2026-08-02).
