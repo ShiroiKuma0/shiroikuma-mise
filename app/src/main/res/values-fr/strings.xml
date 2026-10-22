@@ -168,9 +168,9 @@
     <string name="onboarding_title_permissions">Autorisations</string>
     <string name="onboarding_permission_select">白い熊 店 a besoin des autorisations suivantes</string>
     <string name="dialog_title_self_update">Une nouvelle mise à jour est proposée</string>
-    <string name="installer_service_misconfigured">Commencez par configurer 白い熊 店 Services et attribuez toutes les autorisations.</string>
-    <string name="installer_service_unavailable">Installez 白い熊 店 Services 1.0.9 ou une version ultérieure, ou modifiez le programme d\'installation.</string>
-    <string name="installer_service_available">白い熊 店 Services est disponible et prêt à être installé.</string>
+    <string name="installer_service_misconfigured">Commencez par configurer Aurora Services et attribuez toutes les autorisations.</string>
+    <string name="installer_service_unavailable">Installez Aurora Services 1.0.9 ou une version ultérieure, ou modifiez le programme d\'installation.</string>
+    <string name="installer_service_available">Aurora Services est disponible et prêt à être installé.</string>
     <string name="installer_root_unavailable">L’accès superutilisateur manque. Accordez-le ou changez le programme d’installation.</string>
     <string name="filter_review_all">Tout</string>
     <string name="exodus_view_report">Afficher le rapport</string>

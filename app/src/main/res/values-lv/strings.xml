@@ -540,8 +540,8 @@
     <string name="manual_download_select_version">Atlasiet versiju</string>
     <string name="account_add_failed">Nevarēja pievienot šo kontu. Lūgums mēģināt vēlreiz.</string>
     <string name="account_refresh_all">Atsvaidzināt visus kontus</string>
-    <string name="account_remove_last_message">Šis ir Tavs vienīgais konts. Tā noņemšana izraisīs atteikšanos, un Aurora Store nevarēsi izmantot, līdz atkal pieteiksies.</string>
-    <string name="account_set_default_message">Aurora Store palaidīsies no jauna, lai izmantotu jauno noklusējuma kontu.</string>
+    <string name="account_remove_last_message">Šis ir Tavs vienīgais konts. Tā noņemšana izraisīs atteikšanos, un 白い熊 店 nevarēsi izmantot, līdz atkal pieteiksies.</string>
+    <string name="account_set_default_message">白い熊 店 palaidīsies no jauna, lai izmantotu jauno noklusējuma kontu.</string>
     <string name="account_refresh_done">Visi konti atsvaidzināti</string>
     <string name="account_switch_failed">To kontu nevarēja atsvaidzināt, līdz ar to noklusējums netika mainīts.</string>
     <string name="account_exists">Konts jau ir pievienots</string>

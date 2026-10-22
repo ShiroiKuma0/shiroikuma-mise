@@ -536,7 +536,7 @@
     <string name="toast_fav_install_failed">Impossibile recuperare i dettagli dell\'app</string>
     <string name="status_installing">Installazione</string>
     <string name="status_installed">Installata</string>
-    <string name="updates_self_desc">È disponibile una nuova versione di Aurora Store</string>
+    <string name="updates_self_desc">È disponibile una nuova versione di 白い熊 店</string>
     <string name="pref_theme_style_light">Chiaro</string>
     <string name="pref_theme_style_dark">Scuro</string>
     <string name="pref_theme_style_system">Uguale al sistema</string>

@@ -308,7 +308,7 @@ class AutomationDataService : Service() {
             NotificationChannel(CHANNEL_ID, "Automation data", NotificationManager.IMPORTANCE_LOW)
         )
         return NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_notification_outlined)
+            .setSmallIcon(R.drawable.ic_aurora)
             .setContentTitle(getString(R.string.app_name))
             .setContentText(if (importing) "Restoring data…" else "Backing data up…")
             .setOngoing(true)

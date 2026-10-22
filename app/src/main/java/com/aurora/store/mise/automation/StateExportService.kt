@@ -227,7 +227,7 @@ class StateExportService : Service() {
             )
         )
         return NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_notification_outlined)
+            .setSmallIcon(R.drawable.ic_aurora)
             .setContentTitle(appName)
             .setContentText("Exporting settings…")
             .setOngoing(true)
