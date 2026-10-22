@@ -5,6 +5,36 @@ naming the upstream release it is built on. Upstream Aurora Store's own history 
 [`CHANGELOG`](CHANGELOG) beside this file, exactly as upstream maintains it — it is left untouched
 so every upstream sync merges cleanly.
 
+## 白い熊 店 4.8.4+2026-08-02.08-09.g4b717c67+023 — 2026-10-22
+
+Built on Aurora Store 4.8.4, upstream `master` at `4b717c67` (2026-08-02).
+
+(`+021` and `+022` were intermediate test builds and were never released; everything in them is
+included here.)
+
+### Apps frozen by hiding are checked for updates at last
+
+- **A hidden app did not exist for 白い熊 店.** An app frozen by hiding it — what device-owner
+  freezers do — is still installed and still updatable, but Android reports it only to a lookup
+  that also asks for uninstalled packages, and every lookup here used the plain one. So a hidden
+  app was never checked for updates, was missing from the Installed list, and a held hidden app
+  vanished from the *Ignored* section. On the phone this was found on, that was 63 apps.
+- **Every package lookup now sees hidden apps**, while still rejecting apps uninstalled with
+  their data kept, which the same lookup also returns.
+- **A hidden app counts as frozen:** its row is in italics, and the “Updates for frozen apps”
+  switch covers it. With that switch off, suspended apps are now excluded too, as its description
+  always said; the description now names hidden apps.
+
+### The version now names the upstream base
+
+- **New version format:** `<upstream>+<base date>.<HH-MM>.g<base sha>+<build>`, e.g.
+  `4.8.4+2026-08-02.08-09.g4b717c67+023`. Aurora tags a release only every few months, so `4.8.4` alone said
+  nothing about which upstream commit a build sits on; the date, time (UTC) and short sha of that
+  commit now do. This is the scheme the other 白い熊 forks use.
+- **The build counter keeps counting across upstream syncs** and resets only when upstream's own
+  version code moves, so a sync build always installs over the previous one and is offered by the
+  self-update feed — no more version-code downgrades.
+
 ## 白い熊 店 4.8.4+020 — 2026-10-22
 
 Built on Aurora Store 4.8.4.

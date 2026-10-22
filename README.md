@@ -10,7 +10,7 @@ A fork of [Aurora Store](https://gitlab.com/AuroraOSS/AuroraStore) with **major 
 
 Installs **side-by-side** with Aurora Store (app id `shiroikuma.mise`).
 
-**📥 Latest release: [`4.8.4+020`](https://github.com/ShiroiKuma0/shiroikuma-mise/releases/latest)** — [all releases & APK downloads »](https://github.com/ShiroiKuma0/shiroikuma-mise/releases)
+**📥 Latest release: [`4.8.4+2026-08-02.08-09.g4b717c67+023`](https://github.com/ShiroiKuma0/shiroikuma-mise/releases/latest)** — [all releases & APK downloads »](https://github.com/ShiroiKuma0/shiroikuma-mise/releases)
 
 </div>
 
@@ -26,9 +26,9 @@ The border, divider and roundness sliders all reach **0 meaning "draw nothing"**
 
 ## 🧊 Updates for frozen apps
 
-Stock hides updates for disabled apps unless you turn on "extended updates" — which also drags in apps whose signature does not match Play's, two unrelated things behind one switch. Here frozen apps get their **own** switch, on by default, in Settings › Updates and on the UI page.
+Stock hides updates for frozen apps unless you turn on "extended updates" — which also drags in apps whose signature does not match Play's, two unrelated things behind one switch. Here frozen apps get their **own** switch, on by default, in Settings › Updates and on the UI page.
 
-A frozen app is still installed and still updatable, so it is listed like any other and set in **italics** to tell it apart. The italics are resolved from live system state, so freezing or thawing an app changes them straight away rather than at the next update check.
+Frozen means disabled, suspended, or **hidden** — the last is what device-owner freezers do, and a hidden app is invisible to an ordinary package lookup, so stock never even sees it. A frozen app is still installed and still updatable, so it is listed like any other and set in **italics** to tell it apart. The italics are resolved from live system state, so freezing or thawing an app changes them straight away rather than at the next update check.
 
 ---
 
