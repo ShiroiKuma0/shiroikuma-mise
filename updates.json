@@ -1,13 +1,13 @@
 {
-  "version_name": "4.8.4+019",
-  "version_code": "760019",
-  "download_url": "https://github.com/ShiroiKuma0/shiroikuma-mise/releases/download/4.8.4+019/shiroikuma-mise_4.8.4+019.apk",
+  "version_name": "4.8.4+020",
+  "version_code": "760020",
+  "download_url": "https://github.com/ShiroiKuma0/shiroikuma-mise/releases/download/4.8.4+020/shiroikuma-mise_4.8.4+020.apk",
   "icon_url": "",
-  "sha1": "bee14f556c16a4446b9171d99c0b672cd7b32459",
-  "sha256": "737cf4edf048352d6c85f45928ac2a7752c6fcba4c478145d7d0af74bd6487b0",
-  "changelog": "白い熊 店 4.8.4+019\n• The automation path no longer crashes when it is started cold. A broadcast is a background start on Android 12+, so the foreground service it needs can be refused — and the refusal was killing the app instead of failing the export\n• Four places could be refused, not one; the export service's own start had nowhere to send a reply, so a refusal there vanished silently\n• A refused start is now reported with a keyed error, so 保存復元 can offer a “battery optimisation” button on the failed row\n• That button is only offered when it would actually help: if the app is already exempt, or the state cannot be read, the real reason is reported instead — on EMUI the cause can be アプリ起動管理, which no app can change for itself\n• This makes a cold-phone failure diagnosable, not fixed: exempting the app from battery optimisation is what lets a cold export run",
-  "size": "9129918",
-  "last_commit": "86389c71507018262a2ad078a177283967a8862c",
-  "updated_on": " 9月 05, 2026",
-  "timestamp": "1788583990"
+  "sha1": "f857a55e3ed52f1d55ca2f875869c5909b3d75c8",
+  "sha256": "12fa6c04b37334f3bfe68d5fa52f69d46347679ebd12cb7590d4d543d792c15c",
+  "changelog": "白い熊 店 4.8.4+020\n• Hold an app at its installed version: a “Hold at current version” toggle in the app page’s ⋯ menu\n• A held app’s update is still listed on the Updates tab under Ignored, for information — not counted in the total or the badge, and left out of Update all\n• The background update check now honours ignore rules: ignored and held apps are no longer notified or auto-installed",
+  "size": "9130396",
+  "last_commit": "0706585ba6ce697686cb8b943286c008affd8928",
+  "updated_on": "10月 22, 2026",
+  "timestamp": "1792687486"
 }
