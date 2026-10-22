@@ -64,7 +64,7 @@ object PackageUtil {
     private const val MICROG_INSTALL_ACTIVITY = "org.microg.vending.installer.AppInstallActivity"
 
     fun getAllValidPackages(context: Context): List<PackageInfo> =
-        context.packageManager.getInstalledPackages(PackageManager.GET_META_DATA)
+        getInstalledPackages(context, PackageManager.GET_META_DATA)
             .filter { it.isValidApp(context.packageManager) }
             .sortedBy {
                 it.applicationInfo!!.loadLabel(context.packageManager).toString()
@@ -190,18 +190,28 @@ object PackageUtil {
 
     /**
      * `true` when [packageName] is frozen: disabled by the user — what `pm disable-user` and the
-     * freezer apps do — or suspended. Such an app is still installed and still updatable, it just
-     * can't be launched, so the Updates tab lists it in italics rather than hiding it.
-     *
-     * Apps frozen by *hiding* them (`setApplicationHiddenSettingAsUser`, the Island/Shelter
-     * approach) are invisible to us entirely and can be neither listed nor reported here.
+     * freezer apps do — suspended, or hidden. Such an app is still installed and still updatable,
+     * it just can't be launched, so the Updates tab lists it in italics rather than hiding it.
      */
     fun isFrozen(context: Context, packageName: String): Boolean = try {
         val applicationInfo = getPackageInfo(context, packageName).applicationInfo!!
         !applicationInfo.enabled ||
-            applicationInfo.flags and ApplicationInfo.FLAG_SUSPENDED != 0
+            applicationInfo.flags and ApplicationInfo.FLAG_SUSPENDED != 0 ||
+            isHidden(context, packageName)
     } catch (_: Exception) {
         false
+    }
+
+    /**
+     * Fork: `true` when [packageName] is installed but frozen by *hiding* it
+     * (`setApplicationHiddenSettingAsUser`, what device-owner freezers do). A plain lookup can't
+     * see a hidden app at all; only the [MATCH_HIDDEN] lookup in [getPackageInfo] finds it.
+     */
+    fun isHidden(context: Context, packageName: String): Boolean = try {
+        context.packageManager.getPackageInfo(packageName, 0)
+        false
+    } catch (_: PackageManager.NameNotFoundException) {
+        isInstalled(context, packageName)
     }
 
     /**
@@ -320,19 +330,45 @@ object PackageUtil {
         null
     }
 
-    @Throws(Exception::class)
-    fun getPackageInfo(context: Context, packageName: String, flags: Int = 0): PackageInfo =
+    /**
+     * Fork: a hidden app — frozen by `setApplicationHiddenSettingAsUser` — is still installed and
+     * still updatable, but the PackageManager reports it only to a query that also asks for
+     * uninstalled packages. That query also returns apps uninstalled with their data kept
+     * (`pm uninstall -k`, or `--user 0` on a system app); those lack [ApplicationInfo.FLAG_INSTALLED],
+     * which is how [isInstalledForUser] tells them apart.
+     */
+    private const val MATCH_HIDDEN = PackageManager.MATCH_UNINSTALLED_PACKAGES
+
+    private fun PackageInfo.isInstalledForUser(): Boolean =
+        (applicationInfo?.flags ?: 0) and ApplicationInfo.FLAG_INSTALLED != 0
+
+    /** Every installed package, hidden ones included — see [MATCH_HIDDEN]. */
+    fun getInstalledPackages(context: Context, flags: Int = 0): List<PackageInfo> =
         if (isTAndAbove) {
-            context.packageManager.getPackageInfo(
-                packageName,
-                PackageInfoFlags.of(flags.toLong())
+            context.packageManager.getInstalledPackages(
+                PackageInfoFlags.of((flags or MATCH_HIDDEN).toLong())
             )
         } else {
-            context.packageManager.getPackageInfo(packageName, flags)
+            context.packageManager.getInstalledPackages(flags or MATCH_HIDDEN)
+        }.filter { it.isInstalledForUser() }
+
+    @Throws(Exception::class)
+    fun getPackageInfo(context: Context, packageName: String, flags: Int = 0): PackageInfo {
+        val packageInfo = if (isTAndAbove) {
+            context.packageManager.getPackageInfo(
+                packageName,
+                PackageInfoFlags.of((flags or MATCH_HIDDEN).toLong())
+            )
+        } else {
+            context.packageManager.getPackageInfo(packageName, flags or MATCH_HIDDEN)
         }
+        // Uninstalled with its data kept is not installed, whatever the lookup returned.
+        if (!packageInfo.isInstalledForUser()) throw PackageManager.NameNotFoundException(packageName)
+        return packageInfo
+    }
 
     fun getIconForPackage(context: Context, packageName: String): Bitmap? = try {
-        val packageInfo = context.packageManager.getPackageInfo(packageName, 0)
+        val packageInfo = getPackageInfo(context, packageName)
         val icon = packageInfo.applicationInfo!!.loadIcon(context.packageManager)
         if (icon.intrinsicWidth > 0 && icon.intrinsicHeight > 0) {
             icon.toBitmap(96, 96)
@@ -348,7 +384,7 @@ object PackageUtil {
         val placeholder = AppCompatResources.getDrawable(context, R.drawable.bg_placeholder)
 
         return try {
-            val packageInfo = context.packageManager.getPackageInfo(packageName, 0)
+            val packageInfo = getPackageInfo(context, packageName)
             val applicationInfo = packageInfo.applicationInfo ?: return placeholder
 
             applicationInfo.loadIcon(context.packageManager)
