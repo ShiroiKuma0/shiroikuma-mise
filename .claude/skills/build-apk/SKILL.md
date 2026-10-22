@@ -27,11 +27,13 @@ commit/push still waits for 白い熊's explicit **"Push"**.
    grep -E '^\s+versionCode = |^\s+versionName = ' app/build.gradle.kts   # upstream's two literals
    grep -E '^BUILD_NUMBER' gradle.properties    # the N used for THIS build, before the task bumps it
    ```
-   - APK will be `shiroikuma-mise_<upstream versionName>+<NNN>.apk`, the counter **zero-padded to
-     three digits** — `BUILD_NUMBER=7` → `4.8.4+007`. The padding is applied in
-     `app/build.gradle.kts`; `gradle.properties` stores the plain integer.
+   - APK will be `shiroikuma-mise_<upstream versionName>+<base date>.<HH-MM>.g<base sha>+<NNN>.apk`
+     (the global **`git-versioning`** pin), the counter **zero-padded to three digits** —
+     `BUILD_NUMBER=21` → `4.8.4+2026-08-02.08-09.g4b717c67+021`. The pin is the UTC committer time
+     and 8-char sha of `git merge-base HEAD master`; the padding is applied in `app/build.gradle.kts`;
+     `gradle.properties` stores the plain integer.
    - `versionCode` for this build = `<upstream versionCode> * 10000 + BUILD_NUMBER`
-     (e.g. `76 * 10000 + 7 = 760007`).
+     (e.g. `76 * 10000 + 21 = 760021`).
 
 2. **Build** (the toolchain needs JDK 21):
    ```bash

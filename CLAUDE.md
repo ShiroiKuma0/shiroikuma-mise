@@ -30,9 +30,12 @@ skill — this repo has no local copy.
 and it has no releases). F-Droid builds from GitLab, merge requests and the issue tracker live
 there, and CI is `.gitlab-ci.yml`. Always fetch from GitLab.
 
-**Upstream tracking: `master` tip**, not release tags — Aurora tags a release only every few months
-while `master` moves continuously (Weblate merges, MR merges). 白い熊 chose the plain `+NNN`
-versionName anyway (2026-08-03), so the global **`/git-versioning`** skill does **not** apply here.
+- **Upstream tracking: `git`** — `custom` is rebased onto upstream `master`'s tip, not release tags
+  (Aurora tags a release only every few months while `master` moves continuously), so the fork
+  versionName pins the upstream base:
+  `<upstream>+<base date>.<HH-MM>.g<sha>+<BUILD_NUMBER, 3 digits>`.
+  See the global **`git-versioning`** skill. (Adopted 2026-10-22, replacing the plain `+NNN` form
+  chosen on 2026-08-03; `4.8.4+020` was the last plain-form release.)
 
 ### Our customizations (install identity + build)
 
@@ -54,10 +57,14 @@ versionName anyway (2026-08-03), so the global **`/git-versioning`** skill does 
   them and multiply/append, so a rebase brings the new base in automatically.
   **Never hand-edit those two literals.**
 - `BUILD_NUMBER` (in `gradle.properties`) is our per-build `N`:
-  `versionName = "<upstream name>+<N zero-padded to 3>"` (e.g. `4.8.4+001`),
-  `versionCode = <upstream code> * 10000 + N` (plain integer, e.g. `760001`).
-  The `buildFork` task bumps `BUILD_NUMBER` after every successful build; `/upstream-new-version`
-  resets it to `1` on every sync, so `+N` always reads as "our Nth build on this upstream base".
+  `versionName = "<upstream name>+<base date>.<HH-MM>.g<base sha>+<N zero-padded to 3>"`
+  (e.g. `4.8.4+2026-08-02.08-09.g4b717c67+021`),
+  `versionCode = <upstream code> * 10000 + N` (plain integer, e.g. `760021`).
+  The pin is the UTC committer time and first 8 chars of `git merge-base HEAD master` — the
+  upstream commit our patches sit on — so it moves only on a sync.
+  The `buildFork` task bumps `BUILD_NUMBER` after every successful build. It is **not** reset on a
+  sync — only when upstream's own `versionCode` literal moves. Resetting on a mere repin would send
+  `versionCode` backwards, and the phone would refuse every sync build as a downgrade.
 - APK: `shiroikuma-mise_<versionName>.apk`, copied to `~/tmp/`. **No ABI suffix** — the app has no
   native code, so the APK is universal. The versionName contains no `_`, so the
   `shiroikuma-mise_*.apk` globs in `/adb-push`, `/scp` and `/publish-version` still resolve.
@@ -76,7 +83,8 @@ We ship the **`vanilla`** flavor (upstream's default). The `huawei` and `preload
 
 ### Releasing
 
-Releases go through the global `/publish-version` skill (tag = `VERSION_NAME+NNN`, APK attached).
+Releases go through the global `/publish-version` skill (tag = the full versionName, pin included,
+e.g. `4.8.4+2026-08-02.08-09.g4b717c67+021`; APK attached).
 **One extra step this repo needs:** refresh `updates.json` at the repo root and commit it to `custom`
 before/with the release. That file *is* our self-update feed — the app fetches it from
 `raw.githubusercontent.com/ShiroiKuma0/shiroikuma-mise/custom/updates.json` and offers the build in

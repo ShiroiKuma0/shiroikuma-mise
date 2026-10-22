@@ -1,6 +1,6 @@
 ---
 name: upstream-new-version
-description: Sync the shiroikuma-mise fork onto new upstream work from AuroraOSS/AuroraStore on GitLab — fast-forward master, rebase custom, reset BUILD_NUMBER, build the new +001. Use when 白い熊 says a new upstream version is out, asks to check/update/sync to upstream, or to rebase custom onto the latest Aurora Store. ALWAYS present the proceed-gated upstream-changes table BEFORE rebasing.
+description: Sync the shiroikuma-mise fork onto new upstream work from AuroraOSS/AuroraStore on GitLab — fast-forward master, rebase custom, build the next +NNN on the new pinned base. Use when 白い熊 says a new upstream version is out, asks to check/update/sync to upstream, or to rebase custom onto the latest Aurora Store. ALWAYS present the proceed-gated upstream-changes table BEFORE rebasing.
 ---
 
 # Sync shiroikuma-mise onto new upstream Aurora Store work
@@ -15,8 +15,10 @@ GitLab, read the MRs and issues there.
 
 **We follow `master`'s tip, not release tags.** Aurora tags a release every few months while `master`
 moves continuously (Weblate merges, MR merges). So a sync is normal even when upstream's
-`versionName` has not changed — expect `4.8.4+001` to be followed by another `4.8.4+001` on the next
-base. The global `/git-versioning` skill does **not** apply here (白い熊's call, 2026-08-03).
+`versionName` has not changed. The global **`/git-versioning`** skill applies (since 2026-10-22):
+the versionName carries the upstream base pin, so a sync shows up as a new pin —
+`4.8.4+2026-08-02.08-09.g4b717c67+021` → `4.8.4+2026-10-02.16-53.g3a15ff67+022` — while the counter
+simply keeps counting.
 
 ## Branch / remote model
 
@@ -68,7 +70,10 @@ base. The global `/git-versioning` skill does **not** apply here (白い熊's ca
      `Constants.kt` (links + self-update feed), `app/build.gradle.kts`, `.gitignore`, the Welcome /
      About / Help screens under `compose/ui/`. Those are the rebase conflicts, predicted in advance.
    - Below the table, add the base line: old base sha → new base sha, old `versionCode`/`versionName`
-     → new, and the resulting fork version (`<newVersionName>+001`, code `<newVersionCode>*10000+1`).
+     → new, and the resulting fork version
+     (`<newVersionName>+<new base date>.<HH-MM>.g<new sha>+<next NNN>`, code
+     `<newVersionCode>*10000+<next N>` — where the next N is `1` only if upstream's `versionCode`
+     moved, otherwise the current `BUILD_NUMBER`).
 
    **Then stop and wait for 白い熊's explicit go-ahead.** Do not fast-forward `master`, do not
    rebase, do not build until they say proceed. If they decline, nothing has been touched.
@@ -95,14 +100,13 @@ base. The global `/git-versioning` skill does **not** apply here (白い熊's ca
    strings mentioning "Aurora", new links to `auroraoss.com` / `gitlab.com/AuroraOSS`, a new About
    entry. Those need the same treatment as the original de-branding sweep.
 
-5. **Reset the build tail:** in `gradle.properties`, set **`BUILD_NUMBER=1`** — a new upstream base
-   starts its `+N` at 1, whether or not upstream bumped its own version.
-
-   Consequence to expect: when upstream ships commits *without* bumping `versionCode` (the usual
-   case between releases), the reset lowers our `versionCode` below the installed build. Deliver such
-   a build with **`adb install -r -d`** (`-d` allows a version-code downgrade); plain `-r` fails with
-   `INSTALL_FAILED_VERSION_DOWNGRADE`. Never `adb uninstall` to work around it — that wipes the
-   account session and the downloads/updates database.
+5. **Build tail — reset ONLY if upstream's `versionCode` moved.** Compare upstream's `versionCode`
+   literal before and after the rebase. If it moved, set **`BUILD_NUMBER=1`** in `gradle.properties`
+   (the larger upstream code already outranks every earlier build). If it did not — the usual case
+   between upstream releases — **leave `BUILD_NUMBER` alone**: the new pin already shows the base
+   moved, and a reset would send `versionCode` backwards, so the phone would refuse the build as a
+   downgrade and the self-update feed would never offer it. Never `adb uninstall` to work around a
+   downgrade — that wipes the account session and the downloads/updates database.
 
 6. **Verify our customizations are intact after the rebase:**
 
@@ -111,10 +115,10 @@ base. The global `/git-versioning` skill does **not** apply here (白い熊's ca
    | Installed app id | `shiroikuma.mise` | `app/build.gradle.kts` → `defaultConfig.applicationId` |
    | Code namespace | `com.aurora.store` (**unchanged** from upstream) | `app/build.gradle.kts` → `namespace` |
    | App label | `白い熊 店` | `app_name` in `app/src/main/res/values/strings.xml` |
-   | Fork version block | upstream literals + `forkVersionName` / `forkVersionCode` lines after them | `app/build.gradle.kts` |
+   | Fork version block | upstream literals + `forkVersionName` / `forkVersionCode` lines after them; the `upstreamPin` (merge-base sha + UTC stamp) block near the top | `app/build.gradle.kts` |
    | `buildFork` task + `archivesName` | present at the end of the script | `app/build.gradle.kts` |
    | Signing path patch | `rootProject.file("signing.properties")`, not `File("signing.properties")` | `app/build.gradle.kts` |
-   | Build tail | `BUILD_NUMBER=1` | `gradle.properties` |
+   | Build tail | unchanged, or `1` only if upstream's `versionCode` moved | `gradle.properties` |
    | Black-yellow icon | yellow `#FFFF00` traced line-art, black `ic_launcher_background` | `drawable/ic_launcher_foreground.xml`, `drawable-v24/…`, `ic_launcher_monochrome.xml`, `values/colors.xml`, `mipmap-*/`, `ic_launcher-playstore.png` |
    | De-branding | no upstream app name, wiki/FAQ/donate/XDA/Telegram links left in user-visible text | `values*/strings.xml`, `arrays.xml`, `Constants.kt`, `compose/ui/onboarding/`, About screen |
    | Self-update feed | points at our `updates.json` on `raw.githubusercontent.com` | `Constants.kt`, `updates.json` |
@@ -126,7 +130,7 @@ base. The global `/git-versioning` skill does **not** apply here (白い熊's ca
    JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64 ./gradlew :app:tasks --console=plain | head
    ```
 
-7. **Build the new `+001`** via the **build-apk** skill
+7. **Build the next `+NNN`** on the new base via the **build-apk** skill
    (`JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64 ./gradlew buildFork < /dev/null`), then deliver it
    via the global **/after-build** skill (no transfer prompt). This is the first build of the new
    upstream base.
