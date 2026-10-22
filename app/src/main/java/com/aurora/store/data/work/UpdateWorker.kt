@@ -27,6 +27,7 @@ import com.aurora.store.data.providers.AccountProvider
 import com.aurora.store.data.providers.AuthProvider
 import com.aurora.store.data.providers.BlacklistProvider
 import com.aurora.store.data.providers.GoogleAccountTokenProvider
+import com.aurora.store.data.room.update.IgnoredUpdateDao
 import com.aurora.store.data.room.update.Update
 import com.aurora.store.data.room.update.UpdateDao
 import com.aurora.store.util.CertUtil
@@ -39,6 +40,7 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import java.util.Locale
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 
@@ -60,6 +62,7 @@ class UpdateWorker @AssistedInject constructor(
     private val json: Json,
     private val blacklistProvider: BlacklistProvider,
     private val updateDao: UpdateDao,
+    private val ignoredUpdateDao: IgnoredUpdateDao,
     private val downloadHelper: DownloadHelper,
     private val authProvider: AuthProvider,
     tokenProvider: GoogleAccountTokenProvider,
@@ -124,9 +127,20 @@ class UpdateWorker @AssistedInject constructor(
                 .also { updateDao.insertUpdates(it) }
                 .filter { if (!isExtendedUpdateEnabled) it.hasValidCert else true }
 
+            // Fork: ignored updates (an app held at its version, or a skipped version) stay
+            // in the database for the Updates tab's Ignored section, but are never notified
+            // or auto-installed — the UI already keeps them out of the count and Update all.
+            val ignored = ignoredUpdateDao.ignoredUpdates().first().associateBy { it.packageName }
+
             // Incompatible updates (e.g. system app updates on HyperOS / GrapheneOS) are
             // surfaced in the UI but excluded from notifications and auto-install.
-            val updates = allUpdates.filterNot { it.isIncompatible }
+            val updates = allUpdates
+                .filterNot { it.isIncompatible }
+                .filterNot { update ->
+                    ignored[update.packageName]?.let {
+                        it.ignoredVersionCode == null || it.ignoredVersionCode == update.versionCode
+                    } ?: false
+                }
 
             if (updates.isEmpty() || updateMode == UpdateMode.CHECK_ONLY) {
                 Log.i(TAG, "Found ${updates.size} updates")

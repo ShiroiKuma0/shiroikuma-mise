@@ -16,5 +16,6 @@ enum class MenuItem {
     INSTALL_OTHER_ACCOUNT,
     APP_INFO,
     ADD_TO_HOME,
-    PLAY_STORE
+    PLAY_STORE,
+    HOLD_VERSION
 }

@@ -132,6 +132,7 @@ fun AppDetailsScreen(
     val featuredReviews by viewModel.featuredReviews.collectAsStateWithLifecycle()
     val userReview by viewModel.userReview.collectAsStateWithLifecycle()
     val favorite by viewModel.favourite.collectAsStateWithLifecycle()
+    val held by viewModel.isHeld.collectAsStateWithLifecycle()
     val exodusReport by viewModel.exodusReport.collectAsStateWithLifecycle()
     val dataSafetyReport by viewModel.dataSafetyReport.collectAsStateWithLifecycle()
     val plexusScores by viewModel.plexusScores.collectAsStateWithLifecycle()
@@ -186,6 +187,7 @@ fun AppDetailsScreen(
                     userReview = userReview,
                     suggestionsBundle = suggestionsBundle,
                     isFavorite = favorite,
+                    isHeld = held,
                     isAnonymous = viewModel.authProvider.isAnonymous,
                     state = currentState,
                     plexusScores = plexusScores,
@@ -199,6 +201,7 @@ fun AppDetailsScreen(
                         viewModel.enqueueDownloadWith(requestedApp, accountId)
                     },
                     onFavorite = { viewModel.toggleFavourite(loadedApp) },
+                    onToggleHold = { viewModel.toggleHold(loadedApp) },
                     onCancelDownload = { viewModel.cancelDownload(loadedApp) },
                     onUninstall = { AppInstaller.uninstall(context, packageName) },
                     onOpen = {
@@ -298,6 +301,7 @@ private fun ScreenContentApp(
     userReview: Review? = null,
     suggestionsBundle: StreamBundle? = StreamBundle.EMPTY,
     isFavorite: Boolean = false,
+    isHeld: Boolean = false,
     isAnonymous: Boolean = true,
     state: AppState = AppState.Unavailable,
     plexusScores: Scores? = null,
@@ -309,6 +313,7 @@ private fun ScreenContentApp(
     onDownload: (requestedApp: App) -> Unit = {},
     onDownloadWith: (requestedApp: App, accountId: String) -> Unit = { _, _ -> },
     onFavorite: () -> Unit = {},
+    onToggleHold: () -> Unit = {},
     onCancelDownload: () -> Unit = {},
     onUninstall: () -> Unit = {},
     onOpen: () -> Unit = {},
@@ -460,6 +465,7 @@ private fun ScreenContentApp(
     fun SetupMenu() {
         AppDetailsMenu(
             isFavorite = isFavorite,
+            isHeld = isHeld,
             state = state,
             canManualDownload = canAcquire,
             canUseOtherAccount = accounts.size > 1
@@ -484,6 +490,8 @@ private fun ScreenContentApp(
                 }
 
                 MenuItem.PLAY_STORE -> openPlayStore(context, app.packageName)
+
+                MenuItem.HOLD_VERSION -> onToggleHold()
             }
         }
     }
