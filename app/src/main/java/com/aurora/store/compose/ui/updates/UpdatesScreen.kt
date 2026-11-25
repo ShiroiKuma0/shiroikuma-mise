@@ -29,6 +29,7 @@ import com.aurora.store.compose.composable.Placeholder
 import com.aurora.store.compose.composable.SectionHeader
 import com.aurora.store.compose.composable.ShimmerUpdateItem
 import com.aurora.store.compose.composable.app.AppUpdateItem
+import com.aurora.store.compose.composable.app.HeldState
 import com.aurora.store.compose.navigation.Destination
 import com.aurora.store.data.model.DownloadStatus
 import com.aurora.store.data.room.download.Download
@@ -51,6 +52,7 @@ fun UpdatesScreen(
     val context = LocalContext.current
     val updates by viewModel.updates.collectAsStateWithLifecycle()
     val ignoredUpdates by viewModel.ignoredUpdates.collectAsStateWithLifecycle()
+    val ignoreRules by viewModel.ignoreRules.collectAsStateWithLifecycle()
     val downloads by viewModel.downloadsList.collectAsStateWithLifecycle()
     val fetchingUpdates by viewModel.fetchingUpdates.collectAsStateWithLifecycle()
 
@@ -63,6 +65,36 @@ fun UpdatesScreen(
                 .filter { PackageUtil.isFrozen(context, it) }
                 .toSet()
         }
+    }
+
+    // Fork: held apps whose offered version still needs trying come first, the ones already
+    // rejected after them. The installed version tells a rejected mark from a kept one: a
+    // version that was tried and kept is the one installed, so it is never "last skipped".
+    val heldStates by produceState(
+        initialValue = emptyMap<String, HeldState>(),
+        ignoredUpdates,
+        ignoreRules
+    ) {
+        value = withContext(Dispatchers.IO) {
+            ignoredUpdates.mapNotNull { update ->
+                val rule = ignoreRules[update.packageName]?.takeIf { it.isHold }
+                    ?: return@mapNotNull null
+                val tested = rule.testedVersionCode
+                val state = when {
+                    rule.hasSkipped(update) -> HeldState.Skipped(rule.testedAt)
+
+                    tested != null && tested >
+                        PackageUtil.getInstalledVersionCode(context, update.packageName) ->
+                        HeldState.Untested(rule.testedVersionName, rule.testedAt)
+
+                    else -> HeldState.Untested()
+                }
+                update.packageName to state
+            }.toMap()
+        }
+    }
+    val sortedIgnored = remember(ignoredUpdates, heldStates) {
+        ignoredUpdates.sortedBy { heldStates[it.packageName] is HeldState.Skipped }
     }
 
     val updateMap = remember(updates, downloads) {
@@ -258,14 +290,29 @@ fun UpdatesScreen(
                             )
                         }
                         items(
-                            items = ignoredUpdates,
+                            items = sortedIgnored,
                             key = { "ignored-${it.packageName}" }
                         ) { update ->
                             AppUpdateItem(
                                 update = update,
+                                // "Test" downloads and installs like any update, so the row
+                                // shows its progress and can be cancelled like any other.
+                                download = downloads.find {
+                                    it.packageName == update.packageName &&
+                                        it.versionCode == update.versionCode
+                                },
+                                isChecking = update.packageName in checkingPackages,
                                 isFrozen = update.packageName in frozenPackages,
                                 onClick = {},
-                                onUnignore = { viewModel.unignore(update.packageName) }
+                                onUpdate = { onRequestUpdate(update) },
+                                onCancel = { onCancelUpdate(update.packageName) },
+                                onUnignore = { viewModel.unignore(update.packageName) },
+                                heldState = heldStates[update.packageName],
+                                onSkip = { viewModel.skipVersion(update) },
+                                onTestAgain = { viewModel.testAgain(update.packageName) },
+                                onDetails = {
+                                    onNavigateTo(Destination.AppDetails(update.packageName))
+                                }
                             )
                         }
                     }

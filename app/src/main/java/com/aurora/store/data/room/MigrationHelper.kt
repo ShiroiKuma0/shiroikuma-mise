@@ -63,6 +63,10 @@ object MigrationHelper {
         override fun migrate(db: SupportSQLiteDatabase) = migrateFrom12To13(db)
     }
 
+    val MIGRATION_13_14 = object : Migration(13, 14) {
+        override fun migrate(db: SupportSQLiteDatabase) = migrateFrom13To14(db)
+    }
+
     private const val TAG = "MigrationHelper"
 
     private fun migrateFrom1To2(database: SupportSQLiteDatabase) {
@@ -328,6 +332,28 @@ object MigrationHelper {
             database.setTransactionSuccessful()
         } catch (exception: Exception) {
             Log.e(TAG, "Failed while migrating from database version 12 to 13", exception)
+        } finally {
+            database.endTransaction()
+        }
+    }
+
+    /**
+     * Fork: add the tested mark to ignored_update — the newest version of a held app that was
+     * tried, so a rejected version is shown as skipped instead of being offered again.
+     */
+    private fun migrateFrom13To14(database: SupportSQLiteDatabase) {
+        database.beginTransaction()
+        try {
+            listOf(
+                "testedVersionCode INTEGER",
+                "testedVersionName TEXT",
+                "testedAt INTEGER"
+            ).forEach {
+                database.execSQL("ALTER TABLE `ignored_update` ADD COLUMN $it")
+            }
+            database.setTransactionSuccessful()
+        } catch (exception: Exception) {
+            Log.e(TAG, "Failed while migrating from database version 13 to 14", exception)
         } finally {
             database.endTransaction()
         }

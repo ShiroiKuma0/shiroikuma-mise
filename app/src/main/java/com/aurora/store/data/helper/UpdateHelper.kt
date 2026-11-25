@@ -27,6 +27,7 @@ import com.aurora.store.data.model.BuildType
 import com.aurora.store.data.model.UpdateMode
 import com.aurora.store.data.room.update.IgnoredUpdate
 import com.aurora.store.data.room.update.IgnoredUpdateDao
+import com.aurora.store.data.room.update.Update
 import com.aurora.store.data.room.update.UpdateDao
 import com.aurora.store.data.room.update.isIgnoredBy
 import com.aurora.store.data.work.UpdateWorker
@@ -126,6 +127,14 @@ class UpdateHelper @Inject constructor(
         list.filter { it.isIgnoredBy(byPkg) }
     }.stateIn(AuroraApp.scope, SharingStarted.WhileSubscribed(), emptyList())
 
+    /**
+     * Fork: every ignore rule by package name, for the Updates screen to tell a held app's
+     * untested update from one already tried and rejected.
+     */
+    val ignoreRules = ignoredUpdateDao.ignoredUpdates()
+        .map { list -> list.associateBy { it.packageName } }
+        .stateIn(AuroraApp.scope, SharingStarted.WhileSubscribed(), emptyMap())
+
     val isCheckingUpdates = WorkManager.getInstance(context)
         .getWorkInfosForUniqueWorkFlow(EXPEDITED_UPDATE_WORKER)
         .map { list -> list.any { it.state == WorkInfo.State.RUNNING } }
@@ -145,7 +154,10 @@ class UpdateHelper @Inject constructor(
     private fun observeUpdates() {
         AuroraApp.events.installerEvent.onEach {
             when (it) {
-                is InstallerEvent.Installed -> deleteUpdate(it.packageName)
+                is InstallerEvent.Installed -> {
+                    markTested(it.packageName)
+                    deleteUpdate(it.packageName)
+                }
                 is InstallerEvent.Uninstalled -> deleteUpdate(it.packageName)
                 else -> {}
             }
@@ -221,6 +233,44 @@ class UpdateHelper @Inject constructor(
      */
     suspend fun unignore(packageName: String) {
         ignoredUpdateDao.delete(packageName)
+    }
+
+    /**
+     * Fork: a held app was just (re)installed — remember the version it is on as tried. The
+     * mark only ever rises: restoring the old version from a backup fires this too, and must
+     * leave the newer, rejected version marked. No-op unless the package is held.
+     */
+    private suspend fun markTested(packageName: String) {
+        val rule = ignoredUpdateDao.get(packageName)?.takeIf { it.isHold } ?: return
+        val installed = PackageUtil.getInstalledVersionCode(context, packageName)
+        if (installed <= (rule.testedVersionCode ?: 0L)) return
+        ignoredUpdateDao.setTested(
+            packageName,
+            installed,
+            PackageUtil.getInstalledVersionName(context, packageName),
+            System.currentTimeMillis()
+        )
+    }
+
+    /**
+     * Fork: mark [update] as tried and rejected by hand, without installing it. It stays
+     * listed as skipped until a newer version is offered.
+     */
+    suspend fun skipVersion(update: Update) {
+        ignoredUpdateDao.setTested(
+            update.packageName,
+            update.versionCode,
+            update.versionName,
+            System.currentTimeMillis()
+        )
+    }
+
+    /**
+     * Fork: forget the tested mark for [packageName], so its offered version counts as
+     * untested again.
+     */
+    suspend fun clearTested(packageName: String) {
+        ignoredUpdateDao.setTested(packageName, null, null, null)
     }
 
     /**

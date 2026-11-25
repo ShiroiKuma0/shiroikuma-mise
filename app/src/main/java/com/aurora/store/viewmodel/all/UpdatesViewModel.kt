@@ -38,6 +38,7 @@ class UpdatesViewModel @Inject constructor(
     val downloadsList get() = downloadHelper.downloadsList
     val updates get() = updateHelper.updates
     val ignoredUpdates get() = updateHelper.ignoredUpdates
+    val ignoreRules get() = updateHelper.ignoreRules
 
     val fetchingUpdates = updateHelper.isCheckingUpdates
 
@@ -47,6 +48,16 @@ class UpdatesViewModel @Inject constructor(
 
     fun unignore(packageName: String) {
         viewModelScope.launch { updateHelper.unignore(packageName) }
+    }
+
+    /** Fork: mark a held app's offered version as tried and rejected. */
+    fun skipVersion(update: Update) {
+        viewModelScope.launch { updateHelper.skipVersion(update) }
+    }
+
+    /** Fork: drop the tested mark, so the offered version counts as untested again. */
+    fun testAgain(packageName: String) {
+        viewModelScope.launch { updateHelper.clearTested(packageName) }
     }
 
     fun download(update: Update) {
