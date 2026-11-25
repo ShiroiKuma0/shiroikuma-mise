@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  白い熊 店 (shiroikuma-mise) fork: the languages this app offers, written once.
+  SPDX-License-Identifier: GPL-3.0-or-later
+
+  Japanese and English first, then the languages in which the app is translated to four fifths
+  or more of upstream's strings (measured against values/strings.xml; re-measure after a sync).
+  The system's per-app language screen reads this file, and so does the picker on the UI page
+  (MiseLanguage.entries), so the two always offer the same list. The other translations stay in
+  the package; they are only not offered.
+-->
+<locale-config xmlns:android="http://schemas.android.com/apk/res/android">
+    <locale android:name="ja" />
+    <locale android:name="en" />
+    <locale android:name="ar" />
+    <locale android:name="az" />
+    <locale android:name="ca" />
+    <locale android:name="cs" />
+    <locale android:name="de" />
+    <locale android:name="es" />
+    <locale android:name="et" />
+    <locale android:name="eu" />
+    <locale android:name="fi" />
+    <locale android:name="fil" />
+    <locale android:name="fr" />
+    <locale android:name="hu" />
+    <locale android:name="id" />
+    <locale android:name="it" />
+    <locale android:name="ko" />
+    <locale android:name="lo" />
+    <locale android:name="lv" />
+    <locale android:name="ms" />
+    <locale android:name="nl" />
+    <locale android:name="pl" />
+    <locale android:name="pt" />
+    <locale android:name="pt-BR" />
+    <locale android:name="ro" />
+    <locale android:name="ru" />
+    <locale android:name="sk" />
+    <locale android:name="sq" />
+    <locale android:name="sv" />
+    <locale android:name="ta" />
+    <locale android:name="tr" />
+    <locale android:name="uk" />
+    <locale android:name="zh-CN" />
+    <locale android:name="zh-TW" />
+</locale-config>

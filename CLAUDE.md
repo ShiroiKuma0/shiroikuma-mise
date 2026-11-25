@@ -150,7 +150,8 @@ the Updates tab when its `version_code` exceeds the installed one. Its schema is
   wrapping the base context of `AuroraApp` and of every activity — **a new activity needs the same
   `attachBaseContext` override**. `Locale.getDefault()` is left alone on purpose: sign-in and Play
   requests read it. The picker lists Japanese, English and the languages at four fifths or more
-  of upstream's strings (`MOSTLY_TRANSLATED`); re-measure after a sync.
+  of upstream's strings — the hand-written `res/xml/locales_config.xml`, read by the picker and
+  by the system alike (`generateLocaleConfig` is off for that); re-measure after a sync.
 - **Every row of the UI page takes an icon** (`RowIcon`, 1.25 × the label, floor 18 dp) and
   switches there are `MiseSwitch`, never Material's `Switch`.
 - **The fork's own screens take their text from `mise_strings.xml`** (`values/` and `values-ja/`),

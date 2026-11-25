@@ -12,7 +12,9 @@ import android.content.res.Configuration
 import android.os.Build
 import android.os.LocaleList
 import androidx.core.content.edit
+import com.aurora.store.R
 import java.util.Locale
+import org.xmlpull.v1.XmlPullParser
 
 /**
  * The language of this app alone, chosen on the UI page.
@@ -32,15 +34,26 @@ object MiseLanguage {
     private const val KEY = "app_language"
 
     /**
-     * What the picker offers, written once: Japanese and English first, then the languages in
-     * which the app is fully or mostly translated — four fifths or more of upstream's strings,
-     * measured against `values/strings.xml`. The rest stay in the package but are not listed.
+     * What the picker offers: the short list in `res/xml/locales_config.xml`, which the system's
+     * own per-app language screen reads too, so the two cannot drift apart. The file's first two
+     * entries, Japanese and English, keep their place; the rest are sorted by name.
      */
-    private val MOSTLY_TRANSLATED = listOf(
-        "ar", "az", "ca", "cs", "de", "es", "et", "eu", "fi", "fil", "fr", "hu", "id", "it", "ko",
-        "lo", "lv", "ms", "nl", "pl", "pt", "pt-BR", "ro", "ru", "sk", "sq", "sv", "ta", "tr", "uk",
-        "zh-CN", "zh-TW"
-    )
+    private fun offered(context: Context): List<String> {
+        val tags = mutableListOf<String>()
+        val parser = context.resources.getXml(R.xml.locales_config)
+        try {
+            while (parser.next() != XmlPullParser.END_DOCUMENT) {
+                if (parser.eventType == XmlPullParser.START_TAG && parser.name == "locale") {
+                    parser.getAttributeValue(ANDROID_NS, "name")?.let(tags::add)
+                }
+            }
+        } finally {
+            parser.close()
+        }
+        return tags
+    }
+
+    private const val ANDROID_NS = "http://schemas.android.com/apk/res/android"
 
     /** A row of the picker: the tag, the language in its own words, and its country if any. */
     class Entry(val tag: String, val name: String, val country: String)
@@ -51,8 +64,9 @@ object MiseLanguage {
 
     /** The rows after "System default". A language chosen earlier and no longer listed stays. */
     fun entries(context: Context): List<Entry> {
-        val rest = MOSTLY_TRANSLATED.map(::entry).sortedBy { it.name.lowercase(Locale.ROOT) }
-        val listed = listOf(entry("ja"), entry("en")) + rest
+        val tags = offered(context)
+        val rest = tags.drop(2).map(::entry).sortedBy { it.name.lowercase(Locale.ROOT) }
+        val listed = tags.take(2).map(::entry) + rest
         val current = tag(context)
         return if (current.isEmpty() || listed.any { it.tag == current }) {
             listed

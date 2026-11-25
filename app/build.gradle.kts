@@ -233,7 +233,9 @@ configure<ApplicationExtension> {
     }
 
     androidResources {
-        generateLocaleConfig = true
+        // Fork: off — the declaration is the hand-written short list in res/xml/locales_config.xml,
+        // and a generated one beside it stops the build.
+        generateLocaleConfig = false
     }
 
     dependenciesInfo {
