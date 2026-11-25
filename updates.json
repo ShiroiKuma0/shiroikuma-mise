@@ -1,13 +1,13 @@
 {
-  "version_name": "4.8.4+2026-10-02.16-53.g3a15ff67+025",
-  "version_code": "760025",
-  "download_url": "https://github.com/ShiroiKuma0/shiroikuma-mise/releases/download/4.8.4+2026-10-02.16-53.g3a15ff67+025/shiroikuma-mise_4.8.4+2026-10-02.16-53.g3a15ff67+025.apk",
+  "version_name": "4.8.4+2026-10-02.16-53.g3a15ff67+028",
+  "version_code": "760028",
+  "download_url": "https://github.com/ShiroiKuma0/shiroikuma-mise/releases/download/4.8.4+2026-10-02.16-53.g3a15ff67+028/shiroikuma-mise_4.8.4+2026-10-02.16-53.g3a15ff67+028.apk",
   "icon_url": "",
-  "sha1": "0d3ffe6d7a3502495ab8c14292f70d43674735a9",
-  "sha256": "ad840f5b02b8aa04d33566a05ac4a48df3ccf7258581df47562db0e27e4ccb39",
-  "changelog": "白い熊 店 4.8.4+2026-10-02.16-53.g3a15ff67+025\n• Held apps: a newer version can be tested or skipped, and a skipped version is shown as skipped until a newer one appears\n• Every popup menu in the house look: full-width pill rows with role-coloured icons, outlined switches\n• Pill rows on the UI page, with new colour roles\n• A complete Japanese translation, the fork's own screens included",
-  "size": "9324798",
-  "last_commit": "dc4a293e97c5ede27c1055f22d25d16d696d3d06",
+  "sha1": "36df7c7c2bc9fe472e6317f5fe814226739b67a3",
+  "sha256": "09de63e8910c6a43dfc857e086757b6f1c172bef54556b12ed749085a634afcd",
+  "changelog": "白い熊 店 4.8.4+2026-10-02.16-53.g3a15ff67+028\n• The UI page folds: every section opens on a tap, with a chip index on top that jumps to a section\n• The index is draggable: long-press a chip to reorder the sections\n• App language: a language for this app alone, first on the UI page\n• Section icons in seven colours, an icon on every row, outlined switches",
+  "size": "9335735",
+  "last_commit": "13d27ca864526c874350f54d7e07aec5d1e6a008",
   "updated_on": "11月 25, 2026",
-  "timestamp": "1795629734"
+  "timestamp": "1795632478"
 }

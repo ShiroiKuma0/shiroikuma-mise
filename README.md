@@ -10,7 +10,7 @@ A fork of [Aurora Store](https://gitlab.com/AuroraOSS/AuroraStore) with **major 
 
 Installs **side-by-side** with Aurora Store (app id `shiroikuma.mise`).
 
-**📥 Latest release: [`4.8.4+2026-10-02.16-53.g3a15ff67+025`](https://github.com/ShiroiKuma0/shiroikuma-mise/releases/latest)** — [all releases & APK downloads »](https://github.com/ShiroiKuma0/shiroikuma-mise/releases)
+**📥 Latest release: [`4.8.4+2026-10-02.16-53.g3a15ff67+028`](https://github.com/ShiroiKuma0/shiroikuma-mise/releases/latest)** — [all releases & APK downloads »](https://github.com/ShiroiKuma0/shiroikuma-mise/releases)
 
 </div>
 
@@ -21,6 +21,8 @@ Installs **side-by-side** with Aurora Store (app id `shiroikuma.mise`).
 Every knob that shapes the app's look, on one page — colours, fonts, roundness, border and divider widths, indent step, row padding, group spacing. It is not a settings screen that takes effect on restart: each write lands in preferences *and* in Compose state, so dragging a slider repaints the whole app underneath you. The page is themed by the very values it edits, which makes the app its own preview.
 
 The border, divider and roundness sliders all reach **0 meaning "draw nothing"** — not "draw the Material default". Colours come from an RGBA picker with a one-click row of colours you have used before, and fonts from a picker that renders every candidate in its own glyphs.
+
+The page is a folding accordion: every section opens on a tap of its heading, and a grid of small chips on top — one per section, each with the section's icon in its colour — jumps straight to any of them. Long-press a chip and it lifts; drag it, and the sections reorder to match. The first section is **App language**: a language for this app alone, whatever the phone speaks.
 
 ---
 

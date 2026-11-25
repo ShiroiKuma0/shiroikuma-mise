@@ -5,6 +5,46 @@ naming the upstream release it is built on. Upstream Aurora Store's own history 
 [`CHANGELOG`](CHANGELOG) beside this file, exactly as upstream maintains it — it is left untouched
 so every upstream sync merges cleanly.
 
+## 白い熊 店 4.8.4+2026-10-02.16-53.g3a15ff67+028 — 2026-11-25
+
+Built on Aurora Store 4.8.4, upstream `master` at `3a15ff67` (2026-10-02) — the same base as
+`+025`; this release is fork work only. `+026` and `+027` were test builds and are not released.
+
+### The UI page folds, with an index on top
+
+- **Every section folds.** A tap on a heading folds or unfolds its rows, with › when folded and ⌄
+  when open. Every section starts folded, and each remembers its state.
+- **A chip index sits at the top of the page:** one small outlined chip per section, each as wide
+  as its icon and label. A tap on a chip unfolds its section and scrolls to it.
+- **The index is draggable.** A long-press lifts a chip; it floats under the finger while the
+  other chips reorder beneath it, and the sections below follow on drop. “Reset section order” in
+  the Reset section puts them back.
+- **Order and fold state travel in the export**, with the colours and fonts.
+
+### App language
+
+- **A language for this app alone**, as the first section of the UI page: “Language: …” opens a
+  list with *System default*, 日本語, English and the 32 languages in which the app is translated
+  to four fifths or more. Each row shows the language in its own words, its country and its tag;
+  the one in force stands in a pill. A choice applies at once.
+- The choice is stored with the page's settings, so it travels in the export, and it survives
+  “Restore the black-yellow defaults”.
+- What the store itself shows — app descriptions, the sign-in — still follows the system or the
+  spoof settings; only the app's own texts change.
+
+### UI & theming
+
+- **Section icons in seven colours, by what the section is** — the base, controls, words, the
+  frame, reaching out, warning, a brief flash — the same icon and colour on a heading and on its
+  chip. Each of the seven is a colour you can set, under Colours → “Section icons of this page”.
+- **Every row of the UI page has an icon**, sized by its label so it follows the font size.
+- **The page's switches are the outlined house switch** — a round outline with a solid dot, never
+  filled — and the dot now travels when a switch is flipped, in menus too.
+
+### Japanese
+
+- All sixteen new strings are translated; both key sets match.
+
 ## 白い熊 店 4.8.4+2026-10-02.16-53.g3a15ff67+025 — 2026-11-25
 
 Built on Aurora Store 4.8.4, upstream `master` at `3a15ff67` (2026-10-02) — the same base as
