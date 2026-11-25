@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ 白い熊 店 (shiroikuma-mise) fork: the strings of the fork's own screens.
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  -->
+<resources>
+    <!-- Common buttons -->
+    <string name="mise_action_ok">OK</string>
+    <string name="mise_action_cancel">キャンセル</string>
+    <string name="mise_action_close">閉じる</string>
+    <string name="mise_action_remove">削除</string>
+    <string name="mise_action_export">保存</string>
+    <string name="mise_action_import">復元</string>
+    <string name="mise_action_restart_now">今すぐ再起動</string>
+    <string name="mise_action_later">後で</string>
+    <string name="mise_unknown_error">不明なエラー</string>
+
+    <!-- UI page: Export / Import -->
+    <string name="mise_ui_section_export_import">保存 / 復元</string>
+    <string name="mise_ui_export_import_settings">設定の保存 / 復元</string>
+    <string name="mise_ui_export_dir_unset">保存先ディレクトリが設定されていません。</string>
+    <string name="mise_ui_export_dir_set">保存先ディレクトリは設定済みです。</string>
+
+    <!-- UI page: automation -->
+    <string name="mise_ui_automation_export">自動化による保存</string>
+    <string name="mise_ui_automation_export_note">姉妹アプリからこのアプリの保存を実行できるようにします。また、白い熊 応用管理がこのアプリのデータを保存し、まっさらな端末に復元できるようになります。</string>
+    <string name="mise_ui_automation_use_token">認証トークンを使用しますか？</string>
+    <string name="mise_ui_automation_use_token_on_note">オン：呼び出し元は下のトークンも提示する必要があります。データの受け渡し口は、どちらの場合も呼び出し元のパッケージ名と署名証明書を確認します。</string>
+    <string name="mise_ui_automation_use_token_off_note">オフ：どの姉妹アプリでも自動化を実行できます。データの受け渡し口は、どちらの場合も呼び出し元のパッケージ名と署名証明書を確認します。</string>
+    <string name="mise_ui_automation_token">自動化トークン</string>
+    <string name="mise_ui_automation_token_regenerate">再生成</string>
+    <string name="mise_ui_automation_token_copied">トークンをコピーしました。</string>
+    <string name="mise_ui_automation_token_regenerated">トークンを新しくしました。ほかの場所に貼り付けたものもすべて更新してください。</string>
+
+    <!-- UI page: updates -->
+    <string name="mise_ui_section_updates">更新</string>
+    <string name="mise_ui_updates_frozen">凍結アプリも確認する</string>
+    <string name="mise_ui_updates_frozen_note">無効化または一時停止したアプリの更新も、斜体で一覧に表示します。凍結アプリもすべて照会するため、確認に時間がかかります。</string>
+
+    <!-- UI page: colours -->
+    <string name="mise_ui_section_colours">色</string>
+    <string name="mise_ui_colour_background">背景</string>
+    <string name="mise_ui_colour_surface">部品の背景（カード、シート、ダイアログ）</string>
+    <string name="mise_ui_colour_text">文字</string>
+    <string name="mise_ui_colour_text_secondary">補助の文字</string>
+    <string name="mise_ui_colour_accent">アクセント</string>
+    <string name="mise_ui_colour_border">枠線</string>
+    <string name="mise_ui_colour_divider">区切り線</string>
+    <string name="mise_ui_colour_icons">アイコン</string>
+    <string name="mise_ui_colour_warnings">警告</string>
+    <string name="mise_ui_colour_switch_off">スイッチ（オフ）</string>
+    <string name="mise_ui_sub_held_updates">保留中の更新</string>
+    <string name="mise_ui_colour_held_new">新しいバージョン（未試用）</string>
+    <string name="mise_ui_colour_held_skipped">見送ったバージョン</string>
+    <string name="mise_ui_sub_menu_icons">メニューのアイコン</string>
+    <string name="mise_ui_colour_menu_view">表示、開く</string>
+    <string name="mise_ui_colour_menu_connect">接続、ダウンロード、再読み込み</string>
+    <string name="mise_ui_colour_menu_account">アカウント</string>
+    <string name="mise_ui_colour_menu_share">共有、保存、復元</string>
+    <string name="mise_ui_colour_menu_block">ブロック、保留、キャンセル</string>
+
+    <!-- UI page: typography -->
+    <string name="mise_ui_section_typography">文字</string>
+    <string name="mise_ui_font">フォント</string>
+    <string name="mise_ui_sub_body">本文</string>
+    <string name="mise_ui_size">大きさ</string>
+    <string name="mise_ui_weight">太さ</string>
+    <string name="mise_ui_italic">斜体</string>
+    <string name="mise_ui_sub_headings">見出し</string>
+    <string name="mise_ui_sub_secondary_lines">補助の行</string>
+    <string name="mise_ui_sub_spacing">間隔</string>
+    <string name="mise_ui_letter_spacing">字間</string>
+    <string name="mise_ui_line_height">行の高さ</string>
+    <string name="mise_ui_preview_heading">白い熊 店 — 見出し</string>
+    <string name="mise_ui_preview_body">本文 — 見本 AaBbCc 0123</string>
+    <string name="mise_ui_preview_secondary">補助の行 — 補足</string>
+
+    <!-- UI page: shape and borders -->
+    <string name="mise_ui_section_shape">形と枠線</string>
+    <string name="mise_ui_corner_roundness">角の丸み</string>
+    <string name="mise_ui_border_thickness">枠線の太さ</string>
+    <string name="mise_ui_divider_thickness">区切り線の太さ</string>
+    <string name="mise_ui_preview_shape">角 %1$ddp · 枠線 %2$ddp</string>
+
+    <!-- UI page: icons -->
+    <string name="mise_ui_section_icons">アイコン</string>
+    <string name="mise_ui_roundness">丸み</string>
+    <string name="mise_ui_preview_icon">%1$ddp · 丸み %2$d%%</string>
+
+    <!-- UI page: density -->
+    <string name="mise_ui_section_density">表示の密度</string>
+    <string name="mise_ui_row_padding">行の余白</string>
+    <string name="mise_ui_group_spacing">グループの間隔</string>
+    <string name="mise_ui_indent_step">階層ごとの字下げ</string>
+
+    <!-- UI page: reset -->
+    <string name="mise_ui_section_reset">初期設定</string>
+    <string name="mise_ui_reset_defaults">黒と黄の初期設定に戻す</string>
+    <string name="mise_ui_reset_defaults_summary">色、フォント、大きさをすべて、白い熊 店の最初の状態に戻します。</string>
+
+    <!-- Font picker -->
+    <string name="mise_font_import">フォントを取り込む…</string>
+    <string name="mise_font_system_default">システムの既定</string>
+    <string name="mise_font_sans_serif">サンセリフ</string>
+    <string name="mise_font_serif">セリフ</string>
+    <string name="mise_font_monospace">等幅</string>
+    <string name="mise_font_cursive">筆記体</string>
+
+    <!-- Export / Import panel -->
+    <string name="mise_export_intro">すべての設定を別のインストール先へ持ち運べます。対象にチェックを入れ、「保存」で保存先ディレクトリに書き出すか、「復元」で保存ファイルから読み込みます。</string>
+    <string name="mise_export_dir_label">保存先ディレクトリ</string>
+    <string name="mise_export_dir_choose">保存先ディレクトリが設定されていません。タップして選んでください。</string>
+    <string name="mise_export_last_backup">最新の保存：%1$s（%2$s）</string>
+    <string name="mise_export_no_backup_found">このディレクトリにはまだ保存ファイルがありません。</string>
+    <string name="mise_import_finished">復元が完了しました</string>
+    <string name="mise_import_finished_message">%1$d 件の区分を復元しました。</string>
+    <string name="mise_import_failed">復元に失敗しました</string>
+    <string name="mise_export_finished">保存が完了しました</string>
+    <string name="mise_export_finished_message">%1$s\n%2$d kB · %3$d 区分</string>
+    <string name="mise_export_failed">保存に失敗しました</string>
+    <string name="mise_export_no_categories">区分が選択されていません。</string>
+    <string name="mise_export_no_dir">保存先ディレクトリが設定されていません。</string>
+    <string name="mise_export_dir_not_writable">保存先ディレクトリに書き込めませんでした。</string>
+
+    <!-- Backup categories -->
+    <string name="mise_backup_cat_ui">白い熊 店 UI（色、フォント、大きさ）</string>
+    <string name="mise_backup_cat_settings">アプリの設定（インストーラー、ネットワーク、更新、ブラックリスト、偽装）</string>
+    <string name="mise_backup_cat_favourites">お気に入り</string>
+    <string name="mise_backup_cat_ignored_updates">無視した更新</string>
+    <string name="mise_backup_cat_fonts">取り込んだフォント</string>
+    <string name="mise_backup_account_exclusion">Google アカウントは含みません。セッションと認証トークンは保存されないため、復元後はログアウトした状態になります。</string>
+
+    <!-- Automation notifications -->
+    <string name="mise_automation_channel_export">自動化による保存</string>
+    <string name="mise_automation_exporting">設定を保存しています…</string>
+    <string name="mise_automation_channel_data">自動化によるデータの保存と復元</string>
+    <string name="mise_automation_restoring">データを復元しています…</string>
+    <string name="mise_automation_backing_up">データを保存しています…</string>
+</resources>

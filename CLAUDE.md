@@ -115,6 +115,7 @@ the Updates tab when its `version_code` exceeds the installed one. Its schema is
 | `compose/ui/mise/MiseDialogs.kt` | RGBA colour picker with recent-colour swatches, font picker (each font in its own glyphs), the Export/Import panel |
 | `compose/composable/MiseButtons.kt` | drop-in `TextButton`/`Button`/`OutlinedButton`/`FilledTonalButton` with the house border by default |
 | `compose/composable/MiseDividers.kt` | drop-in `HorizontalDivider`/`VerticalDivider` taking thickness + colour from the knobs (0 = draw nothing) |
+| `compose/composable/MiseMenus.kt` | drop-in `DropdownMenu`/`DropdownMenuItem` in the house menu look: full-width outlined pill rows with an icon coloured by `MenuRole`, `opens` (›), `destructive`, `checked` (a toggle row with `MiseSwitch`), plus `MenuDivider` |
 | `mise/MiseFlash.kt` | the black-yellow toast; `Context.toast()` and every direct call route through it |
 | `design/` | the icon's source SVG |
 
@@ -126,6 +127,20 @@ the Updates tab when its `version_code` exceeds the installed one. Its schema is
 - **`MiseButtons.kt` / `MiseDividers.kt` are how buttons and dividers get the house look.** A file opts in by importing these instead of
   the `androidx.compose.material3` ones — 36 files (buttons) and 16 (dividers) already do. When
   upstream adds a screen, switch its imports over; don't patch borders or thicknesses at call sites.
+- **Menus go through `MiseMenus.kt`.** A file opts in by importing `DropdownMenu` /
+  `DropdownMenuItem` from `compose/composable` instead of Material's; every action row then needs
+  an `icon` and, where it is not a plain "view", a `role`. A list of pure choices passes
+  `iconColumn = false`. All seven menu files are switched over — switch upstream's new ones too.
+- **A new colour role is one line in `MiseUiState.ColorSlot`** (key + default) and one `ColorRow`
+  on the UI page; only the first nine roles have properties of their own in `MiseUiConfig`.
+- **Held apps carry a "tested" mark** (`ignored_update.testedVersionCode/Name/At`, Room v14). It
+  is set when a held app is installed (`UpdateHelper.markTested`, and it only ever rises, so
+  restoring the old version from a backup keeps the newer version marked) or by the row's "Skip".
+  The Updates screen derives the row state from it: offered version == tested → *skipped*;
+  otherwise *untested*. Whether an older mark was a rejection is read from the installed version
+  (tested > installed), never stored. "Unignore" deletes the rule and the mark with it.
+- **The fork's own screens take their text from `mise_strings.xml`** (`values/` and `values-ja/`),
+  never from literals — every string added needs its Japanese in the same change.
 - **`MiseUiState` writers are `updateX()`, not `setX()`** — the properties' generated setters already
   own the `setX` JVM signature.
 - **The export core is called from three places** (panel, service, and any future caller). Never

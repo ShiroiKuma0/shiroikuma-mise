@@ -209,7 +209,7 @@ class StateExportService : Service() {
                 putExtra(StateExportReceiver.EXTRA_REPLY_ID, replyId)
                 putExtra("app", getString(R.string.app_name))
                 putExtra("item", cat.id)
-                putExtra("text", "区分 $position/$total — ${cat.label}")
+                putExtra("text", "区分 $position/$total — ${cat.label(this@StateExportService)}")
                 putExtra("current", position.toLong())
                 putExtra("total", total.toLong())
                 putExtra("unit", "区分")
@@ -222,14 +222,14 @@ class StateExportService : Service() {
         manager?.createNotificationChannel(
             NotificationChannel(
                 CHANNEL_ID,
-                "Automation export",
+                getString(R.string.mise_automation_channel_export),
                 NotificationManager.IMPORTANCE_LOW
             )
         )
         return NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_aurora)
             .setContentTitle(appName)
-            .setContentText("Exporting settings…")
+            .setContentText(getString(R.string.mise_automation_exporting))
             .setOngoing(true)
             .build()
     }

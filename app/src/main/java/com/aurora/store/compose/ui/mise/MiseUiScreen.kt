@@ -26,6 +26,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
@@ -45,6 +46,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -91,12 +93,14 @@ fun MiseUiScreen() {
                 .verticalScroll(rememberScrollState())
         ) {
             // ---------------------------------------------------------- 保存復元
-            SectionHeader(ui, "Export / Import", first = true)
+            SectionHeader(ui, stringResource(R.string.mise_ui_section_export_import), first = true)
             NavigationRow(
                 ui = ui,
-                title = "Export / Import settings",
+                title = stringResource(R.string.mise_ui_export_import_settings),
                 summary = exportDirSummary(ui),
                 summaryIsWarning = ui.exportDir.isBlank(),
+                main = true,
+                opens = true,
                 onClick = { showExportImport = true }
             )
             // The 保存復元 automation rows belong here, under the export rows — a backup feature
@@ -104,79 +108,183 @@ fun MiseUiScreen() {
             AutomationRows(ui)
 
             // ------------------------------------------------------------ updates
-            SectionHeader(ui, "Updates")
+            SectionHeader(ui, stringResource(R.string.mise_ui_section_updates))
             FrozenUpdatesRow(ui)
 
             // ------------------------------------------------------------ colours
-            SectionHeader(ui, "Colours")
-            ColorRow(ui, "Background", ColorSlot.BACKGROUND)
-            ColorRow(ui, "Surface (cards, sheets, dialogs)", ColorSlot.SURFACE)
-            ColorRow(ui, "Text", ColorSlot.TEXT)
-            ColorRow(ui, "Secondary text", ColorSlot.TEXT_DIM)
-            ColorRow(ui, "Accent", ColorSlot.ACCENT)
-            ColorRow(ui, "Border", ColorSlot.BORDER)
-            ColorRow(ui, "Divider", ColorSlot.DIVIDER)
-            ColorRow(ui, "Icons", ColorSlot.ICON)
-            ColorRow(ui, "Warnings", ColorSlot.WARN)
+            SectionHeader(ui, stringResource(R.string.mise_ui_section_colours))
+            ColorRow(ui, stringResource(R.string.mise_ui_colour_background), ColorSlot.BACKGROUND)
+            ColorRow(ui, stringResource(R.string.mise_ui_colour_surface), ColorSlot.SURFACE)
+            ColorRow(ui, stringResource(R.string.mise_ui_colour_text), ColorSlot.TEXT)
+            ColorRow(ui, stringResource(R.string.mise_ui_colour_text_secondary), ColorSlot.TEXT_DIM)
+            ColorRow(ui, stringResource(R.string.mise_ui_colour_accent), ColorSlot.ACCENT)
+            ColorRow(ui, stringResource(R.string.mise_ui_colour_border), ColorSlot.BORDER)
+            ColorRow(ui, stringResource(R.string.mise_ui_colour_divider), ColorSlot.DIVIDER)
+            ColorRow(ui, stringResource(R.string.mise_ui_colour_icons), ColorSlot.ICON)
+            ColorRow(ui, stringResource(R.string.mise_ui_colour_warnings), ColorSlot.WARN)
+            ColorRow(ui, stringResource(R.string.mise_ui_colour_switch_off), ColorSlot.SWITCH_OFF)
+            SubHeader(ui, stringResource(R.string.mise_ui_sub_held_updates))
+            ColorRow(ui, stringResource(R.string.mise_ui_colour_held_new), ColorSlot.HELD_NEW, level2 = true)
+            ColorRow(ui, stringResource(R.string.mise_ui_colour_held_skipped), ColorSlot.HELD_SKIPPED, level2 = true)
+            SubHeader(ui, stringResource(R.string.mise_ui_sub_menu_icons))
+            ColorRow(ui, stringResource(R.string.mise_ui_colour_menu_view), ColorSlot.MENU_VIEW, level2 = true)
+            ColorRow(ui, stringResource(R.string.mise_ui_colour_menu_connect), ColorSlot.MENU_CONNECT, level2 = true)
+            ColorRow(ui, stringResource(R.string.mise_ui_colour_menu_account), ColorSlot.MENU_CONTACT, level2 = true)
+            ColorRow(ui, stringResource(R.string.mise_ui_colour_menu_share), ColorSlot.MENU_SHARE, level2 = true)
+            ColorRow(ui, stringResource(R.string.mise_ui_colour_menu_block), ColorSlot.MENU_BLOCK, level2 = true)
 
             // --------------------------------------------------------- typography
-            SectionHeader(ui, "Typography")
+            SectionHeader(ui, stringResource(R.string.mise_ui_section_typography))
             FontRow(ui)
-            SubHeader(ui, "Body")
-            SliderRow(ui, "Size", ui.fontSize, 8..32, "sp", level2 = true) { ui.updateFontSize(it) }
-            SliderRow(ui, "Weight", ui.fontWeight, 100..900, step = 100, level2 = true) {
+            SubHeader(ui, stringResource(R.string.mise_ui_sub_body))
+            SliderRow(ui, stringResource(R.string.mise_ui_size), ui.fontSize, 8..32, stringResource(R.string.mise_unit_sp), level2 = true) {
+                ui.updateFontSize(it)
+            }
+            SliderRow(
+                ui,
+                stringResource(R.string.mise_ui_weight),
+                ui.fontWeight,
+                100..900,
+                step = 100,
+                level2 = true
+            ) {
                 ui.updateFontWeight(it)
             }
-            ToggleRow(ui, "Italic", ui.fontItalic, level2 = true) { ui.updateFontItalic(it) }
-            SubHeader(ui, "Headings")
-            SliderRow(ui, "Size", ui.headingSize, 12..40, "sp", level2 = true) {
+            ToggleRow(ui, stringResource(R.string.mise_ui_italic), ui.fontItalic, level2 = true) {
+                ui.updateFontItalic(it)
+            }
+            SubHeader(ui, stringResource(R.string.mise_ui_sub_headings))
+            SliderRow(
+                ui,
+                stringResource(R.string.mise_ui_size),
+                ui.headingSize,
+                12..40,
+                stringResource(R.string.mise_unit_sp),
+                level2 = true
+            ) {
                 ui.updateHeadingSize(it)
             }
-            SliderRow(ui, "Weight", ui.headingWeight, 100..900, step = 100, level2 = true) {
+            SliderRow(
+                ui,
+                stringResource(R.string.mise_ui_weight),
+                ui.headingWeight,
+                100..900,
+                step = 100,
+                level2 = true
+            ) {
                 ui.updateHeadingWeight(it)
             }
-            SubHeader(ui, "Secondary lines")
-            SliderRow(ui, "Size", ui.labelSize, 8..24, "sp", level2 = true) { ui.updateLabelSize(it) }
-            SubHeader(ui, "Spacing")
-            SliderRow(ui, "Letter spacing", ui.letterSpacing, 0..20, "/100 em", level2 = true) {
+            SubHeader(ui, stringResource(R.string.mise_ui_sub_secondary_lines))
+            SliderRow(
+                ui,
+                stringResource(R.string.mise_ui_size),
+                ui.labelSize,
+                8..24,
+                stringResource(R.string.mise_unit_sp),
+                level2 = true
+            ) { ui.updateLabelSize(it) }
+            SubHeader(ui, stringResource(R.string.mise_ui_sub_spacing))
+            SliderRow(
+                ui,
+                stringResource(R.string.mise_ui_letter_spacing),
+                ui.letterSpacing,
+                0..20,
+                stringResource(R.string.mise_unit_em_hundredths),
+                level2 = true
+            ) {
                 ui.updateLetterSpacing(it)
             }
-            SliderRow(ui, "Line height", ui.lineHeightPct, 100..200, "%", level2 = true) {
+            SliderRow(
+                ui,
+                stringResource(R.string.mise_ui_line_height),
+                ui.lineHeightPct,
+                100..200,
+                stringResource(R.string.mise_unit_percent),
+                level2 = true
+            ) {
                 ui.updateLineHeightPct(it)
             }
             TypePreview(ui)
 
             // ----------------------------------------------------- shape & border
-            SectionHeader(ui, "Shape and borders")
-            SliderRow(ui, "Corner roundness", ui.cornerRadius, 0..40, "dp") {
+            SectionHeader(ui, stringResource(R.string.mise_ui_section_shape))
+            SliderRow(
+                ui,
+                stringResource(R.string.mise_ui_corner_roundness),
+                ui.cornerRadius,
+                0..40,
+                stringResource(R.string.mise_unit_dp)
+            ) {
                 ui.updateCornerRadius(it)
             }
-            SliderRow(ui, "Border thickness", ui.borderWidth, 0..8, "dp") { ui.updateBorderWidth(it) }
-            SliderRow(ui, "Divider thickness", ui.dividerWidth, 0..8, "dp") {
+            SliderRow(
+                ui,
+                stringResource(R.string.mise_ui_border_thickness),
+                ui.borderWidth,
+                0..8,
+                stringResource(R.string.mise_unit_dp)
+            ) { ui.updateBorderWidth(it) }
+            SliderRow(
+                ui,
+                stringResource(R.string.mise_ui_divider_thickness),
+                ui.dividerWidth,
+                0..8,
+                stringResource(R.string.mise_unit_dp)
+            ) {
                 ui.updateDividerWidth(it)
             }
             ShapePreview(ui)
 
             // -------------------------------------------------------------- icons
-            SectionHeader(ui, "Icons")
-            SliderRow(ui, "Size", ui.iconSize, 12..64, "dp") { ui.updateIconSize(it) }
-            SliderRow(ui, "Roundness", ui.iconRoundness, 0..100, "%") { ui.updateIconRoundness(it) }
+            SectionHeader(ui, stringResource(R.string.mise_ui_section_icons))
+            SliderRow(
+                ui,
+                stringResource(R.string.mise_ui_size),
+                ui.iconSize,
+                12..64,
+                stringResource(R.string.mise_unit_dp)
+            ) { ui.updateIconSize(it) }
+            SliderRow(
+                ui,
+                stringResource(R.string.mise_ui_roundness),
+                ui.iconRoundness,
+                0..100,
+                stringResource(R.string.mise_unit_percent)
+            ) { ui.updateIconRoundness(it) }
             IconPreview(ui)
 
             // ------------------------------------------------------------ density
-            SectionHeader(ui, "Density")
-            SliderRow(ui, "Row padding", ui.rowPadding, 0..24, "dp") { ui.updateRowPadding(it) }
-            SliderRow(ui, "Space between groups", ui.groupSpacing, 0..40, "dp") {
+            SectionHeader(ui, stringResource(R.string.mise_ui_section_density))
+            SliderRow(
+                ui,
+                stringResource(R.string.mise_ui_row_padding),
+                ui.rowPadding,
+                0..24,
+                stringResource(R.string.mise_unit_dp)
+            ) { ui.updateRowPadding(it) }
+            SliderRow(
+                ui,
+                stringResource(R.string.mise_ui_group_spacing),
+                ui.groupSpacing,
+                0..40,
+                stringResource(R.string.mise_unit_dp)
+            ) {
                 ui.updateGroupSpacing(it)
             }
-            SliderRow(ui, "Indent per level", ui.indentStep, 0..48, "dp") { ui.updateIndentStep(it) }
+            SliderRow(
+                ui,
+                stringResource(R.string.mise_ui_indent_step),
+                ui.indentStep,
+                0..48,
+                stringResource(R.string.mise_unit_dp)
+            ) { ui.updateIndentStep(it) }
 
             // -------------------------------------------------------------- reset
-            SectionHeader(ui, "Reset")
+            SectionHeader(ui, stringResource(R.string.mise_ui_section_reset))
             NavigationRow(
                 ui = ui,
-                title = "Restore the black-yellow defaults",
-                summary = "Every colour, font and size back to how 白い熊 店 ships",
+                title = stringResource(R.string.mise_ui_reset_defaults),
+                summary = stringResource(R.string.mise_ui_reset_defaults_summary),
                 onClick = { ui.resetToDefaults() }
             )
             Spacer(Modifier.height(ui.groupSpacing.dp * 2))
@@ -211,28 +319,22 @@ private fun AutomationRows(ui: MiseUiState) {
     var enabled by remember { mutableStateOf(MiseAutomationAuth.enabled(context)) }
     var requireToken by remember { mutableStateOf(MiseAutomationAuth.requireToken(context)) }
 
-    ToggleRow(ui, "Automation export", enabled) {
+    ToggleRow(ui, stringResource(R.string.mise_ui_automation_export), enabled) {
         MiseAutomationAuth.setEnabled(context, it)
         enabled = it
     }
-    RowNote(
-        ui,
-        "Lets sister apps trigger this app's export, and lets 白い熊 応用管理 back its data up " +
-            "and put it back on a clean phone."
-    )
+    RowNote(ui, stringResource(R.string.mise_ui_automation_export_note))
 
-    ToggleRow(ui, "Use authorization token?", requireToken) {
+    ToggleRow(ui, stringResource(R.string.mise_ui_automation_use_token), requireToken) {
         MiseAutomationAuth.setRequireToken(context, it)
         requireToken = it
     }
     RowNote(
         ui,
         if (requireToken) {
-            "On: a caller must also present the token below. The data door checks the caller's " +
-                "package name and signing certificate either way."
+            stringResource(R.string.mise_ui_automation_use_token_on_note)
         } else {
-            "Off: any sister app may drive the automation. The data door checks the caller's " +
-                "package name and signing certificate either way."
+            stringResource(R.string.mise_ui_automation_use_token_off_note)
         }
     )
 
@@ -248,7 +350,11 @@ private fun AutomationRows(ui: MiseUiState) {
             .clickable {
                 context.getSystemService(ClipboardManager::class.java)
                     ?.setPrimaryClip(ClipData.newPlainText("token", token))
-                MiseFlash.show(context, "Token copied", Toast.LENGTH_SHORT)
+                MiseFlash.show(
+                    context,
+                    R.string.mise_ui_automation_token_copied,
+                    Toast.LENGTH_SHORT
+                )
             }
             .padding(
                 start = rowIndent(ui, false),
@@ -259,16 +365,28 @@ private fun AutomationRows(ui: MiseUiState) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Column(Modifier.weight(1f)) {
-            RowTitle(ui, "Automation token", MiseAutomationAuth.abbreviated(token))
+            RowTitle(
+                ui,
+                stringResource(R.string.mise_ui_automation_token),
+                MiseAutomationAuth.abbreviated(token)
+            )
         }
         Text(
-            text = "Regenerate",
+            text = stringResource(R.string.mise_ui_automation_token_regenerate),
             color = Color(ui.warnColor),
             fontSize = ui.labelSize.sp,
-            modifier = Modifier.clickable {
-                token = MiseAutomationAuth.regenerate(context)
-                MiseFlash.show(context, "New token — update every copy you pasted elsewhere", Toast.LENGTH_LONG)
-            }
+            modifier = Modifier
+                .clip(CircleShape)
+                .border(1.25.dp, Color(ui.warnColor), CircleShape)
+                .clickable {
+                    token = MiseAutomationAuth.regenerate(context)
+                    MiseFlash.show(
+                        context,
+                        R.string.mise_ui_automation_token_regenerated,
+                        Toast.LENGTH_LONG
+                    )
+                }
+                .padding(horizontal = 12.dp, vertical = 5.dp)
         )
     }
 }
@@ -286,14 +404,13 @@ private fun FrozenUpdatesRow(ui: MiseUiState) {
         mutableStateOf(Preferences.getBoolean(context, PREFERENCE_UPDATES_FROZEN, true))
     }
 
-    ToggleRow(ui, "Check frozen apps", enabled) {
+    ToggleRow(ui, stringResource(R.string.mise_ui_updates_frozen), enabled) {
         context.save(PREFERENCE_UPDATES_FROZEN, it)
         enabled = it
         viewModel.fetchUpdates()
     }
     Text(
-        text = "Lists updates for disabled or suspended apps too, in italics. Checks take " +
-            "longer, since every frozen app is looked up as well.",
+        text = stringResource(R.string.mise_ui_updates_frozen_note),
         color = Color(ui.textDimColor),
         fontSize = ui.labelSize.sp,
         modifier = Modifier.padding(
@@ -306,7 +423,11 @@ private fun FrozenUpdatesRow(ui: MiseUiState) {
 
 @Composable
 private fun exportDirSummary(ui: MiseUiState): String =
-    if (ui.exportDir.isBlank()) "No backup directory set" else "Backup directory is set"
+    if (ui.exportDir.isBlank()) {
+        stringResource(R.string.mise_ui_export_dir_unset)
+    } else {
+        stringResource(R.string.mise_ui_export_dir_set)
+    }
 
 // ---------------------------------------------------------------------- headings
 
@@ -406,6 +527,14 @@ private fun RowTitle(ui: MiseUiState, title: String, summary: String?, warn: Boo
     }
 }
 
+/**
+ * A row that does something when tapped — opens a panel, runs an action. It is an outlined pill
+ * as wide as its label, never stretched across the line and never filled, with its explanation
+ * beneath in the dim colour, aligned with the label. The pill alone is the touch target.
+ *
+ * @param main The main action of its section: 3 dp frame and a bold label. Any other: 1.25 dp.
+ * @param opens The row opens another screen, picker or panel: a › at the pill's right end.
+ */
 @Composable
 private fun NavigationRow(
     ui: MiseUiState,
@@ -413,12 +542,13 @@ private fun NavigationRow(
     summary: String? = null,
     summaryIsWarning: Boolean = false,
     level2: Boolean = false,
+    main: Boolean = false,
+    opens: Boolean = false,
     onClick: () -> Unit
 ) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = onClick)
             .padding(
                 start = rowIndent(ui, level2),
                 end = 16.dp,
@@ -426,9 +556,44 @@ private fun NavigationRow(
                 bottom = ui.rowPadding.dp
             )
     ) {
-        RowTitle(ui, title, summary, summaryIsWarning)
+        val weight = if (main) FontWeight.Bold else null
+        Row(
+            modifier = Modifier
+                .clip(CircleShape)
+                .border(if (main) 3.dp else 1.25.dp, Color(ui.borderColor), CircleShape)
+                .clickable(onClick = onClick)
+                .padding(horizontal = PILL_INSET.dp, vertical = 7.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = title,
+                color = Color(ui.textColor),
+                fontSize = ui.fontSize.sp,
+                fontWeight = weight
+            )
+            if (opens) {
+                Spacer(Modifier.width(8.dp))
+                Text(
+                    text = "›",
+                    color = Color(ui.textColor),
+                    fontSize = ui.fontSize.sp,
+                    fontWeight = weight
+                )
+            }
+        }
+        if (summary != null) {
+            Text(
+                text = summary,
+                color = Color(if (summaryIsWarning) ui.warnColor else ui.textDimColor),
+                fontSize = ui.labelSize.sp,
+                modifier = Modifier.padding(start = PILL_INSET.dp, top = 3.dp)
+            )
+        }
     }
 }
+
+/** What a pill keeps between its frame and its label — and so the indent of its explanation. */
+private const val PILL_INSET = 16
 
 @Composable
 private fun ToggleRow(
@@ -580,7 +745,11 @@ private fun FontRow(ui: MiseUiState) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Column(Modifier.weight(1f)) {
-            Text(text = "Font", color = Color(ui.textColor), fontSize = ui.fontSize.sp)
+            Text(
+                text = stringResource(R.string.mise_ui_font),
+                color = Color(ui.textColor),
+                fontSize = ui.fontSize.sp
+            )
             Text(
                 text = MiseFonts.displayName(context, ui.fontFamilyId),
                 color = Color(ui.textDimColor),
@@ -627,14 +796,14 @@ private fun TypePreview(ui: MiseUiState) {
     PreviewFrame(ui) {
         Column {
             Text(
-                text = "白い熊 店 — Heading",
+                text = stringResource(R.string.mise_ui_preview_heading),
                 color = Color(ui.accentColor),
                 fontSize = ui.headingSize.sp,
                 fontWeight = FontWeight(ui.headingWeight.coerceIn(100, 900)),
                 fontFamily = family
             )
             Text(
-                text = "Body text — 見本 AaBbCc 0123",
+                text = stringResource(R.string.mise_ui_preview_body),
                 color = Color(ui.textColor),
                 fontSize = ui.fontSize.sp,
                 fontWeight = FontWeight(ui.fontWeight.coerceIn(100, 900)),
@@ -642,7 +811,7 @@ private fun TypePreview(ui: MiseUiState) {
                 fontFamily = family
             )
             Text(
-                text = "Secondary line — 補足",
+                text = stringResource(R.string.mise_ui_preview_secondary),
                 color = Color(ui.textDimColor),
                 fontSize = ui.labelSize.sp,
                 fontFamily = family
@@ -671,7 +840,11 @@ private fun ShapePreview(ui: MiseUiState) {
             )
             Column(Modifier.weight(1f)) {
                 Text(
-                    text = "Corner ${ui.cornerRadius}dp · border ${ui.borderWidth}dp",
+                    text = stringResource(
+                        R.string.mise_ui_preview_shape,
+                        ui.cornerRadius,
+                        ui.borderWidth
+                    ),
                     color = Color(ui.textColor),
                     fontSize = ui.labelSize.sp
                 )
@@ -712,7 +885,11 @@ private fun IconPreview(ui: MiseUiState) {
                 )
             }
             Text(
-                text = "${ui.iconSize}dp · ${ui.iconRoundness}% round",
+                text = stringResource(
+                    R.string.mise_ui_preview_icon,
+                    ui.iconSize,
+                    ui.iconRoundness
+                ),
                 color = Color(ui.textColor),
                 fontSize = ui.labelSize.sp,
                 textAlign = TextAlign.Start

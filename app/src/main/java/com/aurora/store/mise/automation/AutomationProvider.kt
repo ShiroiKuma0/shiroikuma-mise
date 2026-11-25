@@ -15,6 +15,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.ParcelFileDescriptor
 import androidx.core.content.pm.PackageInfoCompat
+import com.aurora.store.R
 import com.aurora.store.mise.MiseBackup
 import org.json.JSONArray
 import org.json.JSONObject
@@ -125,7 +126,13 @@ class AutomationProvider : ContentProvider() {
             put("requires_launch_first", false)
             // 応用管理 renders these verbatim, so this is where 白い熊 finds out what a backup of
             // this app does and does not cover — the exclusion is stated here, not only in a report.
-            put("contains", JSONArray(cats.map { it.label } + ACCOUNT_EXCLUSION))
+            put(
+                "contains",
+                JSONArray(
+                    cats.map { it.label(ctx) } +
+                        ctx.getString(R.string.mise_backup_account_exclusion)
+                )
+            )
         }
     }
 
@@ -191,8 +198,9 @@ class AutomationProvider : ContentProvider() {
         const val KEY_REPLY_PACKAGE = "reply_package"
         const val KEY_PROGRESS_ACTION = "progress_action"
 
-        /**
-         * Said out loud in [describe] because a backup row that looks like it covers the login is
+        /*
+         * The account exclusion (the string resource `mise_backup_account_exclusion`) is said out
+         * loud in [describe] because a backup row that looks like it covers the login is
          * worse than one that admits it does not.
          *
          * This app holds **live Google credentials** — the Play session it runs on. They are out of
@@ -203,9 +211,6 @@ class AutomationProvider : ContentProvider() {
          * A restored install therefore comes back fully configured but signed out, and 白い熊 signs
          * in again.
          */
-        private const val ACCOUNT_EXCLUSION =
-            "Excludes the Google account: session and auth tokens are never exported — a restored " +
-                "install comes back signed out"
 
         /** This app's archive format. Bumped when an older build could no longer read what we write. */
         const val FORMAT = MiseBackup.VERSION

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ 白い熊 店 (shiroikuma-mise) fork: the strings of the fork's own screens.
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  -->
+<resources>
+    <!-- Units and other non-words -->
+    <string name="mise_unit_sp" translatable="false">sp</string>
+    <string name="mise_unit_dp" translatable="false">dp</string>
+    <string name="mise_unit_percent" translatable="false" formatted="false">%</string>
+    <string name="mise_unit_em_hundredths" translatable="false">/100 em</string>
+
+    <!-- Common buttons -->
+    <string name="mise_action_ok">OK</string>
+    <string name="mise_action_cancel">Cancel</string>
+    <string name="mise_action_close">Close</string>
+    <string name="mise_action_remove">Remove</string>
+    <string name="mise_action_export">Export</string>
+    <string name="mise_action_import">Import</string>
+    <string name="mise_action_restart_now">Restart now</string>
+    <string name="mise_action_later">Later</string>
+    <string name="mise_unknown_error">Unknown error</string>
+
+    <!-- UI page: Export / Import -->
+    <string name="mise_ui_section_export_import">Export / Import</string>
+    <string name="mise_ui_export_import_settings">Export / Import settings</string>
+    <string name="mise_ui_export_dir_unset">No backup directory set</string>
+    <string name="mise_ui_export_dir_set">Backup directory is set</string>
+
+    <!-- UI page: automation -->
+    <string name="mise_ui_automation_export">Automation export</string>
+    <string name="mise_ui_automation_export_note">Lets sister apps trigger this app\'s export, and lets 白い熊 応用管理 back its data up and put it back on a clean phone.</string>
+    <string name="mise_ui_automation_use_token">Use authorization token?</string>
+    <string name="mise_ui_automation_use_token_on_note">On: a caller must also present the token below. The data door checks the caller\'s package name and signing certificate either way.</string>
+    <string name="mise_ui_automation_use_token_off_note">Off: any sister app may drive the automation. The data door checks the caller\'s package name and signing certificate either way.</string>
+    <string name="mise_ui_automation_token">Automation token</string>
+    <string name="mise_ui_automation_token_regenerate">Regenerate</string>
+    <string name="mise_ui_automation_token_copied">Token copied</string>
+    <string name="mise_ui_automation_token_regenerated">New token — update every copy you pasted elsewhere</string>
+
+    <!-- UI page: updates -->
+    <string name="mise_ui_section_updates">Updates</string>
+    <string name="mise_ui_updates_frozen">Check frozen apps</string>
+    <string name="mise_ui_updates_frozen_note">Lists updates for disabled or suspended apps too, in italics. Checks take longer, since every frozen app is looked up as well.</string>
+
+    <!-- UI page: colours -->
+    <string name="mise_ui_section_colours">Colours</string>
+    <string name="mise_ui_colour_background">Background</string>
+    <string name="mise_ui_colour_surface">Surface (cards, sheets, dialogs)</string>
+    <string name="mise_ui_colour_text">Text</string>
+    <string name="mise_ui_colour_text_secondary">Secondary text</string>
+    <string name="mise_ui_colour_accent">Accent</string>
+    <string name="mise_ui_colour_border">Border</string>
+    <string name="mise_ui_colour_divider">Divider</string>
+    <string name="mise_ui_colour_icons">Icons</string>
+    <string name="mise_ui_colour_warnings">Warnings</string>
+    <string name="mise_ui_colour_switch_off">Switch, off</string>
+    <string name="mise_ui_sub_held_updates">Held updates</string>
+    <string name="mise_ui_colour_held_new">New version, not tested</string>
+    <string name="mise_ui_colour_held_skipped">Skipped version</string>
+    <string name="mise_ui_sub_menu_icons">Menu icons</string>
+    <string name="mise_ui_colour_menu_view">View, open</string>
+    <string name="mise_ui_colour_menu_connect">Connect, download, refresh</string>
+    <string name="mise_ui_colour_menu_account">Account</string>
+    <string name="mise_ui_colour_menu_share">Share, export, import</string>
+    <string name="mise_ui_colour_menu_block">Block, hold, cancel</string>
+
+    <!-- UI page: typography -->
+    <string name="mise_ui_section_typography">Typography</string>
+    <string name="mise_ui_font">Font</string>
+    <string name="mise_ui_sub_body">Body</string>
+    <string name="mise_ui_size">Size</string>
+    <string name="mise_ui_weight">Weight</string>
+    <string name="mise_ui_italic">Italic</string>
+    <string name="mise_ui_sub_headings">Headings</string>
+    <string name="mise_ui_sub_secondary_lines">Secondary lines</string>
+    <string name="mise_ui_sub_spacing">Spacing</string>
+    <string name="mise_ui_letter_spacing">Letter spacing</string>
+    <string name="mise_ui_line_height">Line height</string>
+    <string name="mise_ui_preview_heading">白い熊 店 — Heading</string>
+    <string name="mise_ui_preview_body">Body text — 見本 AaBbCc 0123</string>
+    <string name="mise_ui_preview_secondary">Secondary line — 補足</string>
+
+    <!-- UI page: shape and borders -->
+    <string name="mise_ui_section_shape">Shape and borders</string>
+    <string name="mise_ui_corner_roundness">Corner roundness</string>
+    <string name="mise_ui_border_thickness">Border thickness</string>
+    <string name="mise_ui_divider_thickness">Divider thickness</string>
+    <string name="mise_ui_preview_shape">Corner %1$ddp · border %2$ddp</string>
+
+    <!-- UI page: icons -->
+    <string name="mise_ui_section_icons">Icons</string>
+    <string name="mise_ui_roundness">Roundness</string>
+    <string name="mise_ui_preview_icon">%1$ddp · %2$d%% round</string>
+
+    <!-- UI page: density -->
+    <string name="mise_ui_section_density">Density</string>
+    <string name="mise_ui_row_padding">Row padding</string>
+    <string name="mise_ui_group_spacing">Space between groups</string>
+    <string name="mise_ui_indent_step">Indent per level</string>
+
+    <!-- UI page: reset -->
+    <string name="mise_ui_section_reset">Reset</string>
+    <string name="mise_ui_reset_defaults">Restore the black-yellow defaults</string>
+    <string name="mise_ui_reset_defaults_summary">Every colour, font and size back to how 白い熊 店 ships</string>
+
+    <!-- Font picker -->
+    <string name="mise_font_import">Import font…</string>
+    <string name="mise_font_system_default">System default</string>
+    <string name="mise_font_sans_serif">Sans serif</string>
+    <string name="mise_font_serif">Serif</string>
+    <string name="mise_font_monospace">Monospace</string>
+    <string name="mise_font_cursive">Cursive</string>
+
+    <!-- Export / Import panel -->
+    <string name="mise_export_intro">Carry every setting to another install: tick what to take, then Export to the backup directory or Import from a backup file.</string>
+    <string name="mise_export_dir_label">Backup directory</string>
+    <string name="mise_export_dir_choose">No backup directory set — tap to choose one</string>
+    <string name="mise_export_last_backup">Last backup: %1$s (%2$s)</string>
+    <string name="mise_export_no_backup_found">No backup found in this directory yet</string>
+    <string name="mise_import_finished">Import finished</string>
+    <string name="mise_import_finished_message">%1$d categories restored.</string>
+    <string name="mise_import_failed">Import failed</string>
+    <string name="mise_export_finished">Export finished</string>
+    <string name="mise_export_finished_message">%1$s\n%2$d kB · %3$d categories</string>
+    <string name="mise_export_failed">Export failed</string>
+    <string name="mise_export_no_categories">No categories selected.</string>
+    <string name="mise_export_no_dir">No backup directory set.</string>
+    <string name="mise_export_dir_not_writable">The backup directory could not be written to.</string>
+
+    <!-- Backup categories -->
+    <string name="mise_backup_cat_ui">白い熊 店 UI (colours, fonts, sizes)</string>
+    <string name="mise_backup_cat_settings">App settings (installer, network, updates, blacklist, spoof)</string>
+    <string name="mise_backup_cat_favourites">Favourites</string>
+    <string name="mise_backup_cat_ignored_updates">Ignored updates</string>
+    <string name="mise_backup_cat_fonts">Imported fonts</string>
+    <string name="mise_backup_account_exclusion">Excludes the Google account: session and auth tokens are never exported — a restored install comes back signed out</string>
+
+    <!-- Automation notifications -->
+    <string name="mise_automation_channel_export">Automation export</string>
+    <string name="mise_automation_exporting">Exporting settings…</string>
+    <string name="mise_automation_channel_data">Automation data</string>
+    <string name="mise_automation_restoring">Restoring data…</string>
+    <string name="mise_automation_backing_up">Backing data up…</string>
+</resources>

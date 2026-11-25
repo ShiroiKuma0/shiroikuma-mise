@@ -13,6 +13,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import com.aurora.store.R
 import java.io.File
 
 /**
@@ -34,12 +35,13 @@ object MiseFonts {
     const val MONOSPACE = "@monospace"
     const val CURSIVE = "@cursive"
 
+    /** Id to the string resource of its name; resolved per call so it follows the language. */
     private val BUILT_IN = listOf(
-        FontOption(SYSTEM, "System default"),
-        FontOption(SANS, "Sans serif"),
-        FontOption(SERIF, "Serif"),
-        FontOption(MONOSPACE, "Monospace"),
-        FontOption(CURSIVE, "Cursive")
+        SYSTEM to R.string.mise_font_system_default,
+        SANS to R.string.mise_font_sans_serif,
+        SERIF to R.string.mise_font_serif,
+        MONOSPACE to R.string.mise_font_monospace,
+        CURSIVE to R.string.mise_font_cursive
     )
 
     private val cache = mutableMapOf<String, FontFamily>()
@@ -50,7 +52,8 @@ object MiseFonts {
 
     /** Built-in families first, then imported files sorted by name. */
     fun available(context: Context): List<FontOption> =
-        BUILT_IN + imported(context).map { FontOption(it.name, it.nameWithoutExtension) }
+        BUILT_IN.map { (id, name) -> FontOption(id, context.getString(name)) } +
+            imported(context).map { FontOption(it.name, it.nameWithoutExtension) }
 
     fun imported(context: Context): List<File> =
         fontsDir(context).listFiles { f -> f.isFile && f.extension.lowercase() in FONT_EXTENSIONS }
@@ -59,7 +62,7 @@ object MiseFonts {
 
     fun displayName(context: Context, id: String): String =
         available(context).firstOrNull { it.id == id }?.displayName
-            ?: BUILT_IN.first().displayName
+            ?: context.getString(BUILT_IN.first().second)
 
     /**
      * Resolves a stored id to a Compose [FontFamily]. An imported file that has since been

@@ -37,7 +37,7 @@ class StateExportReceiver : BroadcastReceiver() {
                 val replyPackage = intent.getStringExtra(EXTRA_REPLY_PACKAGE) ?: return
                 val replyId = intent.getStringExtra(EXTRA_REPLY_ID) ?: return
 
-                val result = MiseAutomationAuth.refuse(app, token) ?: ("OK:" + categoryLines())
+                val result = MiseAutomationAuth.refuse(app, token) ?: ("OK:" + categoryLines(app))
                 reply(app, replyAction, replyPackage, replyId, result)
             }
 
@@ -112,8 +112,10 @@ class StateExportReceiver : BroadcastReceiver() {
      * `id<TAB>label`, one per line, with the optional third (parent) and fourth (default) fields.
      * Fonts are re-creatable by re-importing them, so they ship as `off`.
      */
-    private fun categoryLines(): String = MiseBackup.Cat.entries.joinToString("\n") { cat ->
-        if (cat.onByDefault) "${cat.id}\t${cat.label}" else "${cat.id}\t${cat.label}\t\toff"
+    private fun categoryLines(context: Context): String =
+        MiseBackup.Cat.entries.joinToString("\n") { cat ->
+            val label = cat.label(context)
+            if (cat.onByDefault) "${cat.id}\t$label" else "${cat.id}\t$label\t\toff"
     }
 
     companion object {

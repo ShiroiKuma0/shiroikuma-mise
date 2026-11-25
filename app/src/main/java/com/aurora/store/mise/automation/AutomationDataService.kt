@@ -294,7 +294,7 @@ class AutomationDataService : Service() {
                 putExtra(StateExportReceiver.EXTRA_REPLY_ID, jobId)
                 putExtra("app", getString(R.string.app_name))
                 putExtra("item", cat.id)
-                putExtra("text", "区分 $position/$total — ${cat.label}")
+                putExtra("text", "区分 $position/$total — ${cat.label(this@AutomationDataService)}")
                 putExtra("current", position.toLong())
                 putExtra("total", total.toLong())
                 putExtra("unit", "区分")
@@ -305,12 +305,24 @@ class AutomationDataService : Service() {
 
     private fun notification(importing: Boolean): Notification {
         getSystemService<NotificationManager>()?.createNotificationChannel(
-            NotificationChannel(CHANNEL_ID, "Automation data", NotificationManager.IMPORTANCE_LOW)
+            NotificationChannel(
+                CHANNEL_ID,
+                getString(R.string.mise_automation_channel_data),
+                NotificationManager.IMPORTANCE_LOW
+            )
         )
         return NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_aurora)
             .setContentTitle(getString(R.string.app_name))
-            .setContentText(if (importing) "Restoring data…" else "Backing data up…")
+            .setContentText(
+                getString(
+                    if (importing) {
+                        R.string.mise_automation_restoring
+                    } else {
+                        R.string.mise_automation_backing_up
+                    }
+                )
+            )
             .setOngoing(true)
             .build()
     }

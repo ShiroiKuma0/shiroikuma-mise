@@ -52,10 +52,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.aurora.store.R
 import com.aurora.store.mise.LocalMiseUi
 import com.aurora.store.mise.MiseBackup
 import com.aurora.store.mise.MiseFonts
@@ -149,12 +151,15 @@ fun MiseColorPickerDialog(
         },
         confirmButton = {
             TextButton(onClick = { onPicked(current) }) {
-                Text("OK", color = Color(ui.accentColor))
+                Text(stringResource(R.string.mise_action_ok), color = Color(ui.accentColor))
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("Cancel", color = Color(ui.textDimColor))
+                Text(
+                    stringResource(R.string.mise_action_cancel),
+                    color = Color(ui.textDimColor)
+                )
             }
         }
     )
@@ -212,7 +217,13 @@ fun MiseFontPickerDialog(onDismiss: () -> Unit) {
     AlertDialog(
         onDismissRequest = onDismiss,
         containerColor = Color(ui.surface),
-        title = { Text("Font", color = Color(ui.accentColor), fontWeight = FontWeight.Bold) },
+        title = {
+            Text(
+                stringResource(R.string.mise_ui_font),
+                color = Color(ui.accentColor),
+                fontWeight = FontWeight.Bold
+            )
+        },
         text = {
             LazyColumn(modifier = Modifier.heightIn(max = 420.dp)) {
                 items(options) { option ->
@@ -244,7 +255,11 @@ fun MiseFontPickerDialog(onDismiss: () -> Unit) {
                                 if (selected) ui.updateFontFamily(MiseFonts.SYSTEM)
                                 ui.onFontsChanged()
                             }) {
-                                Text("Remove", color = Color(ui.warnColor), fontSize = ui.labelSize.sp)
+                                Text(
+                                    stringResource(R.string.mise_action_remove),
+                                    color = Color(ui.warnColor),
+                                    fontSize = ui.labelSize.sp
+                                )
                             }
                         }
                     }
@@ -253,11 +268,13 @@ fun MiseFontPickerDialog(onDismiss: () -> Unit) {
         },
         confirmButton = {
             TextButton(onClick = { importLauncher.launch(arrayOf("font/*", "application/octet-stream")) }) {
-                Text("Import font…", color = Color(ui.accentColor))
+                Text(stringResource(R.string.mise_font_import), color = Color(ui.accentColor))
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Close", color = Color(ui.textDimColor)) }
+            TextButton(onClick = onDismiss) {
+                Text(stringResource(R.string.mise_action_close), color = Color(ui.textDimColor))
+            }
         }
     )
 }
@@ -266,7 +283,7 @@ fun MiseFontPickerDialog(onDismiss: () -> Unit) {
 
 /**
  * The Export / Import panel, in the Kōjiki flow and the kxkb box look: one bordered rounded box,
- * the backup folder as its own tappable box (red until it is set), the newest backup found there,
+ * the backup directory as its own tappable box (red until it is set), the newest backup found there,
  * a category checklist, and an ArcaneChat-style button bar — Cancel alone on the left, Import and
  * Export grouped right, all fully round pills.
  */
@@ -316,13 +333,17 @@ fun MiseExportImportPanel(onDismiss: () -> Unit, onFinishedAndClose: () -> Unit)
                 val restored = MiseBackup.restore(context, bytes, selected)
                 ui.reload()
                 InfoState(
-                    "Import finished",
-                    "$restored categories restored.",
+                    context.getString(R.string.mise_import_finished),
+                    context.getString(R.string.mise_import_finished_message, restored),
                     success = true,
                     restart = true
                 )
             }.getOrElse {
-                InfoState("Import failed", it.message ?: "Unknown error", success = false)
+                InfoState(
+                    context.getString(R.string.mise_import_failed),
+                    it.message ?: context.getString(R.string.mise_unknown_error),
+                    success = false
+                )
             }
         }
     }
@@ -332,7 +353,7 @@ fun MiseExportImportPanel(onDismiss: () -> Unit, onFinishedAndClose: () -> Unit)
         containerColor = Color(ui.surface),
         title = {
             Text(
-                text = "Export / Import",
+                text = stringResource(R.string.mise_ui_section_export_import),
                 color = Color(ui.accentColor),
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.fillMaxWidth(),
@@ -342,14 +363,13 @@ fun MiseExportImportPanel(onDismiss: () -> Unit, onFinishedAndClose: () -> Unit)
         text = {
             Column(Modifier.verticalScroll(rememberScrollState())) {
                 Text(
-                    text = "Carry every setting to another install: tick what to take, then Export " +
-                        "to the backup folder or Import from a backup file.",
+                    text = stringResource(R.string.mise_export_intro),
                     color = Color(ui.textDimColor),
                     fontSize = ui.labelSize.sp
                 )
                 Spacer(Modifier.height(10.dp))
 
-                // Backup folder — red until it is set, yellow once it is.
+                // Backup directory — red until it is set, yellow once it is.
                 Box(
                     Modifier
                         .fillMaxWidth()
@@ -364,13 +384,13 @@ fun MiseExportImportPanel(onDismiss: () -> Unit, onFinishedAndClose: () -> Unit)
                 ) {
                     Column {
                         Text(
-                            text = "Backup folder",
+                            text = stringResource(R.string.mise_export_dir_label),
                             color = Color(ui.textDimColor),
                             fontSize = ui.labelSize.sp
                         )
                         Text(
                             text = if (ui.exportDir.isBlank()) {
-                                "No backup directory set — tap to choose one"
+                                stringResource(R.string.mise_export_dir_choose)
                             } else {
                                 Uri.decode(ui.exportDir.substringAfterLast('/'))
                             },
@@ -384,8 +404,12 @@ fun MiseExportImportPanel(onDismiss: () -> Unit, onFinishedAndClose: () -> Unit)
                 }
                 Text(
                     text = lastBackup?.let {
-                        "Last backup: ${it.first} (${MiseBackup.formatTimestamp(it.second)})"
-                    } ?: "No backup found in this folder yet",
+                        stringResource(
+                            R.string.mise_export_last_backup,
+                            it.first,
+                            MiseBackup.formatTimestamp(it.second)
+                        )
+                    } ?: stringResource(R.string.mise_export_no_backup_found),
                     color = Color(ui.textDimColor),
                     fontSize = ui.labelSize.sp,
                     modifier = Modifier.padding(top = 4.dp, bottom = 8.dp)
@@ -409,7 +433,7 @@ fun MiseExportImportPanel(onDismiss: () -> Unit, onFinishedAndClose: () -> Unit)
                             )
                         )
                         Text(
-                            text = cat.label,
+                            text = stringResource(cat.labelRes),
                             color = Color(ui.textColor),
                             fontSize = ui.fontSize.sp
                         )
@@ -425,26 +449,34 @@ fun MiseExportImportPanel(onDismiss: () -> Unit, onFinishedAndClose: () -> Unit)
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                PillButton(ui, "Cancel", onClick = onDismiss)
+                PillButton(ui, stringResource(R.string.mise_action_cancel), onClick = onDismiss)
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    PillButton(ui, "Import") {
+                    PillButton(ui, stringResource(R.string.mise_action_import)) {
                         if (checks.none { it.value }) {
-                            info = InfoState("Import failed", "No categories selected.", success = false)
+                            info = InfoState(
+                                context.getString(R.string.mise_import_failed),
+                                context.getString(R.string.mise_export_no_categories),
+                                success = false
+                            )
                         } else {
                             importLauncher.launch(arrayOf("application/zip", "application/octet-stream"))
                         }
                     }
-                    PillButton(ui, "Export") {
+                    PillButton(ui, stringResource(R.string.mise_action_export)) {
                         val selected = checks.filterValues { it }.keys
                         when {
                             selected.isEmpty() ->
                                 info = InfoState(
-                                    "Export failed", "No categories selected.", success = false
+                                    context.getString(R.string.mise_export_failed),
+                                    context.getString(R.string.mise_export_no_categories),
+                                    success = false
                                 )
 
                             ui.exportDir.isBlank() ->
                                 info = InfoState(
-                                    "Export failed", "No backup directory set.", success = false
+                                    context.getString(R.string.mise_export_failed),
+                                    context.getString(R.string.mise_export_no_dir),
+                                    success = false
                                 )
 
                             else -> scope.launch {
@@ -456,17 +488,24 @@ fun MiseExportImportPanel(onDismiss: () -> Unit, onFinishedAndClose: () -> Unit)
                                     }
                                     val name = withContext(Dispatchers.IO) {
                                         MiseBackup.writeToTree(context, ui.exportDir.toUri(), bytes)
-                                    } ?: error("The backup folder could not be written to.")
+                                    } ?: error(
+                                        context.getString(R.string.mise_export_dir_not_writable)
+                                    )
                                     lastBackup = MiseBackup.newestBackup(context, ui.exportDir.toUri())
                                     InfoState(
-                                        "Export finished",
-                                        "$name\n${bytes.size / 1024} kB · ${selected.size} categories",
+                                        context.getString(R.string.mise_export_finished),
+                                        context.getString(
+                                            R.string.mise_export_finished_message,
+                                            name,
+                                            bytes.size / 1024,
+                                            selected.size
+                                        ),
                                         success = true
                                     )
                                 }.getOrElse {
                                     InfoState(
-                                        "Export failed",
-                                        it.message ?: "Unknown error",
+                                        context.getString(R.string.mise_export_failed),
+                                        it.message ?: context.getString(R.string.mise_unknown_error),
                                         success = false
                                     )
                                 }
@@ -525,13 +564,15 @@ private fun MiseInfoDialog(
         text = { Text(text = state.message, color = Color(ui.textColor)) },
         confirmButton = {
             if (state.restart) {
-                PillButton(ui, "Restart now", onClick = onRestart)
+                PillButton(ui, stringResource(R.string.mise_action_restart_now), onClick = onRestart)
             } else {
-                PillButton(ui, "OK", onClick = onAcknowledge)
+                PillButton(ui, stringResource(R.string.mise_action_ok), onClick = onAcknowledge)
             }
         },
         dismissButton = {
-            if (state.restart) PillButton(ui, "Later", onClick = onAcknowledge)
+            if (state.restart) {
+                PillButton(ui, stringResource(R.string.mise_action_later), onClick = onAcknowledge)
+            }
         }
     )
 }

@@ -7,10 +7,12 @@
 package com.aurora.store.mise
 
 import android.content.Context
+import androidx.annotation.StringRes
 import android.net.Uri
 import android.provider.DocumentsContract
 import androidx.core.content.edit
 import com.aurora.Constants
+import com.aurora.store.R
 import com.aurora.store.data.room.AuroraDatabase
 import com.aurora.store.data.room.favourite.Favourite
 import com.aurora.store.data.room.update.IgnoredUpdate
@@ -49,12 +51,19 @@ object MiseBackup {
     const val MIME_ZIP = "application/zip"
 
     /** A tickable unit of the backup. [id] is both the zip entry base and the automation id. */
-    enum class Cat(val id: String, val label: String, val onByDefault: Boolean = true) {
-        UI("ui", "白い熊 店 UI (colours, fonts, sizes)"),
-        SETTINGS("settings", "App settings (installer, network, updates, blacklist, spoof)"),
-        FAVOURITES("favourites", "Favourites"),
-        IGNORED_UPDATES("ignored_updates", "Ignored updates"),
-        FONTS("fonts", "Imported fonts", onByDefault = false);
+    enum class Cat(
+        val id: String,
+        @StringRes val labelRes: Int,
+        val onByDefault: Boolean = true
+    ) {
+        UI("ui", R.string.mise_backup_cat_ui),
+        SETTINGS("settings", R.string.mise_backup_cat_settings),
+        FAVOURITES("favourites", R.string.mise_backup_cat_favourites),
+        IGNORED_UPDATES("ignored_updates", R.string.mise_backup_cat_ignored_updates),
+        FONTS("fonts", R.string.mise_backup_cat_fonts, onByDefault = false);
+
+        /** The label as a person reads it, in the phone's language. */
+        fun label(context: Context): String = context.getString(labelRes)
 
         /** Entry name inside the zip. Fonts are a directory of the original files. */
         val entry: String get() = if (this == FONTS) "fonts/" else "$id.json"
@@ -163,9 +172,9 @@ object MiseBackup {
         return runCatching {
             partUri = DocumentsContract.createDocument(
                 context.contentResolver, parent, MIME_ZIP, "$finalName.part"
-            ) ?: error("The backup folder could not be written to.")
+            ) ?: error(context.getString(R.string.mise_export_dir_not_writable))
             context.contentResolver.openOutputStream(partUri!!)?.use { it.write(bytes) }
-                ?: error("The backup folder could not be written to.")
+                ?: error(context.getString(R.string.mise_export_dir_not_writable))
             DocumentsContract.renameDocument(context.contentResolver, partUri!!, finalName)
             finalName
         }.getOrElse { failure ->
@@ -349,6 +358,9 @@ object MiseBackup {
                         JSONObject().apply {
                             put("packageName", ignored.packageName)
                             ignored.ignoredVersionCode?.let { put("ignoredVersionCode", it) }
+                            ignored.testedVersionCode?.let { put("testedVersionCode", it) }
+                            ignored.testedVersionName?.let { put("testedVersionName", it) }
+                            ignored.testedAt?.let { put("testedAt", it) }
                         }
                     }
                 )
@@ -370,7 +382,15 @@ object MiseBackup {
                         item.optLong("ignoredVersionCode")
                     } else {
                         null
-                    }
+                    },
+                    testedVersionCode = if (item.has("testedVersionCode")) {
+                        item.optLong("testedVersionCode")
+                    } else {
+                        null
+                    },
+                    testedVersionName = item.optString("testedVersionName")
+                        .takeIf { it.isNotBlank() },
+                    testedAt = if (item.has("testedAt")) item.optLong("testedAt") else null
                 )
             )
         }
