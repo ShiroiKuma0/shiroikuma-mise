@@ -5,6 +5,8 @@
 
 package com.aurora.store.data.activity
 
+import com.aurora.store.mise.MiseLanguage
+import android.content.Context
 import android.content.pm.PackageInstaller.SessionCallback
 import android.os.Bundle
 import android.util.Log
@@ -20,6 +22,10 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class InstallActivity : AppCompatActivity() {
+
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(MiseLanguage.wrap(newBase))
+    }
 
     @Inject
     lateinit var sessionInstaller: SessionInstaller

@@ -6,6 +6,7 @@
 
 package com.aurora.store
 
+import com.aurora.store.mise.MiseLanguage
 import android.app.Activity
 import android.app.Application
 import android.content.Context
@@ -68,9 +69,14 @@ class AuroraApp : Application(), Configuration.Provider, SingletonImageLoader.Fa
         val isForeground get() = startedActivities > 0
     }
 
+    override fun attachBaseContext(base: Context) {
+        super.attachBaseContext(MiseLanguage.wrap(base))
+    }
+
     override fun onCreate() {
         ComposeMaterial3Flags.isCheckboxStylingFixEnabled = true
         super.onCreate()
+        MiseLanguage.reassert(this)
         // Set the app theme
         val themeStyle = Preferences.getInteger(this, Preferences.PREFERENCE_THEME_STYLE)
         setAppTheme(themeStyle)

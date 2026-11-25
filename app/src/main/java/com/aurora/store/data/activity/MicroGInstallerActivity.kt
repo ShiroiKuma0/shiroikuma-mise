@@ -5,6 +5,7 @@
 
 package com.aurora.store.data.activity
 
+import com.aurora.store.mise.MiseLanguage
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -20,6 +21,10 @@ import com.aurora.store.data.installer.MicroGInstaller.Companion.buildMicroGInst
 import java.io.File
 
 class MicroGInstallerActivity : Activity() {
+
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(MiseLanguage.wrap(newBase))
+    }
 
     companion object {
         private const val REQUEST_CODE = 1001

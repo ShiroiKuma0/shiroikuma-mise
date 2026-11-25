@@ -139,6 +139,20 @@ the Updates tab when its `version_code` exceeds the installed one. Its schema is
   The Updates screen derives the row state from it: offered version == tested → *skipped*;
   otherwise *untested*. Whether an older mark was a rejection is read from the installed version
   (tested > installed), never stored. "Unignore" deletes the rule and the mark with it.
+- **The UI page is a registry of sections** (`PageSection` in `MiseUiScreen.kt`: key, title, icon,
+  colour slot, rows). The heading and its chip in the index both read it. Every section is folded
+  by default; order and fold state live in the `mise_ui` prefs (`section_order`, `sections_open`),
+  so they travel in the export. A new section is one entry there — give it one of the seven
+  `SECTION_*` colours by meaning, and keep neighbours in the default order apart in colour.
+  "App language" is the first entry and takes first place also in a stored order that does not
+  know it.
+- **The app's own language is `MiseLanguage`** (`app_language` in the `mise_ui` prefs). It works by
+  wrapping the base context of `AuroraApp` and of every activity — **a new activity needs the same
+  `attachBaseContext` override**. `Locale.getDefault()` is left alone on purpose: sign-in and Play
+  requests read it. The picker lists Japanese, English and the languages at four fifths or more
+  of upstream's strings (`MOSTLY_TRANSLATED`); re-measure after a sync.
+- **Every row of the UI page takes an icon** (`RowIcon`, 1.25 × the label, floor 18 dp) and
+  switches there are `MiseSwitch`, never Material's `Switch`.
 - **The fork's own screens take their text from `mise_strings.xml`** (`values/` and `values-ja/`),
   never from literals — every string added needs its Japanese in the same change.
 - **`MiseUiState` writers are `updateX()`, not `setX()`** — the properties' generated setters already

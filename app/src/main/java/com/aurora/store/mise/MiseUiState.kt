@@ -108,6 +108,14 @@ class MiseUiState(context: Context) {
     var recentColors by mutableStateOf(config.recentColors())
         private set
 
+    /** The UI page's dragged section order (keys); empty = the default order. */
+    var sectionOrder by mutableStateOf(config.sectionOrder)
+        private set
+
+    /** The UI page's unfolded sections (keys). */
+    var openSections by mutableStateOf(config.openSections)
+        private set
+
     /** Bumped whenever a font is imported or deleted, so pickers recompose. */
     var fontRevision by mutableIntStateOf(0)
         private set
@@ -167,6 +175,14 @@ class MiseUiState(context: Context) {
 
     fun updateExportDir(uri: String) { config.exportDir = uri; exportDir = uri }
 
+    fun updateSectionOrder(order: List<String>) { config.sectionOrder = order; sectionOrder = order }
+
+    fun setSectionOpen(key: String, open: Boolean) {
+        val next = if (open) openSections + key else openSections - key
+        config.openSections = next
+        openSections = next
+    }
+
     fun onFontsChanged() { fontRevision++ }
 
     fun resetToDefaults() {
@@ -205,6 +221,8 @@ class MiseUiState(context: Context) {
         indentStep = config.indentStep
         exportDir = config.exportDir
         recentColors = config.recentColors()
+        sectionOrder = config.sectionOrder
+        openSections = config.openSections
         fontRevision++
     }
 
@@ -328,7 +346,31 @@ class MiseUiState(context: Context) {
         MENU_BLOCK("color_menu_block", 0xFFFF3D7F.toInt()),
 
         /** A switch that is off — opaque, so it reads on any ground. */
-        SWITCH_OFF("color_switch_off", 0xFF8C8C00.toInt())
+        SWITCH_OFF("color_switch_off", 0xFF8C8C00.toInt()),
+
+        // The seven section-icon colours of the UI page, each with one meaning. They are not the
+        // menu roles, even where a default coincides.
+
+        /** Section icon: the base — what the app is, and its settings. */
+        SECTION_BASE("color_section_base", MiseUiConfig.YELLOW),
+
+        /** Section icon: controls — what you operate. */
+        SECTION_CONTROLS("color_section_controls", 0xFF00A550.toInt()),
+
+        /** Section icon: words, written and read. */
+        SECTION_WORDS("color_section_words", 0xFF00B0FF.toInt()),
+
+        /** Section icon: the frame and its boxes. */
+        SECTION_FRAME("color_section_frame", 0xFF0066FF.toInt()),
+
+        /** Section icon: the app reaches out — asks, offers, hands over. */
+        SECTION_REACH("color_section_reach", 0xFFFF8000.toInt()),
+
+        /** Section icon: warning — resets, wipes. */
+        SECTION_WARNING("color_section_warning", 0xFFFF0000.toInt()),
+
+        /** Section icon: a brief flash. Rare. */
+        SECTION_FLASH("color_section_flash", 0xFFFF3D7F.toInt())
     }
 }
 

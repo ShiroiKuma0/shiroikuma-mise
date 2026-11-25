@@ -5,6 +5,8 @@
 
 package com.aurora.store
 
+import com.aurora.store.mise.MiseLanguage
+import android.content.Context
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.activity.compose.setContent
@@ -46,6 +48,10 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class ComposeActivity : FragmentActivity() {
+
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(MiseLanguage.wrap(newBase))
+    }
 
     @Inject lateinit var networkProvider: NetworkProvider
 

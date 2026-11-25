@@ -142,4 +142,24 @@
     <string name="mise_automation_channel_data">Automation data</string>
     <string name="mise_automation_restoring">Restoring data…</string>
     <string name="mise_automation_backing_up">Backing data up…</string>
+
+    <!-- The page's own sections: icons, order -->
+    <string name="mise_ui_sub_section_icons">Section icons of this page</string>
+    <string name="mise_ui_colour_section_base">The base and its settings</string>
+    <string name="mise_ui_colour_section_controls">Controls</string>
+    <string name="mise_ui_colour_section_words">Words, written and read</string>
+    <string name="mise_ui_colour_section_frame">The frame and its boxes</string>
+    <string name="mise_ui_colour_section_reach">Asking, offering, handing over</string>
+    <string name="mise_ui_colour_section_warning">Warning</string>
+    <string name="mise_ui_colour_section_flash">A brief flash</string>
+    <string name="mise_ui_reset_section_order">Reset section order</string>
+    <string name="mise_ui_reset_section_order_summary">The sections of this page back in their original order</string>
+    <string name="mise_ui_section_folded">Folded</string>
+    <string name="mise_ui_section_open">Open</string>
+
+    <!-- App language -->
+    <string name="mise_ui_section_language">App language</string>
+    <string name="mise_ui_language_row">Language: %1$s</string>
+    <string name="mise_ui_language_system">System default</string>
+    <string name="mise_ui_language_summary">For this app only. What the store shows follows the system or the spoof settings.</string>
 </resources>

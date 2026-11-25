@@ -153,6 +153,18 @@ class MiseUiConfig(context: Context) {
     var exportDir: String
         get() = str(KEY_EXPORT_DIR); set(v) = putStr(KEY_EXPORT_DIR, v)
 
+    // ------------------------------------------------- the UI page's sections
+
+    /** The dragged order of the UI page's sections, by key; empty = the default order. */
+    var sectionOrder: List<String>
+        get() = str(KEY_SECTION_ORDER).split(',').filter { it.isNotBlank() }
+        set(v) = putStr(KEY_SECTION_ORDER, v.joinToString(","))
+
+    /** The sections of the UI page that are unfolded; every section starts folded. */
+    var openSections: Set<String>
+        get() = str(KEY_SECTIONS_OPEN).split(',').filter { it.isNotBlank() }.toSet()
+        set(v) = putStr(KEY_SECTIONS_OPEN, v.joinToString(","))
+
     // ------------------------------------------------------- recent colours
 
     /**
@@ -200,7 +212,12 @@ class MiseUiConfig(context: Context) {
 
     /** Back to the house black-yellow defaults. */
     fun resetToDefaults() {
-        prefs.edit { clear() }
+        // The app's language is not a look: it survives the reset.
+        val language = prefs.getString(KEY_APP_LANGUAGE, null)
+        prefs.edit {
+            clear()
+            if (language != null) putString(KEY_APP_LANGUAGE, language)
+        }
     }
 
     companion object {
@@ -251,6 +268,9 @@ class MiseUiConfig(context: Context) {
 
         private const val KEY_EXPORT_DIR = "export_dir"
         private const val KEY_RECENT = "recent_colors"
+        private const val KEY_APP_LANGUAGE = "app_language"
+        private const val KEY_SECTION_ORDER = "section_order"
+        private const val KEY_SECTIONS_OPEN = "sections_open"
     }
 }
 

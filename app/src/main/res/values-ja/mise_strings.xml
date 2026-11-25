@@ -136,4 +136,24 @@
     <string name="mise_automation_channel_data">自動化によるデータの保存と復元</string>
     <string name="mise_automation_restoring">データを復元しています…</string>
     <string name="mise_automation_backing_up">データを保存しています…</string>
+
+    <!-- The page's own sections: icons, order -->
+    <string name="mise_ui_sub_section_icons">このページのセクションアイコン</string>
+    <string name="mise_ui_colour_section_base">基本と設定</string>
+    <string name="mise_ui_colour_section_controls">操作する部品</string>
+    <string name="mise_ui_colour_section_words">文字（書く・読む）</string>
+    <string name="mise_ui_colour_section_frame">枠と箱</string>
+    <string name="mise_ui_colour_section_reach">確認、提案、受け渡し</string>
+    <string name="mise_ui_colour_section_warning">警告</string>
+    <string name="mise_ui_colour_section_flash">一瞬の通知</string>
+    <string name="mise_ui_reset_section_order">セクションの順序を元に戻す</string>
+    <string name="mise_ui_reset_section_order_summary">このページのセクションを最初の順序に戻します。</string>
+    <string name="mise_ui_section_folded">閉じています</string>
+    <string name="mise_ui_section_open">開いています</string>
+
+    <!-- App language -->
+    <string name="mise_ui_section_language">アプリの言語</string>
+    <string name="mise_ui_language_row">言語: %1$s</string>
+    <string name="mise_ui_language_system">システムの既定</string>
+    <string name="mise_ui_language_summary">このアプリだけに適用されます。ストアの表示内容は、システムまたは偽装の設定に従います。</string>
 </resources>

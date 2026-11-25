@@ -6,6 +6,9 @@
 package com.aurora.store.compose.composable
 
 import androidx.annotation.DrawableRes
+import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -34,8 +37,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
@@ -249,12 +254,17 @@ fun MiseSwitch(checked: Boolean, modifier: Modifier = Modifier, compact: Boolean
     val ui = LocalMiseUi.current
     val color = Color(if (checked) ui.accentColor else ui.colorOf(ColorSlot.SWITCH_OFF))
     val height = if (compact) 24.dp else 28.dp
+    val bias by animateFloatAsState(
+        targetValue = if (checked) 1f else -1f,
+        animationSpec = tween(durationMillis = 180, easing = LinearOutSlowInEasing),
+        label = "switch"
+    )
     Box(
         modifier = modifier
             .requiredSize(width = if (compact) 44.dp else 52.dp, height = height)
             .border(2.dp, color, CircleShape)
             .padding(5.dp),
-        contentAlignment = if (checked) Alignment.CenterEnd else Alignment.CenterStart
+        contentAlignment = BiasAlignment(bias, 0f)
     ) {
         Box(Modifier.requiredSize(height - 10.dp).background(color, CircleShape))
     }

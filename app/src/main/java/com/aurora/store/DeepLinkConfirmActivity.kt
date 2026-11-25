@@ -5,6 +5,8 @@
 
 package com.aurora.store
 
+import com.aurora.store.mise.MiseLanguage
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
@@ -23,6 +25,10 @@ import com.aurora.store.util.Preferences
  * doesn't resolve to a listing, it forwards immediately without prompting.
  */
 class DeepLinkConfirmActivity : FragmentActivity() {
+
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(MiseLanguage.wrap(newBase))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
