@@ -6,8 +6,9 @@
 package com.aurora.store.compose.ui.downloads.menu
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
+import com.aurora.store.compose.composable.DropdownMenu
+import com.aurora.store.compose.composable.DropdownMenuItem
+import com.aurora.store.compose.composable.MenuRole
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -52,14 +53,20 @@ fun DownloadsMenu(
         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
             DropdownMenuItem(
                 text = { Text(text = stringResource(R.string.download_cancel_all)) },
+                icon = R.drawable.ic_cancel,
+                role = MenuRole.BLOCK,
                 onClick = { onClick(MenuItem.CANCEL_ALL) }
             )
             DropdownMenuItem(
                 text = { Text(text = stringResource(R.string.download_clear_finished)) },
+                icon = R.drawable.ic_list_check,
+                destructive = true,
                 onClick = { onClick(MenuItem.CLEAR_FINISHED) }
             )
             DropdownMenuItem(
                 text = { Text(text = stringResource(R.string.download_force_clear_all)) },
+                icon = R.drawable.ic_delete_forever,
+                destructive = true,
                 onClick = { onClick(MenuItem.FORCE_CLEAR_ALL) }
             )
         }

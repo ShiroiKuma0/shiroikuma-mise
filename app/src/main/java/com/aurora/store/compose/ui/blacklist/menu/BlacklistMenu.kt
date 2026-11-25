@@ -6,8 +6,9 @@
 package com.aurora.store.compose.ui.blacklist.menu
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
+import com.aurora.store.compose.composable.DropdownMenu
+import com.aurora.store.compose.composable.DropdownMenuItem
+import com.aurora.store.compose.composable.MenuRole
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -52,18 +53,27 @@ fun BlacklistMenu(
         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
             DropdownMenuItem(
                 text = { Text(text = stringResource(R.string.action_select_all)) },
+                icon = R.drawable.ic_list_check,
                 onClick = { onClick(MenuItem.SELECT_ALL) }
             )
             DropdownMenuItem(
                 text = { Text(text = stringResource(R.string.action_remove_all)) },
+                icon = R.drawable.ic_delete_forever,
+                destructive = true,
                 onClick = { onClick(MenuItem.REMOVE_ALL) }
             )
             DropdownMenuItem(
                 text = { Text(text = stringResource(R.string.action_import)) },
+                icon = R.drawable.ic_file_copy,
+                role = MenuRole.SHARE,
+                opens = true,
                 onClick = { onClick(MenuItem.IMPORT) }
             )
             DropdownMenuItem(
                 text = { Text(text = stringResource(R.string.action_export)) },
+                icon = R.drawable.ic_share,
+                role = MenuRole.SHARE,
+                opens = true,
                 onClick = { onClick(MenuItem.EXPORT) }
             )
         }

@@ -23,8 +23,8 @@ import androidx.compose.foundation.text.input.clearText
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.foundation.text.input.setTextAndPlaceCursorAtEnd
 import androidx.compose.material3.AppBarWithSearch
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
+import com.aurora.store.compose.composable.DropdownMenu
+import com.aurora.store.compose.composable.DropdownMenuItem
 import androidx.compose.material3.ExpandedDockedSearchBar
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
@@ -391,6 +391,8 @@ private fun FilterHeader(
                 options.forEach { (key, value) ->
                     DropdownMenuItem(
                         text = { Text(text = key) },
+                        // A list of pure choices: no row has an icon, none keeps the column.
+                        iconColumn = false,
                         onClick = {
                             activeFilter = when (filter) {
                                 R.string.action_filter_rating -> {

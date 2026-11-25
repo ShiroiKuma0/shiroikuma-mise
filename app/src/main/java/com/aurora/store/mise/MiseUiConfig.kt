@@ -66,6 +66,13 @@ class MiseUiConfig(context: Context) {
     var warnColor: Int
         get() = int(KEY_WARN, RED); set(v) = putInt(KEY_WARN, v)
 
+    /**
+     * A colour role stored by its own key — how every role added after the first nine is kept,
+     * so a new role is one line in [MiseUiState.ColorSlot] instead of a property here.
+     */
+    fun color(key: String, def: Int): Int = int(key, def)
+    fun putColor(key: String, v: Int) = putInt(key, v)
+
     // ------------------------------------------------------------- typography
 
     /** "" = system default; `@sans` / `@serif` / `@monospace` = built-in; else an imported file. */

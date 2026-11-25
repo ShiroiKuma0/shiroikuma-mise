@@ -7,9 +7,9 @@
 package com.aurora.store.compose.ui.details.menu
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
+import com.aurora.store.compose.composable.DropdownMenu
+import com.aurora.store.compose.composable.DropdownMenuItem
+import com.aurora.store.compose.composable.MenuRole
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -83,39 +83,48 @@ fun AppDetailsMenu(
         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
             DropdownMenuItem(
                 text = { Text(text = stringResource(R.string.title_manual_download)) },
+                icon = R.drawable.ic_download_manager,
+                role = MenuRole.CONNECT,
+                opens = true,
                 onClick = { onClick(MenuItem.MANUAL_DOWNLOAD) },
                 enabled = canManualDownload && !state.inProgress()
             )
             DropdownMenuItem(
                 text = { Text(text = stringResource(R.string.action_switch_account)) },
+                icon = R.drawable.ic_account,
+                role = MenuRole.CONTACT,
+                opens = true,
                 onClick = { onClick(MenuItem.INSTALL_OTHER_ACCOUNT) },
                 enabled = canUseOtherAccount && !state.inProgress()
             )
             DropdownMenuItem(
                 text = { Text(text = stringResource(R.string.action_info)) },
+                icon = R.drawable.ic_about,
+                opens = true,
                 onClick = { onClick(MenuItem.APP_INFO) },
                 enabled = state is AppState.Installed || state is AppState.Updatable
             )
             DropdownMenuItem(
                 text = { Text(text = stringResource(R.string.action_home_screen)) },
+                icon = R.drawable.ic_add,
+                role = MenuRole.SHARE,
                 onClick = { onClick(MenuItem.ADD_TO_HOME) },
                 enabled = state is AppState.Installed || state is AppState.Updatable
             )
             DropdownMenuItem(
                 text = { Text(text = stringResource(R.string.action_view_on_play)) },
+                icon = R.drawable.ic_google,
+                opens = true,
                 onClick = { onClick(MenuItem.PLAY_STORE) },
                 enabled = PackageUtil.isInstalled(context, Constants.PACKAGE_NAME_PLAY_STORE)
             )
-            // Fork: a toggle, so the menu stays open long enough to see the tick flip.
+            // Fork: a toggle, so the menu stays open long enough to see the switch flip.
             DropdownMenuItem(
                 text = { Text(text = stringResource(R.string.action_hold_version)) },
+                icon = R.drawable.ic_lock,
+                role = MenuRole.BLOCK,
+                checked = isHeld,
                 onClick = { onMenuItemClicked(MenuItem.HOLD_VERSION) },
-                trailingIcon = {
-                    Checkbox(
-                        checked = isHeld,
-                        onCheckedChange = { onMenuItemClicked(MenuItem.HOLD_VERSION) }
-                    )
-                },
                 enabled = isHeld || state is AppState.Installed || state is AppState.Updatable
             )
         }

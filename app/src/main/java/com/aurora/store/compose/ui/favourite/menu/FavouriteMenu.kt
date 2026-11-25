@@ -7,8 +7,9 @@
 package com.aurora.store.compose.ui.favourite.menu
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
+import com.aurora.store.compose.composable.DropdownMenu
+import com.aurora.store.compose.composable.DropdownMenuItem
+import com.aurora.store.compose.composable.MenuRole
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -54,10 +55,16 @@ fun FavouriteMenu(
         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
             DropdownMenuItem(
                 text = { Text(text = stringResource(R.string.action_import)) },
+                icon = R.drawable.ic_file_copy,
+                role = MenuRole.SHARE,
+                opens = true,
                 onClick = { onClick(MenuItem.IMPORT) }
             )
             DropdownMenuItem(
                 text = { Text(text = stringResource(R.string.action_export)) },
+                icon = R.drawable.ic_share,
+                role = MenuRole.SHARE,
+                opens = true,
                 onClick = { onClick(MenuItem.EXPORT) },
                 enabled = items > 0
             )

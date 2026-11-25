@@ -23,8 +23,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import com.aurora.store.compose.composable.AlertDialog
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
+import com.aurora.store.compose.composable.DropdownMenu
+import com.aurora.store.compose.composable.DropdownMenuItem
+import com.aurora.store.compose.composable.MenuDivider
+import com.aurora.store.compose.composable.MenuRole
 import androidx.compose.material3.ExperimentalMaterial3Api
 import com.aurora.store.compose.composable.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -426,10 +428,10 @@ private fun AddOptionRow(iconRes: Int, label: String, onClick: () -> Unit) {
 private fun OverflowMenu(onRefreshAll: () -> Unit) {
     val context = LocalContext.current
     var expanded by remember { mutableStateOf(false) }
-    val links = mapOf(
-        R.string.menu_terms to URL_TOS,
-        R.string.menu_disclaimer to URL_DISCLAIMER,
-        R.string.menu_license to URL_LICENSE
+    val links = listOf(
+        Triple(R.string.menu_terms, R.drawable.ic_privacy, URL_TOS),
+        Triple(R.string.menu_disclaimer, R.drawable.ic_disclaimer, URL_DISCLAIMER),
+        Triple(R.string.menu_license, R.drawable.ic_license, URL_LICENSE)
     )
 
     Box {
@@ -442,15 +444,19 @@ private fun OverflowMenu(onRefreshAll: () -> Unit) {
         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
             DropdownMenuItem(
                 text = { Text(text = stringResource(R.string.account_refresh_all)) },
+                icon = R.drawable.ic_refresh,
+                role = MenuRole.CONNECT,
                 onClick = {
                     expanded = false
                     onRefreshAll()
                 }
             )
-            HorizontalDivider()
-            links.forEach { (label, url) ->
+            MenuDivider()
+            links.forEach { (label, icon, url) ->
                 DropdownMenuItem(
                     text = { Text(text = stringResource(label)) },
+                    icon = icon,
+                    opens = true,
                     onClick = {
                         expanded = false
                         context.browse(url)

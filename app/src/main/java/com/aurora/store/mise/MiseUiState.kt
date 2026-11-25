@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -55,6 +56,13 @@ class MiseUiState(context: Context) {
         private set
     var warnColor by mutableIntStateOf(config.warnColor)
         private set
+
+    /** Roles that carry their own key and default — see [ColorSlot]. */
+    private val keyedColors = mutableStateMapOf<ColorSlot, Int>().apply { putAll(readKeyed()) }
+
+    private fun readKeyed(): Map<ColorSlot, Int> = ColorSlot.entries
+        .filter { it.key != null }
+        .associateWith { config.color(it.key!!, it.default) }
 
     var fontFamilyId by mutableStateOf(config.fontFamily)
         private set
@@ -117,6 +125,7 @@ class MiseUiState(context: Context) {
             ColorSlot.DIVIDER -> { config.dividerColor = value; dividerColor = value }
             ColorSlot.ICON -> { config.iconColor = value; iconColor = value }
             ColorSlot.WARN -> { config.warnColor = value; warnColor = value }
+            else -> { config.putColor(slot.key!!, value); keyedColors[slot] = value }
         }
         config.rememberColor(value)
         recentColors = config.recentColors()
@@ -132,6 +141,7 @@ class MiseUiState(context: Context) {
         ColorSlot.DIVIDER -> dividerColor
         ColorSlot.ICON -> iconColor
         ColorSlot.WARN -> warnColor
+        else -> keyedColors[slot] ?: slot.default
     }
 
     fun updateFontFamily(id: String) { config.fontFamily = id; fontFamilyId = id }
@@ -175,6 +185,7 @@ class MiseUiState(context: Context) {
         dividerColor = config.dividerColor
         iconColor = config.iconColor
         warnColor = config.warnColor
+        keyedColors.putAll(readKeyed())
         fontFamilyId = config.fontFamily
         fontWeight = config.fontWeight
         fontItalic = config.fontItalic
@@ -292,7 +303,33 @@ class MiseUiState(context: Context) {
     }
 
     /** The colour slots the UI page exposes, in the order they appear there. */
-    enum class ColorSlot { BACKGROUND, SURFACE, TEXT, TEXT_DIM, ACCENT, BORDER, DIVIDER, ICON, WARN }
+    enum class ColorSlot(val key: String? = null, val default: Int = 0) {
+        BACKGROUND, SURFACE, TEXT, TEXT_DIM, ACCENT, BORDER, DIVIDER, ICON, WARN,
+
+        /** A held app's offered version that has not been tried yet. */
+        HELD_NEW("color_held_new", 0xFF00A550.toInt()),
+
+        /** A held app's offered version that was tried and rejected. */
+        HELD_SKIPPED("color_held_skipped", 0xFFFF8000.toInt()),
+
+        /** Menu icon: the row views something or opens a page. */
+        MENU_VIEW("color_menu_view", MiseUiConfig.YELLOW),
+
+        /** Menu icon: the row connects, downloads, synchronises or refreshes. */
+        MENU_CONNECT("color_menu_connect", 0xFF00A550.toInt()),
+
+        /** Menu icon: the row is about an account or a person. */
+        MENU_CONTACT("color_menu_contact", 0xFF00B0FF.toInt()),
+
+        /** Menu icon: the row copies, shares, exports or imports. */
+        MENU_SHARE("color_menu_share", 0xFFFF8000.toInt()),
+
+        /** Menu icon: the row blocks, holds back or cancels. */
+        MENU_BLOCK("color_menu_block", 0xFFFF3D7F.toInt()),
+
+        /** A switch that is off — opaque, so it reads on any ground. */
+        SWITCH_OFF("color_switch_off", 0xFF8C8C00.toInt())
+    }
 }
 
 typealias ColorSlot = MiseUiState.ColorSlot

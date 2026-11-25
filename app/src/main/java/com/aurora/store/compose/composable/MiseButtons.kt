@@ -14,7 +14,10 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ButtonElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.unit.dp
+import com.aurora.store.mise.LocalMiseUi
 
 /**
  * Drop-in replacements for Material 3's four button composables, identical in signature but with
@@ -33,6 +36,18 @@ import androidx.compose.ui.graphics.Shape
  */
 @Composable
 fun houseButtonBorder(): BorderStroke? = houseBorder()
+
+/**
+ * The frame of a block's **main** action: 3 dp, to go with a bold label. Still an outline —
+ * the house pill is never filled. Follows the border colour knob, and like every border it
+ * disappears when the border width is set to 0.
+ */
+@Composable
+fun houseMainButtonBorder(): BorderStroke? {
+    val ui = LocalMiseUi.current
+    if (ui.borderWidth <= 0) return null
+    return BorderStroke(3.dp, Color(ui.borderColor))
+}
 
 @Composable
 fun TextButton(
