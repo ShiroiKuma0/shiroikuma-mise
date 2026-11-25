@@ -54,7 +54,7 @@ Toasts are ours too: black ground, yellow text, yellow border, corner radius and
 
 A category ZIP — UI, settings, favourites, ignored updates, fonts — written atomically, `.part` first and renamed only once the archive is complete. Import merges per key and skips categories the archive doesn't carry.
 
-Two deliberate omissions: the **accounts** table is never backed up, because it holds live Google auth tokens and a settings backup that carries credentials into a shared folder is a different object; and the automation token lives in its own preferences file, outside every category.
+Two deliberate omissions: the **accounts** table is never backed up, because it holds live Google auth tokens and a settings backup that carries credentials into a shared directory is a different object; and the automation token lives in its own preferences file, outside every category.
 
 The 保存復元 automation contract lets 白い熊 自由作業盤 drive an export headlessly — real per-category progress, and cancellation at category boundaries with the partial file deleted. Since contract v2 the app answers **out of the box**: the master switch defaults to on and 「Use authorization token?」 defaults to off, because a pasted secret cannot survive a wipe and the point of all this is a phone that has just been wiped. A token sent anyway is ignored rather than refused.
 
