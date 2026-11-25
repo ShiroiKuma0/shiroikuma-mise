@@ -1,13 +1,13 @@
 {
-  "version_name": "4.8.4+2026-10-02.16-53.g3a15ff67+028",
-  "version_code": "760028",
-  "download_url": "https://github.com/ShiroiKuma0/shiroikuma-mise/releases/download/4.8.4+2026-10-02.16-53.g3a15ff67+028/shiroikuma-mise_4.8.4+2026-10-02.16-53.g3a15ff67+028.apk",
+  "version_name": "4.8.4+2026-10-02.16-53.g3a15ff67+029",
+  "version_code": "760029",
+  "download_url": "https://github.com/ShiroiKuma0/shiroikuma-mise/releases/download/4.8.4+2026-10-02.16-53.g3a15ff67+029/shiroikuma-mise_4.8.4+2026-10-02.16-53.g3a15ff67+029.apk",
   "icon_url": "",
-  "sha1": "36df7c7c2bc9fe472e6317f5fe814226739b67a3",
-  "sha256": "09de63e8910c6a43dfc857e086757b6f1c172bef54556b12ed749085a634afcd",
-  "changelog": "白い熊 店 4.8.4+2026-10-02.16-53.g3a15ff67+028\n• The UI page folds: every section opens on a tap, with a chip index on top that jumps to a section\n• The index is draggable: long-press a chip to reorder the sections\n• App language: a language for this app alone, first on the UI page\n• Section icons in seven colours, an icon on every row, outlined switches",
-  "size": "9335735",
-  "last_commit": "13d27ca864526c874350f54d7e07aec5d1e6a008",
+  "sha1": "e288a7af361e8e39ce5467ee4b2b389e1dad7922",
+  "sha256": "1de1a5686afbd1aba7552fded101d91d6b9d9e0e6ae408bd308dfc286d535f86",
+  "changelog": "白い熊 店 4.8.4+2026-10-02.16-53.g3a15ff67+029\n• The system's per-app language screen (Android 13 and later) offers the same 34 languages as the app's own picker\n• Everything of +028: the folding UI page with its draggable chip index, App language, section and row icons, outlined switches",
+  "size": "9334028",
+  "last_commit": "1d8adce4947d89516108ec164ddc587d640c594e",
   "updated_on": "11月 25, 2026",
-  "timestamp": "1795632478"
+  "timestamp": "1795633007"
 }

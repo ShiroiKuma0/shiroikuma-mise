@@ -5,6 +5,22 @@ naming the upstream release it is built on. Upstream Aurora Store's own history 
 [`CHANGELOG`](CHANGELOG) beside this file, exactly as upstream maintains it — it is left untouched
 so every upstream sync merges cleanly.
 
+## 白い熊 店 4.8.4+2026-10-02.16-53.g3a15ff67+029 — 2026-11-25
+
+Built on Aurora Store 4.8.4, upstream `master` at `3a15ff67` (2026-10-02) — the same base as
+`+028`; this release is fork work only.
+
+### App language
+
+- **The system's per-app language screen offers the same languages as the app's own picker.**
+  On Android 13 and later the system listed all 55 languages the package ships, while the picker
+  on the UI page offered 34: Japanese, English and the languages in which the app is translated
+  to four fifths or more. The app now declares that short list itself, and the picker reads the
+  very same declaration, so the two cannot drift apart.
+- Every translation stays in the package, and a language chosen earlier that is no longer listed
+  stays in force until another is picked.
+- Below Android 13 nothing visible changes.
+
 ## 白い熊 店 4.8.4+2026-10-02.16-53.g3a15ff67+028 — 2026-11-25
 
 Built on Aurora Store 4.8.4, upstream `master` at `3a15ff67` (2026-10-02) — the same base as
