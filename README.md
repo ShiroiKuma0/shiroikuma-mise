@@ -10,7 +10,7 @@ A fork of [Aurora Store](https://gitlab.com/AuroraOSS/AuroraStore) with **major 
 
 Installs **side-by-side** with Aurora Store (app id `shiroikuma.mise`).
 
-**📥 Latest release: [`4.8.4+2026-10-02.16-53.g3a15ff67+024`](https://github.com/ShiroiKuma0/shiroikuma-mise/releases/latest)** — [all releases & APK downloads »](https://github.com/ShiroiKuma0/shiroikuma-mise/releases)
+**📥 Latest release: [`4.8.4+2026-10-02.16-53.g3a15ff67+025`](https://github.com/ShiroiKuma0/shiroikuma-mise/releases/latest)** — [all releases & APK downloads »](https://github.com/ShiroiKuma0/shiroikuma-mise/releases)
 
 </div>
 
@@ -37,6 +37,8 @@ Frozen means disabled, suspended, or **hidden** — the last is what device-owne
 Tick **Hold at current version** in an app's ⋯ menu and it stays where it is. Its update is still checked and listed on the Updates tab — under *Ignored*, with the new version and size, so you can see what you are missing — but it is not counted in the badge or the "updates available" total, it is left out of **Update all**, and the background check never notifies or auto-installs it.
 
 Stock had the rule but offered it only from a pending update's sheet, and its background check ignored it anyway; here it is a toggle you can set on any installed app ahead of time, and it holds against the periodic run too.
+
+And a held app can still be **tried**. A newer version shows up as untested, with a **Test** button; install it, and if it disappoints, go back to the old one from a backup — the row then reads *Skipped*, dimmed and struck through with the day, so you never test the same version twice. Only when a still newer version appears does the row light up again. **Skip** marks a version without installing it at all.
 
 ---
 

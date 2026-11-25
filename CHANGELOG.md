@@ -5,6 +5,55 @@ naming the upstream release it is built on. Upstream Aurora Store's own history 
 [`CHANGELOG`](CHANGELOG) beside this file, exactly as upstream maintains it — it is left untouched
 so every upstream sync merges cleanly.
 
+## 白い熊 店 4.8.4+2026-10-02.16-53.g3a15ff67+025 — 2026-11-25
+
+Built on Aurora Store 4.8.4, upstream `master` at `3a15ff67` (2026-10-02) — the same base as
+`+024`; this release is fork work only.
+
+### Held apps: test a newer version, or skip it
+
+- **A held app remembers the version that was tested.** Installing the offered update of a held
+  app marks that version as tested. Going back to the old version — from a backup, say — keeps the
+  mark, because it only ever rises.
+- **A skipped version is shown as skipped.** Under *Ignored* on the Updates tab, an offered
+  version that equals the mark is dimmed and struck through, with “Skipped” and the day, and it
+  sorts below the rest. It stays that way until a newer version appears.
+- **A newer version is shown as untested**, with a green dot, a bold **Test** button that installs
+  it and a **Skip** button that marks it without installing. The line beneath names the version
+  skipped last and when.
+- **Tapping a held row opens a menu:** *Details*, *Test again* (clears the mark of a skipped
+  version) and *Unignore*, which removes the rule and the mark with it.
+- The database moves to version 14 with a migration; the *ignored updates* backup category
+  carries the mark, and restores it.
+
+### UI & theming
+
+- **Every popup menu is in the house look.** An action row is an outlined pill across the whole
+  menu, with its icon inside at the left; a › at the right marks a row that opens a screen, a
+  dialog or the browser; a row that deletes takes the warning colour. All seven menus are switched:
+  app details, blacklist, downloads, favourites, spoof, accounts and the search filters.
+- **The icon's colour says what the row does** — view, connect, contact, share, block or delete —
+  and each of these roles is a colour you can set on the UI page.
+- **Toggle rows carry the outlined house switch** instead of a checkbox: “Hold at current version”
+  in an app's menu is now such a row.
+- **On the UI page, every row that opens something or runs an action is an outlined pill** hugging
+  its label, with the explanation beneath it; “Regenerate” is a pill in the warning colour.
+- New colour rows on the UI page: the two held-app marks, the five menu roles and the switch's
+  off colour.
+
+### Japanese
+
+- **The app is fully translated.** 140 strings that had no Japanese — upstream's newer ones and
+  the fork's — are translated, so the Japanese key set matches the default one.
+- **The fork's own screens are translated too:** the UI page, its colour and font pickers, the
+  export and import panel, the font import and the automation notifications took their text from
+  literals; they now come from resources, each with its Japanese (109 strings).
+- The category names the automation contract reports now follow the phone's language.
+
+### Fixes & behaviour
+
+- Three English texts no longer say “folder” where a directory is meant.
+
 ## 白い熊 店 4.8.4+2026-10-02.16-53.g3a15ff67+024 — 2026-10-22
 
 Built on Aurora Store 4.8.4, upstream `master` at `3a15ff67` (2026-10-02) — synced from
